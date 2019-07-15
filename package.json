@@ -1,0 +1,19 @@
+{
+  "name": "vue-gulu",
+  "version": "0.0.1",
+  "description": "这是一个Vue造轮子项目",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yinhaiying/Vue-gulu.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yinhaiying/Vue-gulu/issues"
+  },
+  "homepage": "https://github.com/yinhaiying/Vue-gulu#readme"
+}
