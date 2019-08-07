@@ -99,3 +99,19 @@ parcel index.html --no-cache
 vertical-align:top;
 ```
 
+4. 控制`iconPosition`的值只能输入`left`和`right`。
+对用户输入进来的其他值进行校验。
+```
+    iconPosition:{
+      type:String,
+      default:'left',
+      validator(value){
+        if(value !== 'left' && value !== 'right'){
+           return false;
+        }else{
+          return true;
+        }
+      }
+    }
+```
+
