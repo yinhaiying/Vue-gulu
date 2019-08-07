@@ -128,3 +128,24 @@ vertical-align:top;
     </svg>
 </template>
 ```
+
+#### 添加loading效果
+通过css的自定义动画来实现loading效果
+`.button.vue`
+```
+    @keyframes spin{
+      0%{
+        transform:rotate(0deg);
+      }
+      100%{
+        transform:rotate(360deg);
+      }
+    }
+```
+调用
+```
+<g-icon class = "loading" name = "loading" v-if = "icon"></g-icon>
+.loading{
+  animation:spin 1s infinite linear;
+}
+```
