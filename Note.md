@@ -149,3 +149,47 @@ vertical-align:top;
   animation:spin 1s infinite linear;
 }
 ```
+
+#### button-group组件的实现
+`button-group.vue`
+```
+<template>
+  <div class = "g-button-group">
+    <slot></slot>
+  </div>
+</template>
+
+<style lang = "scss">
+.g-button-group{
+  display:inline-flex;
+  > .g-button{
+    border-radius:0;
+    margin-left:-1px;
+    &:first-child{
+      border-top-left-radius:var(--border-radius);
+      border-bottom-left-radius:var(--border-radius);
+    }
+    &:last-child{
+      border-top-right-radius:var(--border-radius);
+      border-bottom-right-radius:var(--border-radius);
+    }
+    &:hover{
+      position:relative;
+      z-index:1;
+    }
+  }
+}
+</style>
+```
+
+`button-group`的使用
+```
+    <g-button-group>
+      <g-button icon = "left" >
+          上一页
+      </g-button>
+      <g-button icon = "right" icon-position = "right" >
+          下一页
+      </g-button>
+    </g-button-group>
+```
