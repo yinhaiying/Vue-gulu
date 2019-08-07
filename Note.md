@@ -151,6 +151,7 @@ vertical-align:top;
 ```
 
 #### button-group组件的实现
+1. `button-group`组件的实现思路
 `button-group.vue`
 ```
 <template>
@@ -164,7 +165,9 @@ vertical-align:top;
   display:inline-flex;
   > .g-button{
     border-radius:0;
-    margin-left:-1px;
+    &:not(:first-child){
+      margin-left:-1px;
+    }
     &:first-child{
       border-top-left-radius:var(--border-radius);
       border-bottom-left-radius:var(--border-radius);
@@ -193,3 +196,20 @@ vertical-align:top;
       </g-button>
     </g-button-group>
 ```
+
+2. `g-button-group`组件的子元素只能是`g-button`的实现思路。
+
+首先考虑`this.$children`，发现它获取的都是Vue组件。因此我们查看`this.$el.children`
+发现`this.$el`得到的是当前组件的结构。因此通过判断当前组件的子节点名称是不是`g-button`
+`button-group.vue`
+```
+  mounted(){
+    for(let node of this.$el.children){
+      let name = node.nodeName.toLowerCase();
+       if(name !== 'button'){
+         console.warn(`g-button-group的子元素必须全是button,当前g-button-group中包含${name}`)
+       }
+    }
+  }
+```
+

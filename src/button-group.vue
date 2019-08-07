@@ -3,13 +3,28 @@
     <slot></slot>
   </div>
 </template>
+<script>
+export default {
+  mounted(){
+    for(let node of this.$el.children){
+      let name = node.nodeName.toLowerCase();
+       if(name !== 'button'){
+         console.warn(`g-button-group的子元素必须全是button,当前g-button-group中包含${name}`)
+       }
+    }
+  }
+}
+</script>
+
 
 <style lang = "scss">
 .g-button-group{
   display:inline-flex;
   > .g-button{
     border-radius:0;
-    margin-left:-1px;
+    &:not(:first-child){
+      margin-left:-1px;
+    }
     &:first-child{
       border-top-left-radius:var(--border-radius);
       border-bottom-left-radius:var(--border-radius);
