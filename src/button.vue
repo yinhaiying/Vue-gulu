@@ -1,7 +1,7 @@
 <template>
-  <button class = "g-button" :class = "{[`icon-${iconPosition}`]:true}">
-      <g-icon class = "icon" :name = "icon" v-if = "icon"></g-icon>
-      <g-icon class = "loading" name = "loading" v-if = "icon"></g-icon>
+  <button class = "g-button" :class = "{[`icon-${iconPosition}`]:true}" @click = "$emit('click')">
+      <g-icon class = "icon" :name = "icon" v-if = "icon && !loading"></g-icon>
+      <g-icon  class = "loading icon"  name = "loading" v-if = "loading " ></g-icon>
       <div class = "content">
         <slot></slot>
       </div>
@@ -18,6 +18,10 @@ export default  {
   // props:['icon','iconPosition']
   props:{
     icon:{},
+    loading:{
+      type:Boolean,
+      default:false
+    },
     iconPosition:{
       type:String,
       default:'left',
