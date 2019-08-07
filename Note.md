@@ -213,3 +213,16 @@ vertical-align:top;
   }
 ```
 
+#### 单元测试
+
+1. BDD,TDD,Assert名词解释
+BDD(Behavior Driven Development):行为驱动开发。感觉更多的是满足用户需求，用户有某个需求，就必须实现这个需求。
+
+TDD(est-Driven Development):测试驱动开发。类似于满足测试通过即可。
+
+Assert：断言。表示我主观认为
+console.assert():用来实现简单的断言
+```
+console.assert(1 > 0) // 如果为真没有反应，如果为假就报错。
+```
+2. chai断言
