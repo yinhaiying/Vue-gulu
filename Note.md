@@ -115,3 +115,16 @@ vertical-align:top;
     }
 ```
 
+#### 实现icon的封装
+
+当我们在实现`button`按钮的时候，我们使用了`icon`，当用户只是使用`icon`时，
+他会写跟`button`中的`icon`一样重复的代码,因此，我们最好将`icon`封装好，直接
+给用户使用，同时在`button`中使用封装好的组件。
+`icon.vue`
+```
+<template>
+    <svg v-if = "name" class="g-icon" >
+      <use :xlink:href="`#i-${name}`"></use>
+    </svg>
+</template>
+```
