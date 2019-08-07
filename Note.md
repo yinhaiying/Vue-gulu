@@ -226,3 +226,31 @@ console.assert():用来实现简单的断言
 console.assert(1 > 0) // 如果为真没有反应，如果为假就报错。
 ```
 2. chai断言
+
+哪些需要进行单元测试？
+一般主要是看你有几个输入参数和各种事件。
+```
+  props:{
+    icon:{},
+    loading:{
+      type:Boolean,
+      default:false
+    },
+    iconPosition:{
+      type:String,
+      default:'left',
+      validator(value){
+        return (value === 'left' || value === 'right')
+      }
+    }
+  }
+```
+比如上面的props中，有`icon`,`loading`和`iconPostion`三个属性。
+因此至少需要三个测试用例。
+然后在`button`中,还存在着`click`事件，需要对`click`进行单元测试。
+```
+  <button  @click = "$emit('click')">
+   ...
+  </button>
+```
+

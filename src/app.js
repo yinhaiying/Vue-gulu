@@ -12,3 +12,16 @@ new Vue({
     loading1:false
   }
 })
+
+
+// 单元测试
+{
+  console.log(Button) // 这里得到的是一个对象
+}
+
+{
+  const constructor = Vue.extend(Button);
+  console.log(constructor);
+  const button = new constructor();
+  button.$mount('#test')
+}
