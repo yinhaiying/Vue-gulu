@@ -2,7 +2,7 @@
 
 ## Button
 
-1. 使用`Vue.component`来实现一个简单的全局`button`组件
+####  使用`Vue.component`来实现一个简单的全局`button`组件
 ```
 Vue.component('g-button', {
   template:`<button>Hi</button>`
@@ -28,7 +28,7 @@ Vue.component('g-button', {
       --border-color-hover:#666;
     }
 ```
-2. 引入`parcel`
+####  引入`parcel`
 目前我们已经实现了一个简单的`button`组件，但是我们可以发现我们的js在`button.js`中，我们的css在`index.html`
 ,我们的html结构在`button.js`的`template`中。行为结构样式不是跟vue组件一样在一个单独的`.vue`中，想要实现这种
 效果，我们需要引入打包工具，因此我们需要使用`parcel`或者`webpack`进行打包。
@@ -51,3 +51,51 @@ parcel index.html --no-cache
 
 ```
 通过`parcel`打包我们就实现了一个单文件组件`Button`，
+
+#### 添加icon
+
+1. icon和文字对齐的问题
+
+
+
+2. icon位置的问题：
+通过使用一个属性`icon-position`来控制左右，然后通过`icon-right`类来控制左右位置。
+通过使用`flex`布局中的`order`可以控制元素的位置。
+`html`
+```
+  <button class = "g-button" :class = "{[`icon-${iconPosition}`]:true}">
+      <svg v-if = "icon" class="icon" >
+        <use :xlink:href="`#i-${icon}`"></use>
+      </svg>
+      <div class = "content">
+        <slot></slot>
+      </div>
+  </button>
+```
+`css`
+```
+    > .content{
+      order:2;
+    }
+    > .icon{
+      order:1;
+
+    }
+
+    &.icon-right{
+      > .content{
+        order:1;
+      }
+      > .icon{
+        order:2;
+      }
+    }
+```
+
+3. 解决多个按钮不对齐的问题
+通常只要是内联元素不对齐(设置了inline导致的)，只要加上`vertical-align`样式即可。
+`vertical-align`的值只要不是默认值即可。
+```
+vertical-align:top;
+```
+
