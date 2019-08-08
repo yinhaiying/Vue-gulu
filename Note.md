@@ -254,3 +254,35 @@ console.assert(1 > 0) // 如果为真没有反应，如果为假就报错。
   </button>
 ```
 
+3. Vue的组件单元测试
+在vue中不必为了可测性在组件中做任何特殊的操作，导出原始设置就可以了：
+```
+// 导入 Vue.js 和组件，进行测试
+import Vue from 'vue'
+import MyComponent from 'path/to/MyComponent.vue'
+```
+
+如果我们要测试一个组件，那么我们需要通过js动态生成一个组件，
+然后再去测试这个组件的输入和输出，而一个组价的输入和输出很多时候取决于`props`。
+
+**编写可被测试的组件**
+通过`import`导入的测试组件实际上是一个含有`Vue`各种属性的对象，
+通过`Vue.extend(MyComponent)`能够得到一个构造器。
+通过构造器进行实例化,动态生成一个组件，并将其挂载到DOM上或者内存中。
+```
+  const constructor = Vue.extend(Button);
+  const button = new constructor({
+    propsData:{
+      icon:'settings`'
+    }
+  });
+  button.$mount('#test');
+```
+`propsData`用于传递`props`中的值。
+
+接下来对组价中的各种属性进行测试，通过`button.$el`可以获取到当前挂载的组件。
+然后可以以类似于操作DOM的元素进行获取测试目标。
+```
+  let useElement = button.$el.querySelector('use');
+  expect(useElement.getAttribute('xlink:href')).to.eq('#i-settings')
+```
