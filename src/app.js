@@ -92,6 +92,8 @@ let expect = chai.expect
   vm.$destroy();
 }
 // 测试button的click事件 
+import spies from 'chai-spies'
+chai.use(spies);
 {
   const constructor = Vue.extend(Button);
   const vm = new constructor({
@@ -100,13 +102,13 @@ let expect = chai.expect
     }
   });
   vm.$mount();
-  vm.$on('click',function(){
-    console.log('1')
-  })
-  //希望监听的这个函数被执行。而不是函数执行中的内容是正确的。
-  //哪怕它是错误的，但是它也被执行了，说明click事件被处罚了。
-  //这就表示测试通过了。
+  // spy间谍函数把原来要监听的函数替代了。
+  const spy = chai.spy(function(){});
+  vm.$on('click',spy)
   let button = vm.$el;
   button.click();
+  //这个spy函数是否被调用可以被监控到
+  //把原来不能监控的函数替代成了可以被监控的spy函数。
+  expect(spy).to.have.been.called();
 }
 

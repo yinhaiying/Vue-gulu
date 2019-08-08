@@ -286,3 +286,70 @@ import MyComponent from 'path/to/MyComponent.vue'
   let useElement = button.$el.querySelector('use');
   expect(useElement.getAttribute('xlink:href')).to.eq('#i-settings')
 ```
+实现一个完整的测试用例：
+```
+// iconPosition的值 影响order的值 右侧order 2 
+{
+  //想要获取属性，必须把它挂载到页面的元素身上
+  const div = document.createElement('div');
+  document.body.appendChild(div)
+  const constructor = Vue.extend(Button);
+  const vm = new constructor({
+    propsData:{
+      icon:'settings',
+      loading:true,
+      iconPosition:"right"
+    }
+  });
+  vm.$mount(div);
+  let svg = vm.$el.querySelector('svg');
+  let {order} = window.getComputedStyle(svg);
+  expect(order).to.eq('2');
+  vm.$el.remove();
+  vm.$destroy();
+}
+```
+**编写点击事件的测试用例**
+如下所示：通过使用chai断言来实现单元测试，希望得到的期望是被监听的函数执行了。
+而不是函数中的内容是否正确。
+```
+{
+  const constructor = Vue.extend(Button);
+  const vm = new constructor({
+    propsData:{
+      icon:'settings',
+    }
+  });
+  vm.$mount();
+  vm.$on('click',function(){
+    console.log('1')
+  })
+  //希望监听的这个函数被执行。而不是函数执行中的内容是正确的。
+  //哪怕它是错误的，但是它也被执行了，说明click事件被处罚了。
+  //这就表示测试通过了。
+  let button = vm.$el;
+  button.click();
+}
+```
+因此我们希望能够实现判断监听函数是否执行。这需要使用到`chai-spies`来实现。
+```
+import spies from 'chai-spies'
+chai.use(spies);
+{
+  const constructor = Vue.extend(Button);
+  const vm = new constructor({
+    propsData:{
+      icon:'settings',
+    }
+  });
+  vm.$mount();
+  // spy间谍函数把原来要监听的函数替代了。
+  const spy = chai.spy(function(){});
+  vm.$on('click',spy)
+  let button = vm.$el;
+  button.click();
+  //这个spy函数是否被调用可以被监控到
+  //把原来不能监控的函数替代成了可以被监控的spy函数。
+  expect(spy).to.have.been.called();
+}
+```
