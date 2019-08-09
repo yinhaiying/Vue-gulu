@@ -633,9 +633,38 @@ describe('Button',() => {
 做一些处理，能够让我们判断它是否被调用。`sinon.fake()`就能够实现这个功能。
 
 #### 持续集成服务 Travis ci
-持续集成服务就是你什么都不需要运行，由机器自动帮助你实现不断地测试你的用例。
+**持续集成**的核心就是**持续**，也就是说它会持续地给你做一件事。
+比如我们在项目开发过程中，第一天测试时没有问题，第二天继续开发，第三天继续开发。结果最后合并时
+发现存在问题了。然后，如果我们实现了持续集成，我们在开发时每次一push就会帮助你进行测试，发现错误。
+这样的话就避免了在错误的代码上继续开发。这样的话就可以及时发现bug，避免最后合并时全是各种bug。
 
+持续集成服务：主要包括，持续测试，持续交付和持续部署等主要服务。
+目前我们主要使用持续测试。
+持续测试：
+持续测试就是你什么都不需要运行，由机器自动帮助你实现不断地测试你的用例。
 步骤：
 1. 在项目的根目录下创建一个`.travis.yml`文件
+```
+language: node_js
+node_js:
+  - "8"
+  - "9"
+  - "10"
+addons:
+  chrome: stable
+sudo: required
+before_script:
+  - "sudo chown root /opt/google/chrome/chrome-sandbox"
+  - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
+
+```
+`language`:使用的语言，我们都是使用`npm`进行运行的，依赖于`node`
+`node_js`:希望测试时使用的版本，最多可以使用测试三个版本
+`addons`:插件，由于我们测试时需要使用chrome浏览器。因此可以在这里写入：chrome:版本号
+
+
+
 2. 在[travis ci](https://www.travis-ci.org/)上使用github账号进入
 3. My Repositories下添加你要持续集成的项目。将其激活。
+接下来`travis ci`会自动运行你的的代码，每次你在`github`提交了一次，
+那边就会测试一次，如果出现测试失败就会发送邮件。
