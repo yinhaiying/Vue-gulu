@@ -2,7 +2,8 @@
 
 ## Button
 
-####  使用`Vue.component`来实现一个简单的全局`button`组件
+####  实现简单的`button`组件
+使用`Vue.component`来实现一个简单的全局`button`组件
 ```
 Vue.component('g-button', {
   template:`<button>Hi</button>`
@@ -288,7 +289,7 @@ import MyComponent from 'path/to/MyComponent.vue'
 ```
 实现一个完整的测试用例：
 ```
-// iconPosition的值 影响order的值 右侧order 2 
+// iconPosition的值 影响order的值 右侧order 2
 {
   //想要获取属性，必须把它挂载到页面的元素身上
   const div = document.createElement('div');
@@ -353,3 +354,202 @@ chai.use(spies);
   expect(spy).to.have.been.called();
 }
 ```
+
+## 自动化测试
+
+### 需求分析
+
+到目前为止，我们已经实现了通过`chai`来对代码进行单元测试。但是在测试过程中，我们每写
+一个测试用例，就需要手动刷新浏览器，而且还需要手动打开浏览器。当我们有非常多的测试用例的
+时候，这样操作起来就比较麻烦，我们能不能实现一种能够自动帮助我们打开浏览器，自动刷新，
+自动进行测试的功能。这就是**自动化测试**。
+
+### 使用 Karma + Mocha做单元测试
+- Karma（[ˈkɑrmə] 卡玛）是一个测试运行器，它可以呼起浏览器，加载测试脚本，然后运行测试用例
+  通俗地认为Karma是一个可以帮你打开浏览器的工具。
+- Mocha（[ˈmoʊkə] 摩卡）是一个单元测试框架/库，它可以用来写测试用例
+- Sinon（西农）是一个 spy / stub / mock 库，用以辅助测试（使用后才能理解）
+
+### 步骤
+1. 安装各种工具
+```
+npm i -D karma karma-chrome-launcher karma-mocha karma-sinon-chai mocha sinon sinon-chai karma-chai karma-chai-spies
+```
+2. 创建`karma.conf.js`文件
+```
+module.exports = function (config) {
+  config.set({
+
+      // base path that will be used to resolve all patterns (eg. files, exclude)
+      basePath: '',
+         // frameworks to use
+         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+         frameworks: ['mocha', 'sinon-chai'],
+         client: {
+             chai: {
+                 includeStack: true
+             }
+         },
+
+
+         // list of files / patterns to load in the browser
+         files: [
+             'dist/**/*.test.js',
+             'dist/**/*.test.css'
+         ],
+
+
+         // list of files / patterns to exclude
+         exclude: [],
+
+
+         // preprocess matching files before serving them to the browser
+         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+         preprocessors: {},
+
+
+         // test results reporter to use
+         // possible values: 'dots', 'progress'
+         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+         reporters: ['progress'],
+
+
+         // web server port
+         port: 9876,
+
+
+         // enable / disable colors in the output (reporters and logs)
+         colors: true,
+
+
+         // level of logging
+         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+         logLevel: config.LOG_INFO,
+
+
+         // enable / disable watching file and executing tests whenever any file changes
+         autoWatch: true,
+
+
+         // start these browsers
+         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+         browsers: ['ChromeHeadless'],
+
+
+         // Continuous Integration mode
+         // if true, Karma captures browsers, runs the tests and exits
+         singleRun: false,
+
+         // Concurrency level
+         // how many browser should be started simultaneous
+         concurrency: Infinity
+     })
+ }
+
+```
+3. 新建`test/button.test.js`用来存放`button`的测试用例
+```
+const expect = chai.expect;
+ import Vue from 'vue'
+ import Button from '../src/button'
+
+ Vue.config.productionTip = false
+ Vue.config.devtools = false
+
+ describe('Button', () => {
+     it('存在.', () => {
+         expect(Button).to.be.ok
+     })
+     it('可以设置icon.', () => {
+         const Constructor = Vue.extend(Button)
+         const vm = new Constructor({
+         propsData: {
+             icon: 'settings'
+         }
+         }).$mount()
+         const useElement = vm.$el.querySelector('use')
+         expect(useElement.getAttribute('xlink:href')).to.equal('#i-settings')
+         vm.$destroy()
+     })
+     it('可以设置loading.', () => {
+         const Constructor = Vue.extend(Button)
+         const vm = new Constructor({
+         propsData: {
+             icon: 'settings',
+             loading: true
+         }
+         }).$mount()
+         const useElements = vm.$el.querySelectorAll('use')
+         expect(useElements.length).to.equal(1)
+         expect(useElements[0].getAttribute('xlink:href')).to.equal('#i-loading')
+         vm.$destroy()
+     })
+     it('icon 默认的 order 是 1', () => {
+         const div = document.createElement('div')
+         document.body.appendChild(div)
+         const Constructor = Vue.extend(Button)
+         const vm = new Constructor({
+         propsData: {
+             icon: 'settings',
+         }
+         }).$mount(div)
+         const icon = vm.$el.querySelector('svg')
+         expect(getComputedStyle(icon).order).to.eq('1')
+         vm.$el.remove()
+         vm.$destroy()
+     })
+     it('设置 iconPosition 可以改变 order', () => {
+         const div = document.createElement('div')
+         document.body.appendChild(div)
+         const Constructor = Vue.extend(Button)
+         const vm = new Constructor({
+         propsData: {
+             icon: 'settings',
+             iconPosition: 'right'
+         }
+         }).$mount(div)
+         const icon = vm.$el.querySelector('svg')
+         expect(getComputedStyle(icon).order).to.eq('2')
+         vm.$el.remove()
+         vm.$destroy()
+     })
+     it('点击 button 触发 click 事件', () => {
+         const Constructor = Vue.extend(Button)
+         const vm = new Constructor({
+         propsData: {
+             icon: 'settings',
+         }
+         }).$mount()
+
+         const callback = sinon.fake();
+         vm.$on('click', callback)
+         vm.$el.click()
+         expect(callback).to.have.been.called
+
+     })
+ })
+```
+
+4. 创建测试脚本
+在 package.json 里面找到 scripts 并改写 scripts
+```
+ "scripts": {
+     "dev-test": "parcel watch test/* --no-cache & karma start",
+     "test": "parcel build test/* --no-cache --no-minify && karma start --single-run"
+ },
+```
+`parcel build test/*`:表示`parcel`会运行`build`下面的`test`目录下的所有一级文件。
+`--no-cache`:表示不要缓存
+`--no-minify`:不要进行压缩，这里压缩容易出现问题。
+`parcel build test/* --no-cache --no-minify`：实现的功能就是把test目录下的测试文件
+打包到dist下面。比如`test/button.test.js`就会被打包成`dist/button.test/js`。之所以
+需要进行打包是因为我们在`test/button.test.js`文件中使用了`import`等浏览器无法识别的语法。
+比如`import Vue`打包后就会变成把Vue的源代码拷贝进来，然后将`Vue`当成一个变量使用。
+
+
+
+
+
+5. 运行测试脚本
+`npm run test`: 一次性运行。
+在运行的过程中，会帮助我们打包js,打开浏览器，输入网址，运行测试用例，关闭浏览器，将浏览器的错误信息展示出来。

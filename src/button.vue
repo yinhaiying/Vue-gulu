@@ -10,12 +10,11 @@
 
 
 <script>
-// Vue提供了语法糖，可以直接导出一个对象即可。
-// Vue.component('g-button', {
-//   template:`<button class = "g-button">按钮</button>`
-// })
+import Icon from './icon.vue'
 export default  {
-  // props:['icon','iconPosition']
+  components:{
+   'g-icon':Icon
+  },
   props:{
     icon:{},
     loading:{

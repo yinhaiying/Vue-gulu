@@ -10,3 +10,11 @@ box-sizing:border-box;
 ### 项目运行
 
 parcel index.html --no-cache
+
+### 常见错误处理
+
+碰到一些人为不可能的错误，就记住去删除缓存，删除dist文件
+```
+rm -rf .cache dist
+
+```
