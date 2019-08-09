@@ -546,7 +546,8 @@ const expect = chai.expect;
 需要进行打包是因为我们在`test/button.test.js`文件中使用了`import`等浏览器无法识别的语法。
 比如`import Vue`打包后就会变成把Vue的源代码拷贝进来，然后将`Vue`当成一个变量使用。
 
-
+`karma start`:启动`karma`。通过`karma.conf.js`配置文件
+`--single-run`:只运行一次。
 
 
 
