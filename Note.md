@@ -355,22 +355,22 @@ chai.use(spies);
 }
 ```
 
-## 自动化测试
+### 自动化测试
 
-### 需求分析
+#### 需求分析
 
 到目前为止，我们已经实现了通过`chai`来对代码进行单元测试。但是在测试过程中，我们每写
 一个测试用例，就需要手动刷新浏览器，而且还需要手动打开浏览器。当我们有非常多的测试用例的
 时候，这样操作起来就比较麻烦，我们能不能实现一种能够自动帮助我们打开浏览器，自动刷新，
 自动进行测试的功能。这就是**自动化测试**。
 
-### 使用 Karma + Mocha做单元测试
+#### 使用 Karma + Mocha做单元测试
 - Karma（[ˈkɑrmə] 卡玛）是一个测试运行器，它可以呼起浏览器，加载测试脚本，然后运行测试用例
   通俗地认为Karma是一个可以帮你打开浏览器的工具。
 - Mocha（[ˈmoʊkə] 摩卡）是一个单元测试框架/库，它可以用来写测试用例
 - Sinon（西农）是一个 spy / stub / mock 库，用以辅助测试（使用后才能理解）
 
-### 步骤
+#### 步骤
 1. 安装各种工具
 ```
 npm i -D karma karma-chrome-launcher karma-mocha karma-sinon-chai mocha sinon sinon-chai karma-chai karma-chai-spies
@@ -668,3 +668,34 @@ before_script:
 3. My Repositories下添加你要持续集成的项目。将其激活。
 接下来`travis ci`会自动运行你的的代码，每次你在`github`提交了一次，
 那边就会测试一次，如果出现测试失败就会发送邮件。
+
+
+#### 发布npm包
+
+#####  确保你的代码测试全都通过了
+`npm run test`全部是绿色表示全都通过了。
+
+##### 上传代码到`npmjs.org`
+1. 更新package.json中的版本号
+i.在 package.json 里将版本号改为 0.0.1，等我们全部完成了发布正式版本了再改成 1.0.0。
+ii. 创建 index.js，在 index.js 里将你想要导出的内容全部导出。确保script中的`main`是`index.js`。
+```
+import Button from './src/button.vue'
+import ButtonGroup from './src/button-group.vue'
+import Icon from './src/icon.vue'
+
+export {
+    ButtonGroup,
+    Button,
+    Icon
+}
+```
+
+2. 在项目根目录运行`npm adduser`
+```
+npm adduser
+```
+3. 运行`npm publish`进行发布
+```
+npm publish
+```
