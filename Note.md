@@ -549,8 +549,85 @@ const expect = chai.expect;
 `karma start`:启动`karma`。通过`karma.conf.js`配置文件
 `--single-run`:只运行一次。
 
-
-
 5. 运行测试脚本
 `npm run test`: 一次性运行。
 在运行的过程中，会帮助我们打包js,打开浏览器，输入网址，运行测试用例，关闭浏览器，将浏览器的错误信息展示出来。
+
+#### 使用Mocha和Chai做单元测试
+单元测试有两个必不可少的东西：作用域隔离和断言。
+- 作用域隔离
+我们在写单元测试时，通常一个页面有非常多的测试，这些测试代码很容易出现相互影响。
+因此通常需要对每一个测试用例进行作用域隔离。之前我们都是直接使用`{}`实现一个作用域。
+在接下来我们将使用it函数来实现作用域隔离。
+- 断言(expect)
+单元测试就是根据`expect`来判断测试用例是否通过的。
+`expect`将会写在it函数的回调函数中。
+```
+     it('存在.', () => {
+         expect(Button).to.be.ok
+     })
+```
+上面就是实现一个断言：它表示我定义了一个名字为`存在`的断言(之前是通过注释来解释断言内容)，断言的内容写在箭头函数中。
+`button.ts.js`中断言的编写
+```
+describe('Button',() => {
+  it('存在',() => {
+    expect(Button).to.be.ok
+  })
+  it('可以设置icon.', () => {
+    const Constructor = Vue.extend(Button)
+    const vm = new Constructor({
+    propsData: {
+        icon: 'settings'
+    }
+    }).$mount()
+    const useElement = vm.$el.querySelector('use')
+    expect(useElement.getAttribute('xlink:href')).to.equal('#i-settings')
+    vm.$destroy()
+  })
+  it('可以设置loading.', () => {
+    const Constructor = Vue.extend(Button)
+    const vm = new Constructor({
+    propsData: {
+        icon: 'settings',
+        loading: true
+    }
+    }).$mount()
+    const useElements = vm.$el.querySelectorAll('use')
+    expect(useElements.length).to.equal(1)
+    expect(useElements[0].getAttribute('xlink:href')).to.equal('#i-loading')
+    vm.$destroy()
+})
+})
+```
+这段代码用伪代码来解释就是：
+描述`Button`它可以是存在的，它可以设置`icon`的,它可以设置`loading`等。这是一种
+行为驱动测试(BDD),也就是描述某个事物的行为特征。其中箭头函数里面的`expect`就是来实现
+你的描述。
+
+这里特别注意点击事件单元测试的实现：
+```
+     it('点击 button 触发 click 事件', () => {
+         const Constructor = Vue.extend(Button)
+         const vm = new Constructor({
+         propsData: {
+             icon: 'settings',
+         }
+         }).$mount()
+
+         const callback = sinon.fake(); // 取代简单的回调
+         vm.$on('click', callback)
+         vm.$el.click()
+         expect(callback).to.have.been.called
+     })
+```
+
+错误写法：直接去监听一个回调函数有没有被调用。
+```
+    const callback = function(){}
+    vm.$on('click', callback)
+    vm.$el.click()
+    expect(callback).to.have.been.called
+```
+事实上，我们是没有办法实现判断一个函数有没有被调用。因此，我们需要对这个函数
+做一些处理，能够让我们判断它是否被调用。`sinon.fake()`就能够实现这个功能。
