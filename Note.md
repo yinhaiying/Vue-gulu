@@ -761,3 +761,9 @@ npm link xxx
 ```
 npx parcel build index.js --no-minify --no-cache
 ```
+
+#### 编写README.md
+
+参考`Vue`等文档编写`README.md`文件。
+
+注意：这里需要注意的是使用时自动为用户导入svg，而不是让用户去手动引入。

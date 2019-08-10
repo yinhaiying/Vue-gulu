@@ -6,11 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Vue-gulu</title>
-  <style>
-    * {
+  <style>* {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
     }
 
     #app {
@@ -30,40 +30,39 @@
       --color: #333;
       --border-color: #999;
       --border-color-hover: #666;
-    }
-  </style>
+    }</style>
   <style>
 
   </style>
-</head>
+<link rel="stylesheet" href="/app.a6a4d504.css"></head>
 
 <body>
   <div id="app">
-    <g-button :loading = "true">
+    <g-button :loading="true">
         按钮
     </g-button>
-    <g-button icon = "settings" icon-position = "left" :loading = "loading1" @click = "loading1 = !loading1">
+    <g-button icon="settings" icon-position="left" :loading="loading1" @click="loading1 = !loading1">
         按钮
     </g-button>
-    <g-button icon = "settings" icon-position = "right" :loading = "true">
+    <g-button icon="settings" icon-position="right" :loading="true">
         按钮
     </g-button>
 
     <g-button-group>
-      <g-button icon = "left" >
+      <g-button icon="left">
           上一页
       </g-button>
 
-      <g-button   >
+      <g-button>
           更多
       </g-button>
-      <g-button icon = "right" icon-position = "right" >
+      <g-button icon="right" icon-position="right">
           下一页
       </g-button>
     </g-button-group>
   </div>
 
 </body>
-<script src="./src/app.js"></script>
+<script src="/app.a6a4d504.js"></script>
 
 </html>
