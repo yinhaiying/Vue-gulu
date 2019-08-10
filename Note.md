@@ -743,3 +743,21 @@ npm publish
       --border-color-hover: #666;
     }
   ```
+
+#### 使用 `npm link` 或者 `yarn link` 来加速调试
+我们在把包发布到`npm`上时，如果对本地的包进行了修改，我们需要改变一个版本，重新发布。
+然后测试时需要更新这个包进行测试。这样的话，每一次的调试都特别麻烦。我们可以使用`npm link`
+来加速`npm`包的调试。
+
+步骤1：在项目中运行`npm link`
+```
+npm link
+```
+步骤2：在项目之外使用到这个包的地方运行`npm link xxx`
+```
+npm link xxx
+```
+步骤3： 当项目中进行了修改时，重新打包后，项目外就能够获得最新的代码了。
+```
+npx parcel build index.js --no-minify --no-cache
+```
