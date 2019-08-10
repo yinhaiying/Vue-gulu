@@ -714,3 +714,4 @@ npm publish
   ```
   main:"dist/index.js"
   ```
+  注意：这里如果在你的`.gitignore`中忽略了`dist`文件夹。那么会导致别人引用时无法使用。
