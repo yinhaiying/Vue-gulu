@@ -705,7 +705,11 @@ npm publish
   使用 webpack
   使用 parcel
 2. 分别使用这些方式来使用自己的包（我们只以 vue-cli 为例）。
-  i. 使用过程中我们发现报错说 import 语法有问题，那时因为 node 目前确实不支持 import，我们需要用 babel 转译 import。你可以要求使用者自己用 babel 来转译。你也可以转义好了再给他用。通常来说，我们给别人用的东西最好是能够自己全都设计好，方便别人的使用。
+
+3. 使用vue-cli使用UI组件库过程中暴露的一些问题。
+  - 使用过程中我们发现报错说 import 语法有问题。
+
+  因为 node 目前确实不支持 import，我们需要用 babel 转译 import。你可以要求使用者自己用 babel 来转译。你也可以转义好了再给他用。通常来说，我们给别人用的东西最好是能够自己全都设计好，方便别人的使用。
   ii. 使用`parcel`进行打包，然后将入口文件改成`dist/index.js`
   ```
   npx parcel build index.js --no-minify --no-cache //本来不应该加 --no-minify 的，奈何不加会有 bug，HTML 压缩把 slot 标签全删了）
@@ -715,3 +719,27 @@ npm publish
   main:"dist/index.js"
   ```
   注意：这里如果在你的`.gitignore`中忽略了`dist`文件夹。那么会导致别人引用时无法使用。
+
+  - 使用过程中会发现没有CSS样式
+
+  我们在进行打包时，打包成了`index.js`和`index.css`两个有用的文件。
+  其中`index.js`通过`main.js`自动引入了，但是我们并没有引入`index.css`，而且通常不会将css文件和
+  js文件进行合并实现自动引入，这样会导致文件非常大。因此，我们需要手动引入`css`样式。
+  ```
+    import 'vue-gulu-test-v1/dist/index.css'
+  ```
+  - 手动引入`CSS`样式后，发现还是没有样式。
+
+  这是因为，我么你再定义组件时，为了方便用户自定义样式，使用了Css变量，因此用户需要手动输入这些变量。
+  ```
+    :root{
+      --button-height: 32px;
+      --font-size: 14px;
+      --button-bg: white;
+      --button-active-bg: #eee;
+      --border-radius: 4px;
+      --color: #333;
+      --border-color: #999;
+      --border-color-hover: #666;
+    }
+  ```
