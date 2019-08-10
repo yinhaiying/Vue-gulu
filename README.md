@@ -8,8 +8,10 @@ box-sizing:border-box;
 ```
 
 ### 项目运行
-
+```
 parcel index.html --no-cache
+```
+
 
 ### 常见错误处理
 
