@@ -699,3 +699,18 @@ npm adduser
 ```
 npm publish
 ```
+#### 使用自己的包
+1. 预测其他使用你的包的人会怎么使用
+  使用 vue-cli
+  使用 webpack
+  使用 parcel
+2. 分别使用这些方式来使用自己的包（我们只以 vue-cli 为例）。
+  i. 使用过程中我们发现报错说 import 语法有问题，那时因为 node 目前确实不支持 import，我们需要用 babel 转译 import。你可以要求使用者自己用 babel 来转译。你也可以转义好了再给他用。通常来说，我们给别人用的东西最好是能够自己全都设计好，方便别人的使用。
+  ii. 使用`parcel`进行打包，然后将入口文件改成`dist/index.js`
+  ```
+  npx parcel build index.js --no-minify --no-cache //本来不应该加 --no-minify 的，奈何不加会有 bug，HTML 压缩把 slot 标签全删了）
+  ```
+  将 `package.json` 的 `main` 改为 `dist/index.js`
+  ```
+  main:"dist/index.js"
+  ```

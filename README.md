@@ -12,6 +12,11 @@ box-sizing:border-box;
 parcel index.html --no-cache
 ```
 
+### 发布版本
+```
+npx parcel build index.js --no-minify --no-cache
+npm publish
+```
 
 ### 常见错误处理
 
