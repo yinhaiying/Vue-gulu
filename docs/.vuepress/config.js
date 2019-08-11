@@ -1,4 +1,6 @@
 module.exports = {
+    base:'/Vue-gulu/',
+    dest:'public';
     title: 'Vue-UI Gulu',
     description: '这是一个Vue造轮子项目',
     themeConfig: {
