@@ -33,14 +33,25 @@
     }
   </style>
   <style>
-
+  .box{
+    margin:20px;
+  }
   </style>
 </head>
 
 <body>
   <div id="app">
     <div>
-      <g-input value = "张三"></g-input>
+      <div class = "box">
+          <g-input value = "张三" disabled></g-input>
+          <g-input value = "李四" readonly></g-input>
+          <g-input value = "王五"></g-input>
+      </div>
+      <div class="box">
+          <g-input value = "刘" error = "姓名不能少于两个字"></g-input>
+      </div>
+
+      
     </div>
 
     <div style = "margin-top:500px">
