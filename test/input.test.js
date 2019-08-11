@@ -62,53 +62,57 @@ const expect = chai.expect;
         afterEach(() => {
             vm.$destroy();
         });
-        it('支持change事件',() => {
+        it('支持change/input/focus/blur事件',() => {
           vm = new Constructor({}).$mount();
           const callback = sinon.fake();
-          // 监听事件
-          vm.$on('change', callback);
-          // 触发事件
-          let event = new Event('change');
-          let inputElement = vm.$el.querySelector('input');
-          inputElement.dispatchEvent(event);
-          // 断言
-          expect(callback).to.have.been.calledWith(event);
+
+          ['change','input','focus','blur'].forEach((eventName) => {
+            // 监听事件
+            vm.$on(eventName, callback);
+            // 触发事件
+            let event = new Event(eventName);
+            let inputElement = vm.$el.querySelector('input');
+            inputElement.dispatchEvent(event);
+            // 断言
+            expect(callback).to.have.been.calledWith(event);
+          })
+
         })
-        it('支持input事件',() => {
-          vm = new Constructor({}).$mount();
-          const callback = sinon.fake();
-          // 监听事件
-          vm.$on('input', callback);
-          // 触发事件
-          let event = new Event('input');
-          let inputElement = vm.$el.querySelector('input');
-          inputElement.dispatchEvent(event);
-          // 断言
-          expect(callback).to.have.been.calledWith(event);
-        })
-        it('支持focus事件',() => {
-          vm = new Constructor({}).$mount();
-          const callback = sinon.fake();
-          // 监听事件
-          vm.$on('focus', callback);
-          // 触发事件
-          let event = new Event('focus');
-          let inputElement = vm.$el.querySelector('input');
-          inputElement.dispatchEvent(event);
-          // 断言
-          expect(callback).to.have.been.calledWith(event);
-        })
-        it('支持blur事件',() => {
-          vm = new Constructor({}).$mount();
-          const callback = sinon.fake();
-          // 监听事件
-          vm.$on('blur', callback);
-          // 触发事件
-          let event = new Event('blur');
-          let inputElement = vm.$el.querySelector('input');
-          inputElement.dispatchEvent(event);
-          // 断言
-          expect(callback).to.have.been.calledWith(event);
-        })
+        // it('支持input事件',() => {
+        //   vm = new Constructor({}).$mount();
+        //   const callback = sinon.fake();
+        //   // 监听事件
+        //   vm.$on('input', callback);
+        //   // 触发事件
+        //   let event = new Event('input');
+        //   let inputElement = vm.$el.querySelector('input');
+        //   inputElement.dispatchEvent(event);
+        //   // 断言
+        //   expect(callback).to.have.been.calledWith(event);
+        // })
+        // it('支持focus事件',() => {
+        //   vm = new Constructor({}).$mount();
+        //   const callback = sinon.fake();
+        //   // 监听事件
+        //   vm.$on('focus', callback);
+        //   // 触发事件
+        //   let event = new Event('focus');
+        //   let inputElement = vm.$el.querySelector('input');
+        //   inputElement.dispatchEvent(event);
+        //   // 断言
+        //   expect(callback).to.have.been.calledWith(event);
+        // })
+        // it('支持blur事件',() => {
+        //   vm = new Constructor({}).$mount();
+        //   const callback = sinon.fake();
+        //   // 监听事件
+        //   vm.$on('blur', callback);
+        //   // 触发事件
+        //   let event = new Event('blur');
+        //   let inputElement = vm.$el.querySelector('input');
+        //   inputElement.dispatchEvent(event);
+        //   // 断言
+        //   expect(callback).to.have.been.calledWith(event);
+        // })
      })
  })
