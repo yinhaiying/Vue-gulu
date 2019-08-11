@@ -202,14 +202,14 @@ var _default = {
   props: ['name']
 };
 exports.default = _default;
-        var $c29091 = exports.default || module.exports;
+        var $2f27c1 = exports.default || module.exports;
       
-      if (typeof $c29091 === 'function') {
-        $c29091 = $c29091.options;
+      if (typeof $2f27c1 === 'function') {
+        $2f27c1 = $2f27c1.options;
       }
     
         /* template */
-        Object.assign($c29091, (function () {
+        Object.assign($2f27c1, (function () {
           var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.name)?_c('svg',{staticClass:"g-icon"},[_c('use',{attrs:{"xlink:href":("#i-" + _vm.name)}})]):_vm._e()}
 var staticRenderFns = []
 
@@ -217,7 +217,7 @@ var staticRenderFns = []
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-c29091",
+            _scopeId: "data-v-2f27c1",
             functional: undefined
           };
         })());
@@ -280,14 +280,14 @@ var _default = {
   }
 };
 exports.default = _default;
-        var $e7f41b = exports.default || module.exports;
+        var $b208f8 = exports.default || module.exports;
       
-      if (typeof $e7f41b === 'function') {
-        $e7f41b = $e7f41b.options;
+      if (typeof $b208f8 === 'function') {
+        $b208f8 = $b208f8.options;
       }
     
         /* template */
-        Object.assign($e7f41b, (function () {
+        Object.assign($b208f8, (function () {
           var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"wrapper",class:{'error':_vm.error}},[_c('input',{attrs:{"type":"text","disabled":_vm.disabled,"readonly":_vm.readonly},domProps:{"value":_vm.value},on:{"change":function($event){return _vm.$emit('change',$event)},"input":function($event){return _vm.$emit('input',$event)},"focus":function($event){return _vm.$emit('focus',$event)},"blur":function($event){return _vm.$emit('blur',$event)}}}),_vm._v(" "),(_vm.error)?[_c('Icon',{staticClass:"icon-error",attrs:{"name":"error"}}),_vm._v(" "),_c('span',{staticClass:"error-message"},[_vm._v(_vm._s(_vm.error))])]:_vm._e()],2)}
 var staticRenderFns = []
 
@@ -295,7 +295,7 @@ var staticRenderFns = []
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-e7f41b",
+            _scopeId: "data-v-b208f8",
             functional: undefined
           };
         })());
@@ -317,10 +317,14 @@ describe('Button', function () {
     expect(_input.default).to.be.ok;
   });
   describe('props', function () {
-    it('可以接收value值', function () {
-      var Constructor = _vue.default.extend(_input.default);
+    var Constructor = _vue.default.extend(_input.default);
 
-      var vm = new Constructor({
+    var vm;
+    afterEach(function () {
+      vm.$destroy();
+    });
+    it('可以接收value值', function () {
+      vm = new Constructor({
         propsData: {
           value: '123'
         }
@@ -328,36 +332,27 @@ describe('Button', function () {
       var input = vm.$el.querySelector('input');
       var value = input.value;
       expect(value).to.equal('123');
-      vm.$destroy();
     });
     it('可以接收disabled值', function () {
-      var Constructor = _vue.default.extend(_input.default);
-
-      var vm = new Constructor({
+      vm = new Constructor({
         propsData: {
           disabled: true
         }
       }).$mount();
       var input = vm.$el.querySelector('input');
       expect(input.disabled).to.equal(true);
-      vm.$destroy();
     });
     it('可以接收readonly', function () {
-      var Constructor = _vue.default.extend(_input.default);
-
-      var vm = new Constructor({
+      vm = new Constructor({
         propsData: {
           readonly: true
         }
       }).$mount();
       var input = vm.$el.querySelector('input');
       expect(input.readOnly).to.equal(true);
-      vm.$destroy();
     });
     it('可以接收error', function () {
-      var Constructor = _vue.default.extend(_input.default);
-
-      var vm = new Constructor({
+      vm = new Constructor({
         propsData: {
           error: '测试error'
         }
@@ -366,7 +361,62 @@ describe('Button', function () {
       expect(useElement.getAttribute('xlink:href')).to.equal('#i-error');
       var errorMessage = vm.$el.querySelector('.error-message');
       expect(errorMessage.innerText).to.equal('测试error');
+    });
+  });
+  describe('事件', function () {
+    var Constructor = _vue.default.extend(_input.default);
+
+    var vm;
+    afterEach(function () {
       vm.$destroy();
+    });
+    it('支持change事件', function () {
+      vm = new Constructor({}).$mount();
+      var callback = sinon.fake(); // 监听事件
+
+      vm.$on('change', callback); // 触发事件
+
+      var event = new Event('change');
+      var inputElement = vm.$el.querySelector('input');
+      inputElement.dispatchEvent(event); // 断言
+
+      expect(callback).to.have.been.calledWith(event);
+    });
+    it('支持input事件', function () {
+      vm = new Constructor({}).$mount();
+      var callback = sinon.fake(); // 监听事件
+
+      vm.$on('input', callback); // 触发事件
+
+      var event = new Event('input');
+      var inputElement = vm.$el.querySelector('input');
+      inputElement.dispatchEvent(event); // 断言
+
+      expect(callback).to.have.been.calledWith(event);
+    });
+    it('支持focus事件', function () {
+      vm = new Constructor({}).$mount();
+      var callback = sinon.fake(); // 监听事件
+
+      vm.$on('focus', callback); // 触发事件
+
+      var event = new Event('focus');
+      var inputElement = vm.$el.querySelector('input');
+      inputElement.dispatchEvent(event); // 断言
+
+      expect(callback).to.have.been.calledWith(event);
+    });
+    it('支持blur事件', function () {
+      vm = new Constructor({}).$mount();
+      var callback = sinon.fake(); // 监听事件
+
+      vm.$on('blur', callback); // 触发事件
+
+      var event = new Event('blur');
+      var inputElement = vm.$el.querySelector('input');
+      inputElement.dispatchEvent(event); // 断言
+
+      expect(callback).to.have.been.calledWith(event);
     });
   });
 });
