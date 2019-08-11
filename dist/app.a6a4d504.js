@@ -12767,7 +12767,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
 var _default = {
   name: 'g-input',
   components: {
@@ -12818,7 +12817,7 @@ exports.default = _default;
             return _vm.$emit("change", $event)
           },
           input: function($event) {
-            return _vm.$emit("input", $event)
+            return _vm.$emit("input", $event.target.value)
           },
           focus: function($event) {
             return _vm.$emit("focus", $event)
@@ -12901,11 +12900,12 @@ _vue.default.component('g-input', _input.default);
 new _vue.default({
   el: '#app',
   data: {
-    loading1: false
+    loading1: false,
+    message: 'hello world'
   },
   methods: {
-    inputChange: function inputChange(event) {
-      console.log(event.target.value);
+    inputChange: function inputChange(value) {
+      console.log(value);
     }
   }
 });
@@ -12937,7 +12937,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63557" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51377" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

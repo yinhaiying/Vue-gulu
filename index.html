@@ -49,7 +49,12 @@
       </div>
       <div class="box">
           <g-input value = "刘" error = "姓名不能少于两个字"></g-input>
-          <g-input value = "刘" @change = 'inputChange'></g-input>
+          <g-input  @change = 'inputChange'></g-input>
+      </div>
+      <div class="box">
+          <g-input  v-model = "message"></g-input>
+          <p>{{message}}</p>
+          <div @click = "message += 1">点击触发双向绑定</div>
       </div>
 
       

@@ -202,14 +202,14 @@ var _default = {
   props: ['name']
 };
 exports.default = _default;
-        var $2f27c1 = exports.default || module.exports;
+        var $c29091 = exports.default || module.exports;
       
-      if (typeof $2f27c1 === 'function') {
-        $2f27c1 = $2f27c1.options;
+      if (typeof $c29091 === 'function') {
+        $c29091 = $c29091.options;
       }
     
         /* template */
-        Object.assign($2f27c1, (function () {
+        Object.assign($c29091, (function () {
           var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.name)?_c('svg',{staticClass:"g-icon"},[_c('use',{attrs:{"xlink:href":("#i-" + _vm.name)}})]):_vm._e()}
 var staticRenderFns = []
 
@@ -217,7 +217,7 @@ var staticRenderFns = []
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-2f27c1",
+            _scopeId: "data-v-c29091",
             functional: undefined
           };
         })());
@@ -266,14 +266,14 @@ var _default = {
   }
 };
 exports.default = _default;
-        var $778e3e = exports.default || module.exports;
+        var $4a48da = exports.default || module.exports;
       
-      if (typeof $778e3e === 'function') {
-        $778e3e = $778e3e.options;
+      if (typeof $4a48da === 'function') {
+        $4a48da = $4a48da.options;
       }
     
         /* template */
-        Object.assign($778e3e, (function () {
+        Object.assign($4a48da, (function () {
           var render = function () {
 var _obj;
 var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"g-button g-test",class:( _obj = {}, _obj[("icon-" + _vm.iconPosition)] = true, _obj ),on:{"click":function($event){return _vm.$emit('click')}}},[(_vm.icon && !_vm.loading)?_c('g-icon',{staticClass:"icon",attrs:{"name":_vm.icon}}):_vm._e(),_vm._v(" "),(_vm.loading )?_c('g-icon',{staticClass:"loading icon",attrs:{"name":"loading"}}):_vm._e(),_vm._v(" "),_c('div',{staticClass:"content"},[_vm._t("default")],2)],1)}
@@ -283,7 +283,7 @@ var staticRenderFns = []
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-778e3e",
+            _scopeId: "data-v-4a48da",
             functional: undefined
           };
         })());

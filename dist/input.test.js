@@ -202,14 +202,14 @@ var _default = {
   props: ['name']
 };
 exports.default = _default;
-        var $2f27c1 = exports.default || module.exports;
+        var $c29091 = exports.default || module.exports;
       
-      if (typeof $2f27c1 === 'function') {
-        $2f27c1 = $2f27c1.options;
+      if (typeof $c29091 === 'function') {
+        $c29091 = $c29091.options;
       }
     
         /* template */
-        Object.assign($2f27c1, (function () {
+        Object.assign($c29091, (function () {
           var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.name)?_c('svg',{staticClass:"g-icon"},[_c('use',{attrs:{"xlink:href":("#i-" + _vm.name)}})]):_vm._e()}
 var staticRenderFns = []
 
@@ -217,7 +217,7 @@ var staticRenderFns = []
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-2f27c1",
+            _scopeId: "data-v-c29091",
             functional: undefined
           };
         })());
@@ -234,7 +234,6 @@ var _icon = _interopRequireDefault(require("./icon.vue"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//
 //
 //
 //
@@ -280,22 +279,22 @@ var _default = {
   }
 };
 exports.default = _default;
-        var $b208f8 = exports.default || module.exports;
+        var $e7f41b = exports.default || module.exports;
       
-      if (typeof $b208f8 === 'function') {
-        $b208f8 = $b208f8.options;
+      if (typeof $e7f41b === 'function') {
+        $e7f41b = $e7f41b.options;
       }
     
         /* template */
-        Object.assign($b208f8, (function () {
-          var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"wrapper",class:{'error':_vm.error}},[_c('input',{attrs:{"type":"text","disabled":_vm.disabled,"readonly":_vm.readonly},domProps:{"value":_vm.value},on:{"change":function($event){return _vm.$emit('change',$event)},"input":function($event){return _vm.$emit('input',$event)},"focus":function($event){return _vm.$emit('focus',$event)},"blur":function($event){return _vm.$emit('blur',$event)}}}),_vm._v(" "),(_vm.error)?[_c('Icon',{staticClass:"icon-error",attrs:{"name":"error"}}),_vm._v(" "),_c('span',{staticClass:"error-message"},[_vm._v(_vm._s(_vm.error))])]:_vm._e()],2)}
+        Object.assign($e7f41b, (function () {
+          var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"wrapper",class:{'error':_vm.error}},[_c('input',{attrs:{"type":"text","disabled":_vm.disabled,"readonly":_vm.readonly},domProps:{"value":_vm.value},on:{"change":function($event){return _vm.$emit('change',$event)},"input":function($event){return _vm.$emit('input',$event.target.value)},"focus":function($event){return _vm.$emit('focus',$event)},"blur":function($event){return _vm.$emit('blur',$event)}}}),_vm._v(" "),(_vm.error)?[_c('Icon',{staticClass:"icon-error",attrs:{"name":"error"}}),_vm._v(" "),_c('span',{staticClass:"error-message"},[_vm._v(_vm._s(_vm.error))])]:_vm._e()],2)}
 var staticRenderFns = []
 
           return {
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-b208f8",
+            _scopeId: "data-v-e7f41b",
             functional: undefined
           };
         })());
@@ -370,10 +369,10 @@ describe('Button', function () {
     afterEach(function () {
       vm.$destroy();
     });
-    it('支持change/input/focus/blur事件', function () {
+    it('支持change/focus/blur事件', function () {
       vm = new Constructor({}).$mount();
       var callback = sinon.fake();
-      ['change', 'input', 'focus', 'blur'].forEach(function (eventName) {
+      ['change', 'focus', 'blur'].forEach(function (eventName) {
         // 监听事件
         vm.$on(eventName, callback); // 触发事件
 
@@ -381,21 +380,28 @@ describe('Button', function () {
         var inputElement = vm.$el.querySelector('input');
         inputElement.dispatchEvent(event); // 断言
 
-        expect(callback).to.have.been.calledWith(1);
+        expect(callback).to.have.been.calledWith(event);
       });
-    }); // it('支持input事件',() => {
-    //   vm = new Constructor({}).$mount();
-    //   const callback = sinon.fake();
-    //   // 监听事件
-    //   vm.$on('input', callback);
-    //   // 触发事件
-    //   let event = new Event('input');
-    //   let inputElement = vm.$el.querySelector('input');
-    //   inputElement.dispatchEvent(event);
-    //   // 断言
-    //   expect(callback).to.have.been.calledWith(event);
-    // })
-    // it('支持focus事件',() => {
+    });
+    it('支持input事件', function () {
+      vm = new Constructor({}).$mount();
+      var callback = sinon.fake(); // 监听事件
+
+      vm.$on('input', callback); // 触发事件
+
+      var inputElement = vm.$el.querySelector('input');
+      var event = new Event('input'); // 添加value属性
+
+      Object.defineProperty(event, 'target', {
+        value: {
+          value: 'hello'
+        },
+        enumerable: true
+      });
+      inputElement.dispatchEvent(event); // 断言
+
+      expect(callback).to.have.been.calledWith('hello');
+    }); // it('支持focus事件',() => {
     //   vm = new Constructor({}).$mount();
     //   const callback = sinon.fake();
     //   // 监听事件
