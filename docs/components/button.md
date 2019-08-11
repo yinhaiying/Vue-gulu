@@ -4,5 +4,5 @@ sidebarDepth: 2
 ---
 
 
-
-## Button的使用
+### 使用方法
+<button-demo></button-demo>

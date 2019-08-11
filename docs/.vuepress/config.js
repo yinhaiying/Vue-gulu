@@ -5,17 +5,17 @@ module.exports = {
         sidebar: [
           {
             title: '入门',
-            children: [ 
+            children: [
               '/install/',
               '/get-started/',
             ]
           },
           {
             title: '组件',
-            children: [ 
+            children: [
               '/components/button',
             ]
           }
         ]
-      }
+      },
   }
