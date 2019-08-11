@@ -22,3 +22,6 @@ error
 success
 
 一共有`noraml`,`disabled`,`readonly`,`hover`,`focus`五种常见状态。这五种常见状态又可以和`error`和`success`结合,所以一共由于十五种状态。
+
+### Input的常见事件
+通常情况下，应当处理`input`事件,`change`事件,`focus`事件,`blur`事件

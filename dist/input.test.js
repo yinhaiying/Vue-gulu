@@ -222,7 +222,7 @@ var staticRenderFns = []
           };
         })());
       
-},{"./svg.js":"kLUt"}],"qcet":[function(require,module,exports) {
+},{"./svg.js":"kLUt"}],"eGlL":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -245,55 +245,67 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
-  name: 'g-button',
+  name: 'g-input',
   components: {
-    'g-icon': _icon.default
+    Icon: _icon.default
   },
   props: {
-    icon: {},
-    loading: {
+    value: {
+      type: String
+    },
+    disabled: {
       type: Boolean,
       default: false
     },
-    iconPosition: {
-      type: String,
-      default: 'left',
-      validator: function validator(value) {
-        return value === 'left' || value === 'right';
-      }
+    readonly: {
+      type: Boolean,
+      default: false
+    },
+    error: {
+      type: String
     }
+  },
+  data: function data() {
+    return {};
   }
 };
 exports.default = _default;
-        var $4a48da = exports.default || module.exports;
+        var $e7f41b = exports.default || module.exports;
       
-      if (typeof $4a48da === 'function') {
-        $4a48da = $4a48da.options;
+      if (typeof $e7f41b === 'function') {
+        $e7f41b = $e7f41b.options;
       }
     
         /* template */
-        Object.assign($4a48da, (function () {
-          var render = function () {
-var _obj;
-var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"g-button g-test",class:( _obj = {}, _obj[("icon-" + _vm.iconPosition)] = true, _obj ),on:{"click":function($event){return _vm.$emit('click')}}},[(_vm.icon && !_vm.loading)?_c('g-icon',{staticClass:"icon",attrs:{"name":_vm.icon}}):_vm._e(),_vm._v(" "),(_vm.loading )?_c('g-icon',{staticClass:"loading icon",attrs:{"name":"loading"}}):_vm._e(),_vm._v(" "),_c('div',{staticClass:"content"},[_vm._t("default")],2)],1)}
+        Object.assign($e7f41b, (function () {
+          var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"wrapper",class:{'error':_vm.error}},[_c('input',{attrs:{"type":"text","disabled":_vm.disabled,"readonly":_vm.readonly},domProps:{"value":_vm.value},on:{"change":function($event){return _vm.$emit('change',$event)},"input":function($event){return _vm.$emit('input',$event)},"focus":function($event){return _vm.$emit('focus',$event)},"blur":function($event){return _vm.$emit('blur',$event)}}}),_vm._v(" "),(_vm.error)?[_c('Icon',{staticClass:"icon-error",attrs:{"name":"error"}}),_vm._v(" "),_c('span',{staticClass:"error-message"},[_vm._v(_vm._s(_vm.error))])]:_vm._e()],2)}
 var staticRenderFns = []
 
           return {
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-4a48da",
+            _scopeId: "data-v-e7f41b",
             functional: undefined
           };
         })());
       
-},{"./icon.vue":"Bqhn"}],"OGAT":[function(require,module,exports) {
+},{"./icon.vue":"Bqhn"}],"spTe":[function(require,module,exports) {
 "use strict";
 
 var _vue = _interopRequireDefault(require("vue"));
 
-var _button = _interopRequireDefault(require("../src/button"));
+var _input = _interopRequireDefault(require("../src/input"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -301,82 +313,62 @@ var expect = chai.expect;
 _vue.default.config.productionTip = false;
 _vue.default.config.devtools = false;
 describe('Button', function () {
-  // BDD 行为驱动测试
   it('存在.', function () {
-    expect(_button.default).to.be.ok; // 不是null,undefined
+    expect(_input.default).to.be.ok;
   });
-  it('可以设置icon.', function () {
-    var Constructor = _vue.default.extend(_button.default);
+  describe('props', function () {
+    it('可以接收value值', function () {
+      var Constructor = _vue.default.extend(_input.default);
 
-    var vm = new Constructor({
-      propsData: {
-        icon: 'settings'
-      }
-    }).$mount();
-    var useElement = vm.$el.querySelector('use');
-    expect(useElement.getAttribute('xlink:href')).to.equal('#i-settings');
-    vm.$destroy();
-  });
-  it('可以设置loading.', function () {
-    var Constructor = _vue.default.extend(_button.default);
+      var vm = new Constructor({
+        propsData: {
+          value: '123'
+        }
+      }).$mount();
+      var input = vm.$el.querySelector('input');
+      var value = input.value;
+      expect(value).to.equal('123');
+      vm.$destroy();
+    });
+    it('可以接收disabled值', function () {
+      var Constructor = _vue.default.extend(_input.default);
 
-    var vm = new Constructor({
-      propsData: {
-        icon: 'settings',
-        loading: true
-      }
-    }).$mount();
-    var useElements = vm.$el.querySelectorAll('use');
-    expect(useElements.length).to.equal(1);
-    expect(useElements[0].getAttribute('xlink:href')).to.equal('#i-loading');
-    vm.$destroy();
-  });
-  it('icon 默认的 order 是 1', function () {
-    var div = document.createElement('div');
-    document.body.appendChild(div);
+      var vm = new Constructor({
+        propsData: {
+          disabled: true
+        }
+      }).$mount();
+      var input = vm.$el.querySelector('input');
+      expect(input.disabled).to.equal(true);
+      vm.$destroy();
+    });
+    it('可以接收readonly', function () {
+      var Constructor = _vue.default.extend(_input.default);
 
-    var Constructor = _vue.default.extend(_button.default);
+      var vm = new Constructor({
+        propsData: {
+          readonly: true
+        }
+      }).$mount();
+      var input = vm.$el.querySelector('input');
+      expect(input.readOnly).to.equal(true);
+      vm.$destroy();
+    });
+    it('可以接收error', function () {
+      var Constructor = _vue.default.extend(_input.default);
 
-    var vm = new Constructor({
-      propsData: {
-        icon: 'settings'
-      }
-    }).$mount(div);
-    var icon = vm.$el.querySelector('svg');
-    expect(getComputedStyle(icon).order).to.eq('1');
-    vm.$el.remove();
-    vm.$destroy();
-  });
-  it('设置 iconPosition 可以改变 order', function () {
-    var div = document.createElement('div');
-    document.body.appendChild(div);
-
-    var Constructor = _vue.default.extend(_button.default);
-
-    var vm = new Constructor({
-      propsData: {
-        icon: 'settings',
-        iconPosition: 'right'
-      }
-    }).$mount(div);
-    var icon = vm.$el.querySelector('svg');
-    expect(getComputedStyle(icon).order).to.eq('2');
-    vm.$el.remove();
-    vm.$destroy();
-  });
-  it('点击 button 触发 click 事件', function () {
-    var Constructor = _vue.default.extend(_button.default);
-
-    var vm = new Constructor({
-      propsData: {
-        icon: 'settings'
-      }
-    }).$mount();
-    var callback = sinon.fake();
-    vm.$on('click', callback);
-    vm.$el.click();
-    expect(callback).to.have.been.called;
+      var vm = new Constructor({
+        propsData: {
+          error: '测试error'
+        }
+      }).$mount();
+      var useElement = vm.$el.querySelector('use');
+      expect(useElement.getAttribute('xlink:href')).to.equal('#i-error');
+      var errorMessage = vm.$el.querySelector('.error-message');
+      expect(errorMessage.innerText).to.equal('测试error');
+      vm.$destroy();
+    });
   });
 });
-},{"vue":"ApMz","../src/button":"qcet"}]},{},["OGAT"], null)
-//# sourceMappingURL=/button.test.js.map
+},{"vue":"ApMz","../src/input":"eGlL"}]},{},["spTe"], null)
+//# sourceMappingURL=/input.test.js.map

@@ -12761,6 +12761,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: 'g-input',
   components: {
@@ -12804,22 +12811,20 @@ exports.default = _default;
     { staticClass: "wrapper", class: { error: _vm.error } },
     [
       _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.value,
-            expression: "value"
-          }
-        ],
         attrs: { type: "text", disabled: _vm.disabled, readonly: _vm.readonly },
         domProps: { value: _vm.value },
         on: {
+          change: function($event) {
+            return _vm.$emit("change", $event)
+          },
           input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.value = $event.target.value
+            return _vm.$emit("input", $event)
+          },
+          focus: function($event) {
+            return _vm.$emit("focus", $event)
+          },
+          blur: function($event) {
+            return _vm.$emit("blur", $event)
           }
         }
       }),
@@ -12897,6 +12902,11 @@ new _vue.default({
   el: '#app',
   data: {
     loading1: false
+  },
+  methods: {
+    inputChange: function inputChange(event) {
+      console.log(event.target.value);
+    }
   }
 });
 },{"vue":"node_modules/vue/dist/vue.common.js","./button.vue":"src/button.vue","./button-group.vue":"src/button-group.vue","./icon.vue":"src/icon.vue","./input":"src/input.vue"}],"C:/Users/yinhaiying/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
