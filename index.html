@@ -20,17 +20,6 @@
     body {
       font-size: var(--font-size);
     }
-
-    :root{
-      --button-height: 32px;
-      --font-size: 14px;
-      --button-bg: white;
-      --button-active-bg: #eee;
-      --border-radius: 4px;
-      --color: #333;
-      --border-color: #999;
-      --border-color-hover: #666;
-    }
   </style>
   <style>
   .box{
@@ -38,57 +27,48 @@
   }
   </style>
   <style>
-      .row{
-        display:flex;
-      }
-      .col{
-        height:100px;
-        background:grey;
-        width:50%;
-        border:1px solid red;
-      }
-      .col[data-span = "1"]{
+      /* .col[span = "1"]{
         width:4.166666%;
       }
-      .col[data-span = "2"]{
+      .col[span = "2"]{
         width:8.333333%;
       }
-      .col[data-span = "3"]{
+      .col[span = "3"]{
         width:12.500000%;
       }
-      .col[data-span = "4"]{
+      .col[span = "4"]{
         width:16.666667%;
       }
-      .col[data-span = "5"]{
+      .col[span = "5"]{
         width:20.833333%;
       }
-      .col[data-span = "22"]{
+      .col[span = "22"]{
         width:91.666667%;
-      }
+      } */
   </style>
 </head>
 
 <body>
   <div id="app">
-    <div class="row">
-      <div class="col"></div>
-      <div class="col"></div>
-    </div>
-    <div class="row">
-      <div class="col"></div>
-      <div class="col"></div>
-      <div class="col"></div>
-    </div>
-    <div class="row">
-      <div class="col"></div>
-      <div class="col"></div>
-      <div class="col"></div>
-      <div class="col"></div>
-    </div>
-    <div class="row">
-      <div class="col" data-span = "2"></div>
-      <div class="col" data-span = "22"></div>
-    </div>
+    <g-row>
+      <g-col span = "12">1</g-col>
+      <g-col span = "12">2</g-col>
+    </g-row>
+    <g-row>
+      <g-col span = "8">1</g-col>
+      <g-col span = "8">2</g-col>
+      <g-col span = "8">3</g-col>
+    </g-row>
+    <g-row>
+      <g-col span = "6">1</g-col>
+      <g-col span = "6">2</g-col>
+      <g-col span = "6">3</g-col>
+      <g-col span = "6">4</g-col>
+    </g-row>
+    <g-row>
+      <g-col :span = "2">1</g-col>
+      <g-col :span = "22">2</g-col>
+    </g-row>
     <hr />
 
 
