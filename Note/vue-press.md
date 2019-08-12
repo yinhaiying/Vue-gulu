@@ -22,3 +22,4 @@ base:'/Vue-gulu/',
 ```
 ./deploy.sh
 ```
+4. 进入github > settings > githubpage进行打开。
