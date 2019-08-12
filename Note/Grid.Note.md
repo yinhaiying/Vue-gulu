@@ -61,3 +61,18 @@
       }
   }
 ```
+
+#### offset偏移的实现
+通过设置`margin-left`来控制偏移。偏移的长度通过`offset`来控制。
+```
+<div class = "col" :class = "[`col-${span}`,offset && `offset-${offset}`]" >
+    <slot></slot>
+</div>
+
+@for $n from 1 to 24 {
+    &.offset-#{$n}{
+      margin-left:($n / 24) * 100%;
+    }
+}
+
+```

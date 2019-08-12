@@ -1,5 +1,5 @@
 <template>
-  <div class = "col" :class = "[`col-${span}`]">
+  <div class = "col" :class = "[`col-${span}`,offset && `offset-${offset}`]" >
     <slot></slot>
   </div>
 </template>    
@@ -9,6 +9,9 @@ export default {
     name:'Gulu-Col',
     props:{
       span:{
+        type:[Number,String]
+      },
+      offset:{
         type:[Number,String]
       }
     }
@@ -23,6 +26,11 @@ export default {
   @for $index from 1 to 24 {
       &-#{$index}{
         width:($index / 24) * 100%;
+      }
+  }
+  @for $n from 1 to 24 {
+      &.offset-#{$n}{
+        margin-left:($n / 24) * 100%;
       }
   }
 }   
