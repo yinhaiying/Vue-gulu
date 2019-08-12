@@ -23,3 +23,4 @@ base:'/Vue-gulu/',
 ./deploy.sh
 ```
 4. 进入github > settings > githubpage进行打开。
+5. 代码更新后需要运行`.deploy`进行更新。
