@@ -37,10 +37,71 @@
     margin:20px;
   }
   </style>
+  <style>
+      .row{
+        display:flex;
+      }
+      .col{
+        height:100px;
+        background:grey;
+        width:50%;
+        border:1px solid red;
+      }
+      .col[data-span = "1"]{
+        width:4.166666%;
+      }
+      .col[data-span = "2"]{
+        width:8.333333%;
+      }
+      .col[data-span = "3"]{
+        width:12.500000%;
+      }
+      .col[data-span = "4"]{
+        width:16.666667%;
+      }
+      .col[data-span = "5"]{
+        width:20.833333%;
+      }
+      .col[data-span = "22"]{
+        width:91.666667%;
+      }
+  </style>
 </head>
 
 <body>
   <div id="app">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col"></div>
+    </div>
+    <div class="row">
+      <div class="col"></div>
+      <div class="col"></div>
+      <div class="col"></div>
+    </div>
+    <div class="row">
+      <div class="col"></div>
+      <div class="col"></div>
+      <div class="col"></div>
+      <div class="col"></div>
+    </div>
+    <div class="row">
+      <div class="col" data-span = "2"></div>
+      <div class="col" data-span = "22"></div>
+    </div>
+    <hr />
+
+
+
+
+
+
+
+
+
+
+
+
 
     <div style = "margin-top:800px">
       <div class = "box">
