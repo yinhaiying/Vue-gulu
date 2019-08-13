@@ -164,3 +164,19 @@ export default {
       }
     }
 ```
+
+#### 进一步优化
+1. 目前我们使用的高度是固定的，当文字特别多的时候，就容易出现问题。因此，高度不能写死，选择最小高度即可。
+```
+.toast{
+  min-height:$toast-min-height;
+}
+  
+```
+2. 父元素设置`min-height`，那么子元素的`height:100%`就不生效了。
+解决办法：通过js来控制这个高度。
+```
+    this.$nextTick(() => {
+      this.$refs.line.style.height = this.$refs.toast.getBoundingClientRect().height + 'px';
+    })
+```

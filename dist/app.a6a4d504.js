@@ -13052,9 +13052,6 @@ var _default = {
       }
     }
   },
-  created: function created() {
-    console.log(this.closeButton);
-  },
   mounted: function mounted() {
     var _this = this;
 
@@ -13062,7 +13059,12 @@ var _default = {
       setTimeout(function () {
         _this.close();
       }, this.autoCloseDelay * 1000);
-    }
+    } // 为了解决min-height带来的问题
+
+
+    this.$nextTick(function () {
+      _this.$refs.line.style.height = _this.$refs.toast.getBoundingClientRect().height + 'px';
+    });
   },
   methods: {
     close: function close() {
@@ -13094,16 +13096,18 @@ exports.default = _default;
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "toast" },
+    { ref: "toast", staticClass: "toast" },
     [
       _vm._t("default"),
       _vm._v(" "),
-      _c("div", { staticClass: "line" }),
+      _c("div", { ref: "line", staticClass: "line" }),
       _vm._v(" "),
       _vm.closeButton
-        ? _c("span", { on: { click: _vm.onClickClose } }, [
-            _vm._v(_vm._s(_vm.closeButton.text))
-          ])
+        ? _c(
+            "span",
+            { staticClass: "close", on: { click: _vm.onClickClose } },
+            [_vm._v(_vm._s(_vm.closeButton.text))]
+          )
         : _vm._e()
     ],
     2
@@ -13223,12 +13227,10 @@ new _vue.default({
       console.log(value);
     },
     showToast: function showToast() {
-      this.$toast('这是一条展示这是一条展示这是一条展示这是一条展示', {
+      this.$toast('这是一条展示这是一条展示这是这是一条展示这是一条展示这是一条展示这是一条展示这是一条展示这是一条展示这是一条展示这是这是一条展示这是一条展示这是一条展示这是一条展示一条展示这是一条展示这是一条展示这是一条展示这是一条展示这是一条展示这是一条展示这是一条展示这是一条展示一条展示这是一条展示', {
         closeButton: {
-          text: '这是一个关闭吗',
-          callback: function callback(toast) {
-            toast.test();
-          }
+          text: '关闭',
+          callback: function callback(toast) {}
         }
       });
     }
@@ -13262,7 +13264,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56945" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56864" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

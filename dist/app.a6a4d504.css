@@ -262,7 +262,7 @@
   transform: translateX(-50%);
   font-size: 14px;
   line-height: 1.8;
-  height: 40px;
+  min-height: 40px;
   display: flex;
   align-items: center;
   background: rgba(0, 0, 0, 0.75);
@@ -274,4 +274,7 @@
   margin: 8px;
   border-left: 1px solid #fff;
   height: 100%;
+}
+.toast .close[data-v-bc58cd] {
+  flex-shrink: 0;
 }
