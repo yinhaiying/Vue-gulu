@@ -12885,6 +12885,8 @@ exports.default = void 0;
 //
 //
 //
+//
+//
 var _default = {
   name: 'Gulu-toast'
 };
@@ -12901,7 +12903,7 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "toast" }, [_vm._v("toast")])
+  return _c("div", { staticClass: "toast" }, [_vm._t("default")], 2)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -12943,15 +12945,26 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _toast = _interopRequireDefault(require("./toast"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var _default = {
   install: function install(Vue, options) {
     Vue.prototype.$toast = function (message) {
-      alert(message);
+      // 生成一个toast组件，然后放到body中
+      var Constructor = Vue.extend(_toast.default);
+      var toast = new Constructor();
+      toast.$slots.default = [message];
+      toast.$mount(); //必须使用$mount()进行挂载，否则所有的生命周期的函数都不会执行
+
+      document.body.appendChild(toast.$el);
     };
   }
 };
 exports.default = _default;
-},{}],"src/app.js":[function(require,module,exports) {
+},{"./toast":"src/toast.vue"}],"src/app.js":[function(require,module,exports) {
 "use strict";
 
 var _vue = _interopRequireDefault(require("vue"));

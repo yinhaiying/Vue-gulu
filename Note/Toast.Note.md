@@ -30,7 +30,7 @@ Vue.prototype.$toast = function(message){
 export default {
   install(vue,options){
     Vue.prototype.$toast = function(){
-      console.log('我是一个toast插件')
+      alert('我是一个toast插件')
     }
   }
 }
@@ -41,3 +41,38 @@ export default {
 如果他不想在原型上挂载`$toast`，那么他可以选择不注册即可。
 2. 我们并没有直接引入`Vue`,我们的`Vue`来自于用户自己引入的`Vue`，不会存在问题。
 
+#### 初步实现
+目前的话，我们能够听过alert弹出一条信息。然而浏览器自带的alert样式非常丑，而且没办法控制
+其位置。通常来说我们可以通过自定义一个`div`来实现类似于`alert`的效果，如下：
+```
+    Vue.prototype.$toast = function(message){
+      let oDiv = document.createElement('div');
+      oDiv.innerText = message;
+      document.body.appendChild(oDiv)
+    }
+```
+但是，在Vue中去操作DOM是非常不推荐的做法。我们最好使用Vue的方法来写。
+
+##### 使用Vue.extend(component)动态创建组件
+
+之前在进行单元测试的时候，我们经常使用`Vue.extend(Button)`来动态地创建组件。
+因此，这里我们要动态地创建一个`toast`。我们可以先在`toast.vue`中加入插槽，
+插槽是为了让我们能够把内容填充进去。
+```
+  <div class = "toast">
+    <slot></slot>
+  </div>
+```
+然后通过`Vue.extend(Toast)`动态地创建一个`toast`，并将其添加到`body`中。
+```
+  install(Vue,options){
+    Vue.prototype.$toast = function(message){
+      // 生成一个toast组件，然后放到body中
+      const Constructor = Vue.extend(Toast);
+      let toast = new Constructor();
+      toast.$slots.default = [message];
+      toast.$mount(); //必须使用$mount()进行挂载，否则所有的生命周期的函数都不会执行
+      document.body.appendChild(toast.$el)
+    }
+  }
+```
