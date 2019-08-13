@@ -33,7 +33,7 @@ new Vue({
     inputChange(value){
       console.log(value)
     },
-    showToast(){
+    showToast1(){
       this.$toast(`当前数字为${Math.random() * 100}`,{
         position:'top',
         closeButton:{
@@ -42,7 +42,27 @@ new Vue({
           }
         }
       })
-    }
+    },
+    showToast2(){
+      this.$toast(`当前数字为${Math.random() * 100}`,{
+        position:'middle',
+        closeButton:{
+          text:'关闭',
+          callback:function(toast){
+          }
+        }
+      })
+    },
+    showToast3(){
+      this.$toast(`当前数字为${Math.random() * 100}`,{
+        position:'bottom',
+        closeButton:{
+          text:'关闭',
+          callback:function(toast){
+          }
+        }
+      })
+    },
   }
 })
 

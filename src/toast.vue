@@ -83,15 +83,25 @@ export default {
 $toast-min-height: 40px;
 $font-size:14px;
 $toast-bg:rgba(0,0,0,0.75);
-@keyframes fade-in{
+$animation-duration:.5s;
+@keyframes slide-up{
   0%{ opacity:0;transform:translate(-50%,100%)}
   100%{ opacity:1;transform:translate(-50%,0%)}
 }
+@keyframes slide-down{
+  0%{ opacity:0;transform:translate(-50%,-100%)}
+  100%{ opacity:1;transform:translate(-50%,0%)}
+}
+@keyframes fade-in{
+  0%{ opacity:0}
+  100%{ opacity:1}
+}
 .toast{
   position:fixed;
-  animation:fade-in 1s linear;
+
   font-size:$font-size;
   line-height:1.8;
+  border-radius:4px;
   min-height:$toast-min-height;
   display:flex;
   align-items:center;
@@ -111,14 +121,21 @@ $toast-bg:rgba(0,0,0,0.75);
   &.position-top{
     top:0;
     transform:translateX(-50%);
+    border-top-left-radius:0px;
+    border-top-right-radius:0px;
+    animation:slide-down $animation-duration linear;
   }
   &.position-bottom{
     bottom:0;
     transform:translateX(-50%);
+    border-bottom-left-radius:0px;
+    border-bottom-left-radius:0px;
+    animation:slide-up $animation-duration linear;
   }
   &.position-middle{
     top:50%;
     transform:translate(-50%);
+    animation:fade-in $animation-duration linear;
   }
 }
 </style>

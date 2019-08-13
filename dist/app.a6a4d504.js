@@ -13285,9 +13285,27 @@ new _vue.default({
     inputChange: function inputChange(value) {
       console.log(value);
     },
-    showToast: function showToast() {
+    showToast1: function showToast1() {
       this.$toast("\u5F53\u524D\u6570\u5B57\u4E3A".concat(Math.random() * 100), {
         position: 'top',
+        closeButton: {
+          text: '关闭',
+          callback: function callback(toast) {}
+        }
+      });
+    },
+    showToast2: function showToast2() {
+      this.$toast("\u5F53\u524D\u6570\u5B57\u4E3A".concat(Math.random() * 100), {
+        position: 'middle',
+        closeButton: {
+          text: '关闭',
+          callback: function callback(toast) {}
+        }
+      });
+    },
+    showToast3: function showToast3() {
+      this.$toast("\u5F53\u524D\u6570\u5B57\u4E3A".concat(Math.random() * 100), {
+        position: 'bottom',
         closeButton: {
           text: '关闭',
           callback: function callback(toast) {}

@@ -296,7 +296,7 @@
     margin-left: 95.83333%;
 }
 
-@-webkit-keyframes fade-in-data-v-dd39bb {
+@-webkit-keyframes slide-up-data-v-dd39bb {
 0% {
     opacity: 0;
     -webkit-transform: translate(-50%, 100%);
@@ -306,26 +306,65 @@
     opacity: 1;
     -webkit-transform: translate(-50%, 0%);
             transform: translate(-50%, 0%);
+}
+}
+@keyframes slide-up-data-v-dd39bb {
+0% {
+    opacity: 0;
+    -webkit-transform: translate(-50%, 100%);
+            transform: translate(-50%, 100%);
+}
+100% {
+    opacity: 1;
+    -webkit-transform: translate(-50%, 0%);
+            transform: translate(-50%, 0%);
+}
+}
+@-webkit-keyframes slide-down-data-v-dd39bb {
+0% {
+    opacity: 0;
+    -webkit-transform: translate(-50%, -100%);
+            transform: translate(-50%, -100%);
+}
+100% {
+    opacity: 1;
+    -webkit-transform: translate(-50%, 0%);
+            transform: translate(-50%, 0%);
+}
+}
+@keyframes slide-down-data-v-dd39bb {
+0% {
+    opacity: 0;
+    -webkit-transform: translate(-50%, -100%);
+            transform: translate(-50%, -100%);
+}
+100% {
+    opacity: 1;
+    -webkit-transform: translate(-50%, 0%);
+            transform: translate(-50%, 0%);
+}
+}
+@-webkit-keyframes fade-in-data-v-dd39bb {
+0% {
+    opacity: 0;
+}
+100% {
+    opacity: 1;
 }
 }
 @keyframes fade-in-data-v-dd39bb {
 0% {
     opacity: 0;
-    -webkit-transform: translate(-50%, 100%);
-            transform: translate(-50%, 100%);
 }
 100% {
     opacity: 1;
-    -webkit-transform: translate(-50%, 0%);
-            transform: translate(-50%, 0%);
 }
 }
 .toast[data-v-dd39bb] {
   position: fixed;
-  -webkit-animation: fade-in-data-v-dd39bb 1s linear;
-          animation: fade-in-data-v-dd39bb 1s linear;
   font-size: 14px;
   line-height: 1.8;
+  border-radius: 4px;
   min-height: 40px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -353,15 +392,25 @@
     top: 0;
     -webkit-transform: translateX(-50%);
             transform: translateX(-50%);
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    -webkit-animation: slide-down-data-v-dd39bb 0.5s linear;
+            animation: slide-down-data-v-dd39bb 0.5s linear;
 }
 .toast.position-bottom[data-v-dd39bb] {
     bottom: 0;
     -webkit-transform: translateX(-50%);
             transform: translateX(-50%);
+    border-bottom-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    -webkit-animation: slide-up-data-v-dd39bb 0.5s linear;
+            animation: slide-up-data-v-dd39bb 0.5s linear;
 }
 .toast.position-middle[data-v-dd39bb] {
     top: 50%;
     -webkit-transform: translate(-50%);
             transform: translate(-50%);
+    -webkit-animation: fade-in-data-v-dd39bb 0.5s linear;
+            animation: fade-in-data-v-dd39bb 0.5s linear;
 }
 
