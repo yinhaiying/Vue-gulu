@@ -12881,19 +12881,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-
-var _vue = _interopRequireDefault(require("vue"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 //
 //
 //
 //
-_vue.default.prototype.$toast = function (message) {
-  console.log(message);
-};
-
 var _default = {
   name: 'Gulu-toast'
 };
@@ -12945,7 +12936,22 @@ render._withStripped = true
       
       }
     })();
-},{"vue":"node_modules/vue/dist/vue.common.js","_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js"}],"src/app.js":[function(require,module,exports) {
+},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.common.js"}],"src/plugin.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  install: function install(Vue, options) {
+    Vue.prototype.$toast = function (message) {
+      alert(message);
+    };
+  }
+};
+exports.default = _default;
+},{}],"src/app.js":[function(require,module,exports) {
 "use strict";
 
 var _vue = _interopRequireDefault(require("vue"));
@@ -12960,6 +12966,8 @@ var _input = _interopRequireDefault(require("./input"));
 
 var _toast = _interopRequireDefault(require("./toast.vue"));
 
+var _plugin = _interopRequireDefault(require("./plugin"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue.default.component('g-button', _button.default);
@@ -12972,22 +12980,25 @@ _vue.default.component('g-input', _input.default);
 
 _vue.default.component('g-toast', _toast.default);
 
+_vue.default.use(_plugin.default);
+
 new _vue.default({
   el: '#app',
   data: {
     loading1: false,
     message: 'hello world'
   },
-  created: function created() {
-    this.$toast('这是一条展示信息');
-  },
+  created: function created() {},
   methods: {
     inputChange: function inputChange(value) {
       console.log(value);
+    },
+    showToast: function showToast() {
+      this.$toast('这是一条展示');
     }
   }
 });
-},{"vue":"node_modules/vue/dist/vue.common.js","./button.vue":"src/button.vue","./button-group.vue":"src/button-group.vue","./icon.vue":"src/icon.vue","./input":"src/input.vue","./toast.vue":"src/toast.vue"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"vue":"node_modules/vue/dist/vue.common.js","./button.vue":"src/button.vue","./button-group.vue":"src/button-group.vue","./icon.vue":"src/icon.vue","./input":"src/input.vue","./toast.vue":"src/toast.vue","./plugin":"src/plugin.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

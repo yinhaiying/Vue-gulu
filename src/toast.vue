@@ -3,10 +3,7 @@
 </template>
 
 <script>
-import Vue from 'vue'
-Vue.prototype.$toast = function(message){
-  console.log(message)
-}
+
 export default {
   name:'Gulu-toast'
 }
