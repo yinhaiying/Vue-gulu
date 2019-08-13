@@ -44,7 +44,6 @@ export default {
   },
   computed: {
     toastClasses(){
-      console.log(this.position)
       return {
         [`position-${this.position}`]:true
       }
@@ -105,15 +104,15 @@ $toast-bg:rgba(0,0,0,0.75);
     flex-shrink: 0;
   }
   &.position-top{
-    top:0; 
+    top:0;
     transform:translateX(-50%);
   }
   &.position-bottom{
-    bottom:0; 
+    bottom:0;
     transform:translateX(-50%);
   }
   &.position-middle{
-    top:50%; 
+    top:50%;
     transform:translate(-50%);
   }
 }

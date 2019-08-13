@@ -90,7 +90,7 @@ export default {
       default:3
     }
   }
-  
+
 ```
 2. 通过`setTimeout`来控制n秒后关闭。
 ```
@@ -171,7 +171,7 @@ export default {
 .toast{
   min-height:$toast-min-height;
 }
-  
+
 ```
 2. 父元素设置`min-height`，那么子元素的`height:100%`就不生效了。
 解决办法：通过js来控制这个高度。
@@ -217,15 +217,52 @@ export default {
 4. `position-top`样式的设置
 ```
   &.position-top{
-    top:0; 
+    top:0;
     transform:translateX(-50%);
   }
   &.position-bottom{
-    bottom:0; 
+    bottom:0;
     transform:translateX(-50%);
   }
   &.position-middle{
-    top:50%; 
+    top:50%;
     transform:translate(-50%);
   }
+```
+
+
+#### 实现只能出现一个toast
+目前我们已经能够实现创建一个功能较为完善的`toast`，但是当我们反复点击时，会不断地创建`toast`。
+这是不符合逻辑的,当我们多次点击时只应该出现一个`toast`。
+
+**解决思路**：每次创建一个新的`toast`的时候，我们就干掉前一个`toast`实例。
+
+1. 将之前的创建`toast`过程封装为一个函数。创建函数可以方便返回一个`toast`。
+```
+function createToast({Vue,message,propsData}){
+  // 生成一个toast组件，然后放到body中
+  const Constructor = Vue.extend(Toast);
+  let toast = new Constructor({propsData});
+  toast.$slots.default = [message];
+  toast.$mount(); //必须使用$mount()进行挂载，否则所有的生命周期的函数都不会执行
+  document.body.appendChild(toast.$el);
+  return toast
+}
+```
+2. 通过定义一个变量`currentToast`来接收当前`toast`，然后判断当前`toast`是否有值。
+如果有值，那么通过调用实例中的`close`方法，删除实例。
+```
+let currentToast ;
+export default {
+  install(Vue,options){
+    Vue.prototype.$toast = function(message,toastOptions){
+      if(currentToast){
+        //实例创建完成以后在这里也可以调用toast实例中的方法。
+        currentToast.close();
+      }
+      currentToast = createToast({Vue,message,propsData:toastOptions});
+    }
+  }
+}
+
 ```

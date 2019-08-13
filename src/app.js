@@ -1,3 +1,4 @@
+
 import Vue from 'vue';
 import Button from './button.vue'
 import ButtonGroup from './button-group.vue'
@@ -26,14 +27,14 @@ new Vue({
     message:'hello world'
   },
   created(){
-    
+
   },
   methods:{
     inputChange(value){
       console.log(value)
     },
     showToast(){
-      this.$toast('这是一条展示一条展示这是一条展示',{
+      this.$toast(`当前数字为${Math.random() * 100}`,{
         position:'middle',
         closeButton:{
           text:'关闭',
