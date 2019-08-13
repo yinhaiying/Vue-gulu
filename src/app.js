@@ -34,6 +34,7 @@ new Vue({
     },
     showToast(){
       this.$toast('这是一条展示一条展示这是一条展示',{
+        position:'middle',
         closeButton:{
           text:'关闭',
           callback:function(toast){

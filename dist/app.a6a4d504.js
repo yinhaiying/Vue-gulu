@@ -13023,7 +13023,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-//
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -13053,11 +13055,24 @@ var _default = {
           callback: undefined
         };
       }
+    },
+    position: {
+      type: String,
+      default: 'top',
+      validator: function validator(value) {
+        return ['top', 'bottom', 'middle'].indexOf(value) > -1;
+      }
     }
   },
   mounted: function mounted() {
     this.updateStyle();
     this.execAutoClose();
+  },
+  computed: {
+    toastClasses: function toastClasses() {
+      console.log(this.position);
+      return _defineProperty({}, "position-".concat(this.position), true);
+    }
   },
   methods: {
     execAutoClose: function execAutoClose() {
@@ -13104,17 +13119,23 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { ref: "toast", staticClass: "toast" }, [
-    _c("div", [_vm._t("default")], 2),
-    _vm._v(" "),
-    _c("div", { ref: "line", staticClass: "line" }),
-    _vm._v(" "),
-    _vm.closeButton
-      ? _c("span", { staticClass: "close", on: { click: _vm.onClickClose } }, [
-          _vm._v(_vm._s(_vm.closeButton.text))
-        ])
-      : _vm._e()
-  ])
+  return _c(
+    "div",
+    { ref: "toast", staticClass: "toast", class: _vm.toastClasses },
+    [
+      _c("div", [_vm._t("default")], 2),
+      _vm._v(" "),
+      _c("div", { ref: "line", staticClass: "line" }),
+      _vm._v(" "),
+      _vm.closeButton
+        ? _c(
+            "span",
+            { staticClass: "close", on: { click: _vm.onClickClose } },
+            [_vm._v(_vm._s(_vm.closeButton.text))]
+          )
+        : _vm._e()
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -13168,7 +13189,8 @@ var _default = {
       var Constructor = Vue.extend(_toast.default);
       var toast = new Constructor({
         propsData: {
-          closeButton: toastOptions.closeButton
+          closeButton: toastOptions.closeButton,
+          position: toastOptions.position
         }
       });
       toast.$slots.default = [message];
@@ -13231,6 +13253,7 @@ new _vue.default({
     },
     showToast: function showToast() {
       this.$toast('这是一条展示一条展示这是一条展示', {
+        position: 'middle',
         closeButton: {
           text: '关闭',
           callback: function callback(toast) {}

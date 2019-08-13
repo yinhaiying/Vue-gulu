@@ -1,9 +1,8 @@
 <template>
-  <div class = "toast" ref = "toast">
+  <div class = "toast" ref = "toast" :class = "toastClasses">
     <div>
       <slot></slot>
     </div>
-
     <div class = "line" ref = "line"></div>
     <span class = "close"  v-if = "closeButton" @click = "onClickClose">{{closeButton.text}}</span>
   </div>
@@ -30,11 +29,26 @@ export default {
           callback:undefined
         }
       }
+    },
+    position:{
+      type:String,
+      default:'top',
+      validator:(value) => {
+        return ['top','bottom','middle'].indexOf(value) > -1;
+      }
     }
   },
   mounted(){
     this.updateStyle();
     this.execAutoClose();
+  },
+  computed: {
+    toastClasses(){
+      console.log(this.position)
+      return {
+        [`position-${this.position}`]:true
+      }
+    }
   },
   methods:{
     execAutoClose(){
@@ -71,9 +85,7 @@ $font-size:14px;
 $toast-bg:rgba(0,0,0,0.75);
 .toast{
   position:fixed;
-  top:0;
-  left:50%;
-  transform:translateX(-50%);
+
   font-size:$font-size;
   line-height:1.8;
   min-height:$toast-min-height;
@@ -82,8 +94,8 @@ $toast-bg:rgba(0,0,0,0.75);
   background:$toast-bg;
   box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.50);
   color:#fff;
+  left:50%;
   padding:0 16px;
-
   .line{
     margin:0 8px;
     border-left:1px solid #fff;
@@ -91,6 +103,18 @@ $toast-bg:rgba(0,0,0,0.75);
   }
   .close{
     flex-shrink: 0;
+  }
+  &.position-top{
+    top:0; 
+    transform:translateX(-50%);
+  }
+  &.position-bottom{
+    bottom:0; 
+    transform:translateX(-50%);
+  }
+  &.position-middle{
+    top:50%; 
+    transform:translate(-50%);
   }
 }
 </style>

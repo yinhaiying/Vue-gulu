@@ -180,3 +180,52 @@ export default {
       this.$refs.line.style.height = this.$refs.toast.getBoundingClientRect().height + 'px';
     })
 ```
+
+#### 实现展示位置的设置
+1. 使用时通过传递`position`参数来设置`toast`显示位置。
+```
+    this.$toast('这是一条展示一条展示这是一条展示',{
+      position:'middle',
+      closeButton:{
+        text:'关闭',
+        callback:function(toast){
+        }
+      }
+    })
+```
+2. 修改`plugin.js`接收`position`参数
+```
+  let toast = new Constructor({
+    propsData:{
+      closeButton:toastOptions.closeButton,
+      position:toastOptions.position
+    }
+  });
+```
+3. 通过`computed`来控制类。
+```
+  <div class = "toast" ref = "toast" :class = "toastClasses">
+  computed: {
+    toastClasses(){
+      console.log(this.position)
+      return {
+        [`position-${this.position}`]:true
+      }
+    }
+  },
+```
+4. `position-top`样式的设置
+```
+  &.position-top{
+    top:0; 
+    transform:translateX(-50%);
+  }
+  &.position-bottom{
+    bottom:0; 
+    transform:translateX(-50%);
+  }
+  &.position-middle{
+    top:50%; 
+    transform:translate(-50%);
+  }
+```

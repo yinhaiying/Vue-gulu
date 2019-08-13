@@ -257,9 +257,6 @@
 }
 .toast[data-v-bc58cd] {
   position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
   font-size: 14px;
   line-height: 1.8;
   min-height: 40px;
@@ -268,6 +265,7 @@
   background: rgba(0, 0, 0, 0.75);
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.5);
   color: #fff;
+  left: 50%;
   padding: 0 16px;
 }
 .toast .line[data-v-bc58cd] {
@@ -277,4 +275,16 @@
 }
 .toast .close[data-v-bc58cd] {
   flex-shrink: 0;
+}
+.toast.position-top[data-v-bc58cd] {
+  top: 0;
+  transform: translateX(-50%);
+}
+.toast.position-bottom[data-v-bc58cd] {
+  bottom: 0;
+  transform: translateX(-50%);
+}
+.toast.position-middle[data-v-bc58cd] {
+  top: 50%;
+  transform: translate(-50%);
 }
