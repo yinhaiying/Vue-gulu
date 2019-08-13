@@ -3,14 +3,11 @@ import Button from './button.vue'
 import ButtonGroup from './button-group.vue'
 import Icon from './icon.vue'
 import Input from './input'
-<<<<<<< HEAD
 import Row from './row.vue'
 import Col from './col.vue'
-=======
 import Toast from './toast.vue'
 import Plugin from './plugin'
 
->>>>>>> a804a303bc9b56d7caf014f5448bef7c70ca2bec
 Vue.component('g-button',Button)
 Vue.component('g-icon',Icon)
 Vue.component('g-button-group',ButtonGroup)
