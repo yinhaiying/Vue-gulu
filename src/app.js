@@ -35,7 +35,7 @@ new Vue({
     },
     showToast(){
       this.$toast(`当前数字为${Math.random() * 100}`,{
-        position:'middle',
+        position:'top',
         closeButton:{
           text:'关闭',
           callback:function(toast){

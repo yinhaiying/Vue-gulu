@@ -296,8 +296,34 @@
     margin-left: 95.83333%;
 }
 
+@-webkit-keyframes fade-in-data-v-dd39bb {
+0% {
+    opacity: 0;
+    -webkit-transform: translate(-50%, 100%);
+            transform: translate(-50%, 100%);
+}
+100% {
+    opacity: 1;
+    -webkit-transform: translate(-50%, 0%);
+            transform: translate(-50%, 0%);
+}
+}
+@keyframes fade-in-data-v-dd39bb {
+0% {
+    opacity: 0;
+    -webkit-transform: translate(-50%, 100%);
+            transform: translate(-50%, 100%);
+}
+100% {
+    opacity: 1;
+    -webkit-transform: translate(-50%, 0%);
+            transform: translate(-50%, 0%);
+}
+}
 .toast[data-v-dd39bb] {
   position: fixed;
+  -webkit-animation: fade-in-data-v-dd39bb 1s linear;
+          animation: fade-in-data-v-dd39bb 1s linear;
   font-size: 14px;
   line-height: 1.8;
   min-height: 40px;

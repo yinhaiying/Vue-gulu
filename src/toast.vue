@@ -64,7 +64,8 @@ export default {
       })
     },
     close(){
-      this.$el.remove(); //把元素从body中移出
+      this.$el.remove(); //把元素从body中移出f
+      this.$emit('close');// 触发一个close事件，告诉组件我已经关闭了。
       this.$destroy();// 把元素身上绑定的所有事件等移除。
     },
     onClickClose(){
@@ -82,9 +83,13 @@ export default {
 $toast-min-height: 40px;
 $font-size:14px;
 $toast-bg:rgba(0,0,0,0.75);
+@keyframes fade-in{
+  0%{ opacity:0;transform:translate(-50%,100%)}
+  100%{ opacity:1;transform:translate(-50%,0%)}
+}
 .toast{
   position:fixed;
-
+  animation:fade-in 1s linear;
   font-size:$font-size;
   line-height:1.8;
   min-height:$toast-min-height;

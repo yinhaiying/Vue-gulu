@@ -13092,7 +13092,9 @@ var _default = {
       });
     },
     close: function close() {
-      this.$el.remove(); //把元素从body中移出
+      this.$el.remove(); //把元素从body中移出f
+
+      this.$emit('close'); // 触发一个close事件，告诉组件我已经关闭了。
 
       this.$destroy(); // 把元素身上绑定的所有事件等移除。
     },
@@ -13200,7 +13202,10 @@ var _default = {
       currentToast = createToast({
         Vue: Vue,
         message: message,
-        propsData: toastOptions
+        propsData: toastOptions,
+        onClose: function onClose() {
+          currentToast = null;
+        }
       });
     };
   }
@@ -13216,7 +13221,8 @@ exports.default = _default;
 function createToast(_ref) {
   var Vue = _ref.Vue,
       message = _ref.message,
-      propsData = _ref.propsData;
+      propsData = _ref.propsData,
+      onClose = _ref.onClose;
   // 生成一个toast组件，然后放到body中
   var Constructor = Vue.extend(_toast.default);
   var toast = new Constructor({
@@ -13225,6 +13231,7 @@ function createToast(_ref) {
   toast.$slots.default = [message];
   toast.$mount(); //必须使用$mount()进行挂载，否则所有的生命周期的函数都不会执行
 
+  toast.$on('close', onClose);
   document.body.appendChild(toast.$el);
   return toast;
 }
@@ -13280,7 +13287,7 @@ new _vue.default({
     },
     showToast: function showToast() {
       this.$toast("\u5F53\u524D\u6570\u5B57\u4E3A".concat(Math.random() * 100), {
-        position: 'middle',
+        position: 'top',
         closeButton: {
           text: '关闭',
           callback: function callback(toast) {}
