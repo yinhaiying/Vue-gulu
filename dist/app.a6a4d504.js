@@ -13029,8 +13029,55 @@ exports.default = void 0;
 //
 //
 //
+//
+//
 var _default = {
-  name: 'Gulu-toast'
+  name: 'Gulu-toast',
+  props: {
+    autoClose: {
+      type: Boolean,
+      default: true
+    },
+    autoCloseDelay: {
+      type: Number,
+      default: 50
+    },
+    closeButton: {
+      type: Object,
+      default: function _default() {
+        return {
+          text: '关闭',
+          callback: undefined
+        };
+      }
+    }
+  },
+  created: function created() {
+    console.log(this.closeButton);
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    if (this.autoClose) {
+      setTimeout(function () {
+        _this.close();
+      }, this.autoCloseDelay * 1000);
+    }
+  },
+  methods: {
+    close: function close() {
+      this.$el.remove(); //把元素从body中移出
+
+      this.$destroy(); // 把元素身上绑定的所有事件等移除。
+    },
+    onClickClose: function onClickClose() {
+      this.close();
+
+      if (this.closeButton && this.closeButton.callback && typeof this.closeButton.callback === 'function') {
+        this.closeButton.callback(this);
+      }
+    }
+  }
 };
 exports.default = _default;
         var $bc58cd = exports.default || module.exports;
@@ -13045,7 +13092,22 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "toast" }, [_vm._t("default")], 2)
+  return _c(
+    "div",
+    { staticClass: "toast" },
+    [
+      _vm._t("default"),
+      _vm._v(" "),
+      _c("div", { staticClass: "line" }),
+      _vm._v(" "),
+      _vm.closeButton
+        ? _c("span", { on: { click: _vm.onClickClose } }, [
+            _vm._v(_vm._s(_vm.closeButton.text))
+          ])
+        : _vm._e()
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -13094,10 +13156,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var _default = {
   install: function install(Vue, options) {
-    Vue.prototype.$toast = function (message) {
+    Vue.prototype.$toast = function (message, toastOptions) {
       // 生成一个toast组件，然后放到body中
       var Constructor = Vue.extend(_toast.default);
-      var toast = new Constructor();
+      var toast = new Constructor({
+        propsData: {
+          closeButton: toastOptions.closeButton
+        }
+      });
       toast.$slots.default = [message];
       toast.$mount(); //必须使用$mount()进行挂载，否则所有的生命周期的函数都不会执行
 
@@ -13157,7 +13223,14 @@ new _vue.default({
       console.log(value);
     },
     showToast: function showToast() {
-      this.$toast('这是一条展示');
+      this.$toast('这是一条展示这是一条展示这是一条展示这是一条展示', {
+        closeButton: {
+          text: '这是一个关闭吗',
+          callback: function callback(toast) {
+            toast.test();
+          }
+        }
+      });
     }
   }
 });

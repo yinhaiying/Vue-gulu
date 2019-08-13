@@ -270,3 +270,8 @@
   color: #fff;
   padding: 0 16px;
 }
+.toast .line[data-v-bc58cd] {
+  margin: 8px;
+  border-left: 1px solid #fff;
+  height: 100%;
+}

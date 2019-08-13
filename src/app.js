@@ -26,14 +26,21 @@ new Vue({
     message:'hello world'
   },
   created(){
-
+    
   },
   methods:{
     inputChange(value){
       console.log(value)
     },
     showToast(){
-      this.$toast('这是一条展示')
+      this.$toast('这是一条展示这是一条展示这是一条展示这是一条展示',{
+        closeButton:{
+          text:'这是一个关闭吗',
+          callback:function(toast){
+           toast.test();
+          }
+        }
+      })
     }
   }
 })

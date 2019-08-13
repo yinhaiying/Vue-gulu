@@ -76,3 +76,91 @@ export default {
     }
   }
 ```
+
+#### 让Toast持续几秒后关闭
+1. 传入`autoClose`和`autoCloseDelay`参数控制关闭和持续时间
+```
+  props:{
+    autoClose:{
+      type:Boolean,
+      default:true
+    },
+    autoCloseDelay:{
+      type:Number,
+      default:3
+    }
+  }
+  
+```
+2. 通过`setTimeout`来控制n秒后关闭。
+```
+  mounted(){
+    if(this.autoClose){
+      setTimeout(() => {
+        this.close();
+      },this.autoCloseDelay * 1000)
+    }
+  }
+ ```
+ 3. 通过`this.$el.remove()`方法移除组件中的元素，通过` this.$destroy()`移除元素身上绑定的事件等。实现组件的销毁。
+```
+  methods:{
+    // 移除组件
+    close(){
+      this.$el.remove(); //把元素从body中移出
+      this.$destroy();// 把元素身上绑定的所有事件等移除。
+    }
+  }
+```
+
+
+#### 添加可关闭按钮
+
+我们先观察其他组件，比如element-ui对可关闭的使用。
+
+```
+  this.$message({
+    showClose: true,
+    message: '恭喜你，这是一条成功消息',
+    type: 'success'
+  });
+```
+
+从上面我们可以知道，用户传入一个`showClose`来控制是否需要关闭。这里我们同样传入一个`closeButton`
+对象来控制是否显示，以及显示后执行一些操作。
+
+```
+    this.$toast('这是一条展示这是一条展示这是一条展示这是一条展示',{
+      closeButton:{
+        text:'这是一个关闭吗',
+        callback:function(toast){
+          //获取到组件可以进行一些操作
+        }
+      }
+    })
+```
+1. 首先我们需要在`plugin.js`中修改创建实例时接收的参数,通过`propsData`来接收传递过来的值。
+```
+  let toast = new Constructor({
+    propsData:{
+      closeButton:toastOptions.closeButton
+    }
+  });
+
+```
+
+2. 通过判断你是否传入`closeButton`来显示关闭按钮。
+```
+  <span  v-if = "closeButton" @click = "onClickClose">{{closeButton.text}}</span>
+```
+
+3. 用户手动关闭`toast`,为了避免用户不传callback或者传的不是一个函数，最好进行一下判断。
+这里我们还可以向`callback`传递`this`,使得`callback`中可以操作组件。
+```
+    onClickClose(){
+      this.close();
+      if(this.closeButton && this.closeButton.callback && typeof this.closeButton.callback === 'function'){
+        this.closeButton.callback(this);
+      }
+    }
+```
