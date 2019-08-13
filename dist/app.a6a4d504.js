@@ -13031,6 +13031,9 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
 var _default = {
   name: 'Gulu-toast',
   props: {
@@ -13053,20 +13056,27 @@ var _default = {
     }
   },
   mounted: function mounted() {
-    var _this = this;
-
-    if (this.autoClose) {
-      setTimeout(function () {
-        _this.close();
-      }, this.autoCloseDelay * 1000);
-    } // 为了解决min-height带来的问题
-
-
-    this.$nextTick(function () {
-      _this.$refs.line.style.height = _this.$refs.toast.getBoundingClientRect().height + 'px';
-    });
+    this.updateStyle();
+    this.execAutoClose();
   },
   methods: {
+    execAutoClose: function execAutoClose() {
+      var _this = this;
+
+      if (this.autoClose) {
+        setTimeout(function () {
+          _this.close();
+        }, this.autoCloseDelay * 1000);
+      }
+    },
+    updateStyle: function updateStyle() {
+      var _this2 = this;
+
+      // 为了解决min-height带来的问题
+      this.$nextTick(function () {
+        _this2.$refs.line.style.height = _this2.$refs.toast.getBoundingClientRect().height + 'px';
+      });
+    },
     close: function close() {
       this.$el.remove(); //把元素从body中移出
 
@@ -13094,24 +13104,17 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { ref: "toast", staticClass: "toast" },
-    [
-      _vm._t("default"),
-      _vm._v(" "),
-      _c("div", { ref: "line", staticClass: "line" }),
-      _vm._v(" "),
-      _vm.closeButton
-        ? _c(
-            "span",
-            { staticClass: "close", on: { click: _vm.onClickClose } },
-            [_vm._v(_vm._s(_vm.closeButton.text))]
-          )
-        : _vm._e()
-    ],
-    2
-  )
+  return _c("div", { ref: "toast", staticClass: "toast" }, [
+    _c("div", [_vm._t("default")], 2),
+    _vm._v(" "),
+    _c("div", { ref: "line", staticClass: "line" }),
+    _vm._v(" "),
+    _vm.closeButton
+      ? _c("span", { staticClass: "close", on: { click: _vm.onClickClose } }, [
+          _vm._v(_vm._s(_vm.closeButton.text))
+        ])
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -13227,7 +13230,7 @@ new _vue.default({
       console.log(value);
     },
     showToast: function showToast() {
-      this.$toast('这是一条展示这是一条展示这是这是一条展示这是一条展示这是一条展示这是一条展示这是一条展示这是一条展示这是一条展示这是这是一条展示这是一条展示这是一条展示这是一条展示一条展示这是一条展示这是一条展示这是一条展示这是一条展示这是一条展示这是一条展示这是一条展示这是一条展示一条展示这是一条展示', {
+      this.$toast('这是一条展示一条展示这是一条展示', {
         closeButton: {
           text: '关闭',
           callback: function callback(toast) {}

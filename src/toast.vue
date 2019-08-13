@@ -1,6 +1,9 @@
 <template>
   <div class = "toast" ref = "toast">
-    <slot></slot>
+    <div>
+      <slot></slot>
+    </div>
+
     <div class = "line" ref = "line"></div>
     <span class = "close"  v-if = "closeButton" @click = "onClickClose">{{closeButton.text}}</span>
   </div>
@@ -30,18 +33,23 @@ export default {
     }
   },
   mounted(){
-    if(this.autoClose){
-      setTimeout(() => {
-        this.close();
-      },this.autoCloseDelay * 1000)
-    }
-    // 为了解决min-height带来的问题
-    this.$nextTick(() => {
-      this.$refs.line.style.height = this.$refs.toast.getBoundingClientRect().height + 'px';
-    })
-    
+    this.updateStyle();
+    this.execAutoClose();
   },
   methods:{
+    execAutoClose(){
+      if(this.autoClose){
+        setTimeout(() => {
+          this.close();
+        },this.autoCloseDelay * 1000)
+      }
+    },
+    updateStyle(){
+      // 为了解决min-height带来的问题
+      this.$nextTick(() => {
+        this.$refs.line.style.height = this.$refs.toast.getBoundingClientRect().height + 'px';
+      })
+    },
     close(){
       this.$el.remove(); //把元素从body中移出
       this.$destroy();// 把元素身上绑定的所有事件等移除。
@@ -77,7 +85,7 @@ $toast-bg:rgba(0,0,0,0.75);
   padding:0 16px;
 
   .line{
-    margin:8px;
+    margin:0 8px;
     border-left:1px solid #fff;
     height:100%;
   }
