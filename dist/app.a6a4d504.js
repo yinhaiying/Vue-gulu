@@ -12887,7 +12887,23 @@ exports.default = void 0;
 //
 //
 //
-var _default = {};
+var _default = {
+  props: {
+    gutter: {
+      type: [Number, String],
+      default: 0
+    }
+  },
+  created: function created() {},
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$children.forEach(function (vm) {
+      // 获取每一个子元素，然后给子元素绑定gutter
+      vm.gutter = _this.gutter;
+    });
+  }
+};
 exports.default = _default;
         var $8cdb2b = exports.default || module.exports;
       
@@ -12901,7 +12917,18 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [_vm._t("default")], 2)
+  return _c(
+    "div",
+    {
+      staticClass: "row",
+      style: {
+        marginLeft: "-" + _vm.gutter / 2 + "px",
+        marginRight: "-" + _vm.gutter / 2 + "px"
+      }
+    },
+    [_vm._t("default")],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -12949,6 +12976,9 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
 var _default = {
   name: 'Gulu-Col',
   props: {
@@ -12958,6 +12988,13 @@ var _default = {
     offset: {
       type: [Number, String]
     }
+  },
+  created: function created() {},
+  mounted: function mounted() {},
+  data: function data() {
+    return {
+      gutter: 0
+    };
   }
 };
 exports.default = _default;
@@ -12977,10 +13014,20 @@ exports.default = _default;
     "div",
     {
       staticClass: "col",
-      class: ["col-" + _vm.span, _vm.offset && "offset-" + _vm.offset]
+      class: ["col-" + _vm.span, _vm.offset && "offset-" + _vm.offset],
+      style: {
+        paddingLeft: _vm.gutter / 2 + "px",
+        paddingRight: _vm.gutter / 2 + "px"
+      }
     },
-    [_vm._t("default")],
-    2
+    [
+      _c(
+        "div",
+        { staticStyle: { border: "3px solid green" } },
+        [_vm._t("default")],
+        2
+      )
+    ]
   )
 }
 var staticRenderFns = []
@@ -13087,7 +13134,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54045" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63017" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

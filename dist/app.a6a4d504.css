@@ -111,11 +111,10 @@
 }
 .row[data-v-8cdb2b] {
   display: flex;
+  margin: 0 -10px;
 }
 .col[data-v-04c2ef] {
   height: 100px;
-  background: grey;
-  border: 1px solid red;
 }
 .col-1[data-v-04c2ef] {
   width: 4.1666666667%;

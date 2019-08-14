@@ -1,6 +1,9 @@
 <template>
-  <div class = "col" :class = "[`col-${span}`,offset && `offset-${offset}`]" >
-    <slot></slot>
+  <div class = "col" 
+       :class = "[`col-${span}`,offset && `offset-${offset}`]" :style = "{paddingLeft:`${gutter/2}px`,paddingRight:`${gutter/2}px`}">
+    <div style = "border:3px solid green">
+      <slot></slot>
+    </div>
   </div>
 </template>    
 
@@ -13,6 +16,17 @@ export default {
       },
       offset:{
         type:[Number,String]
+      },
+
+    },
+    created(){
+
+    },
+    mounted(){
+    },
+    data(){
+      return {
+         gutter:0
       }
     }
 }
@@ -21,8 +35,9 @@ export default {
 <style lang="scss" scoped>
 .col{
   height:100px;
-  background:grey;
-  border:1px solid red;
+  // background:grey;
+  // border:1px solid red;
+  // padding:0 10px;
   @for $index from 1 to 24 {
       &-#{$index}{
         width:($index / 24) * 100%;

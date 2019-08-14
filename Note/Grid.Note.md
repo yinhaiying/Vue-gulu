@@ -74,5 +74,54 @@
       margin-left:($n / 24) * 100%;
     }
 }
+```
 
+#### column之间的gutter间距的设置
+由于我们在设置`offset`时已经设置了`margin`,因此，当我们再次通过`margin`设置间距时，
+两个`margin`之间会出现问题。因此，这里我们考虑通过`padding`来进行设置。
+`col.vue`
+```
+.col{
+  padding:0 10px;
+}  
+```
+但是给每一个`column`设置`padding`,会导致第一个左边和最后一个右边也存在一个`padding`,
+使得整个盒子的宽度始终小于页面2个`padding`的宽度，这里需要进行解决。
+`row.vue`
+```
+.row{
+  display:flex;
+  margin:0 -10px;
+}
+```
+但是我们需要根据row中传递过来得gutter来动态设置`margin`和`padding`。
+这里我们需要考虑如何将`row`中的值传递给`col`组件。这里我们通过`$children`
+来进行传值。获取到每一个子元素，然后给每一个子元素绑定要传递的`gutter`值。
+`.row.vue`
+```
+    mounted(){
+      this.$children.forEach((vm) => {
+        // 获取每一个子元素，然后给子元素绑定gutter
+        vm.gutter = this.gutter;
+      })
+    }
+```
+不明白为什么一定要在data中接收这个值。如果在`props`中接收或者不接受就会报错。
+`col.vue`
+```
+    data(){
+      return {
+         gutter:0
+      }
+    }
+```
+
+最后分别给`.row`和`.col`中动态设置`margin`和`padding`
+`row.vue `
+```
+<div class = "row" :style = "{'marginLeft':`-${gutter/2}px`,'marginRight':`-${gutter/2}px`}">
+```
+`col.vue`
+```
+<div class = "col" :style = "{paddingLeft:`${gutter/2}px`,paddingRight:`${gutter/2}px`}">
 ```
