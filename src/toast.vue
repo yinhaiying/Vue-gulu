@@ -19,7 +19,10 @@ export default {
     },
     autoCloseDelay:{
       type:Number,
-      default:50
+      default:3,
+      validator:(value) =>{
+        return typeof value === 'number'
+      }
     },
     closeButton:{
       type:Object,
