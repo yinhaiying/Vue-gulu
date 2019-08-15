@@ -32,7 +32,6 @@ export default {
 <style lang="scss" scoped>
 .row{
   display:flex;
-  margin:0 -10px;
 }
 
 </style>
