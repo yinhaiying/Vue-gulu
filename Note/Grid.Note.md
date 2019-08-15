@@ -77,13 +77,14 @@
 ```
 
 #### column之间的gutter间距的设置
+
 由于我们在设置`offset`时已经设置了`margin`,因此，当我们再次通过`margin`设置间距时，
 两个`margin`之间会出现问题。因此，这里我们考虑通过`padding`来进行设置。
 `col.vue`
 ```
 .col{
   padding:0 10px;
-}  
+}
 ```
 但是给每一个`column`设置`padding`,会导致第一个左边和最后一个右边也存在一个`padding`,
 使得整个盒子的宽度始终小于页面2个`padding`的宽度，这里需要进行解决。
@@ -124,4 +125,56 @@
 `col.vue`
 ```
 <div class = "col" :style = "{paddingLeft:`${gutter/2}px`,paddingRight:`${gutter/2}px`}">
+```
+
+#### 代码重构
+代码重构是对代码进行一些局部的优化，而不是完全重写。重构的原则是针对：
+1. 一些重复的代码
+
+对于重复的代码最好将其抽离出来，哪怕只有一行代码，这样的话在下次进行修改时就能够避免只修改某几个地方，
+而忽略了替他地方，从而留下bug。
+
+2. 难以让人看懂的代码
+  有些代码可能是逻辑比较复杂，而有些代码则是让人读起来不太方便。这样的代码也尽量进行重构。比如：
+```
+<div class = "row" :style = "{'marginLeft':`-${gutter/2}px`,'marginRight':`-${gutter/2}px`}">
+```
+上面的`:style`看起来就非常长，而且如果有更多的属性就显得不太好读。因此，我们可以考虑对其进行修改。
+我们通过使用`data`中来保存这个变量。
+```
+    data(){
+      return {
+        rowStyle:{
+          marginLeft:-this.gutter/2 + 'px',
+          marginRight:-this.gutter/2 + 'px'
+        }
+      }
+    },
+```
+但是，这里会带来新的问题，也就是这里的`roleStyle`依赖于`gutter`属性。在`Vue`如果一个属性依赖于其他属性，
+那么其他属性发生变化了，这个属性不会自动变化。如果想让其进行变化，需要使用`computed`。
+```
+    computed:{
+      rowStyle(){
+        return {
+          marginLeft:-this.gutter/2 + 'px',
+          marginRight:-this.gutter/2 + 'px'
+        }
+      }
+    },
+
+```
+
+再比如`col.vue`中的这一段代码,下面的class也可以进行优化
+```
+  <div class = "col" :class = "[`col-${span}`,offset && `offset-${offset}`]" :style = "colStyle">
+```
+同样在`computed`中对其进行抽离
+```
+    computed:{
+      colClasses(){
+        return [`col-${this.span}`,this.offset && `offset-${this.offset}`]
+      },
+    }
+
 ```
