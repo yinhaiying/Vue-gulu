@@ -220,6 +220,83 @@
 然后通过媒体查询来设置`phone`
 
 ```
+@media(max-width:576px){
+  // 这里根据获取的phone来设置样式
+}
 
+```
+从上面的分析可知，我们需要在css中根据获取的属性`phone`来设置css。
+然后在css中是无法获取到js中的变量的。除非我们把css写到html标签中去。
+但是在一个html标签中写很长的css是不合适的，通常的做法是通过一个class来
+控制这些样式，然后再通过js来控制`class`。
+`col.vue`
 
+```
+
+      colClasses(){
+        const {span,offset,phone} = this;
+        //添加一个phoneClass
+        let phoneClass = [];
+        if(phone){
+          phoneClass = [`col-phone-${phone.span}`]
+        }
+        return [
+          `col-${span}`,
+          offset && `offset-${offset}`,
+          ...phoneClass
+          ]  
+      },
+
+```
+然后我们通过媒体查询来进行类的切换。这里切记手机的样式一定要写在下面。
+因为手机的样式只有在满足屏幕尺寸的情况下才会出现。而之前的样式是在正常情况下展示。
+当两种样式同时出现的时候，后面一种会覆盖前面的样式。这样的话展示的就是手机的样式了。
+通过这种方式来实现响应式布局。
+```
+.col{
+  height:100px;
+  border:2px solid green;
+  @for $index from 1 to 24 {
+      &-#{$index}{
+        width:($index / 24) * 100%;
+      }
+  }
+  @for $n from 1 to 24 {
+      &.offset-#{$n}{
+        margin-left:($n / 24) * 100%;
+      }
+  }
+
+  @media (max-width:1000px){
+    $class-prefix:phone;
+     @for $index from 1 to 24 {
+      &-#{$class-prefix}-#{$index}{
+        width:($index / 24) * 100%;
+      }
+     }
+    $class-prefix:phone;
+    @for $n from 1 to 24 {
+        &.#{$class-prefix}-offset-#{$n}{
+          margin-left:($n / 24) * 100%;
+        }
+    }
+  }
+}
+```
+
+接下来给不同尺寸的屏幕添加类和样式：
+`colClasses`:
+```
+    colClasses(){
+      const {span,offset,phone,ipad,narrowPc,pc,widePc} = this;
+      return [
+        `col-${span}`,
+        offset && `offset-${offset}`,
+        ...(phone && [`col-phone-${phone.span}`]),
+        ...(ipad && [`col-ipad-${ipad.span}`]),
+        ...(narrowPc && [`col-narrow-pc-${narrowPc.span}`]),
+        ...(pc && [`col-pc-${pc.span}`]),
+        ...(widePc && [`col-wide-pc-${widePc.span}`])
+      ]  
+    },
 ```

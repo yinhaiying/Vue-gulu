@@ -34,73 +34,15 @@
   <div id="app">
     <div>
         <g-row gutter = "20">
-            <g-col span = "12">1</g-col>
-            <g-col span = "12" >2</g-col>
-          </g-row>
-          <g-row>
-            <g-col span = "4" offset = "1" > </g-col>
-            <g-col span = "4" offset = "5" :phone = "{span:12,offset:0}"> </g-col>
-          </g-row>
+            <g-col span = "18" 
+                :phone = "{span:14}" 
+                :ipad = "{span:10}" 
+                :pc = "{span:6} " 
+                :narrow-pc = "{span:4}" 
+                :wide-pc = "{span:1}" >1</g-col>
+        </g-row>
     </div>
-
-    <hr />
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div style = "margin-top:800px">
-      <div class = "box">
-          <g-input value = "张三" disabled></g-input>
-          <g-input value = "李四" readonly></g-input>
-          <g-input value = "王五"></g-input>
-      </div>
-      <div class="box">
-          <g-input value = "刘" error = "姓名不能少于两个字"></g-input>
-          <g-input  @change = 'inputChange'></g-input>
-      </div>
-      <div class="box">
-          <g-input  v-model = "message"></g-input>
-          <p>{{message}}</p>
-          <div @click = "message += 1">点击触发双向绑定</div>
-      </div>
-    </div>
-
-    <div style = "margin-top:100px">
-        <g-button :loading = "true">
-            按钮
-        </g-button>
-        <g-button icon = "settings" icon-position = "left" :loading = "loading1" @click = "loading1 = !loading1">
-            按钮
-        </g-button>
-        <g-button icon = "settings" icon-position = "right" :loading = "true">
-            按钮
-        </g-button>
-
-        <g-button-group>
-          <g-button icon = "left" >
-              上一页
-          </g-button>
-
-          <g-button   >
-              更多
-          </g-button>
-          <g-button icon = "right" icon-position = "right" >
-              下一页
-          </g-button>
-        </g-button-group>
-    </div>
-
   </div>
-
 </body>
 <script src="./src/app.js"></script>
 

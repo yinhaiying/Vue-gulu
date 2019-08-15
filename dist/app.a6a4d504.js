@@ -13363,12 +13363,31 @@ var _keys = _interopRequireDefault(require("babel-runtime/core-js/object/keys"))
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 //
 //
 //
 //
 //
 //
+var validator = function validator(value) {
+  var valid = true;
+  var keys = (0, _keys.default)(value);
+  keys.forEach(function (item) {
+    if (!['span', 'offset'].includes(item)) {
+      valid = false;
+    }
+  });
+  return valid;
+};
+
 var _default = {
   name: 'Gulu-Col',
   props: {
@@ -13380,16 +13399,23 @@ var _default = {
     },
     phone: {
       type: Object,
-      validator: function validator(value) {
-        var valid = true;
-        var keys = (0, _keys.default)(value);
-        keys.forEach(function (item) {
-          if (!['span', 'offset'].includes(item)) {
-            valid = false;
-          }
-        });
-        return valid;
-      }
+      validator: validator
+    },
+    ipad: {
+      type: Object,
+      validator: validator
+    },
+    narrowPc: {
+      type: Object,
+      validator: validator
+    },
+    pc: {
+      type: Object,
+      validator: validator
+    },
+    widePc: {
+      type: Object,
+      validator: validator
     }
   },
   data: function data() {
@@ -13399,7 +13425,14 @@ var _default = {
   },
   computed: {
     colClasses: function colClasses() {
-      return ["col-".concat(this.span), this.offset && "offset-".concat(this.offset)];
+      var span = this.span,
+          offset = this.offset,
+          phone = this.phone,
+          ipad = this.ipad,
+          narrowPc = this.narrowPc,
+          pc = this.pc,
+          widePc = this.widePc;
+      return ["col-".concat(span), offset && "offset-".concat(offset)].concat(_toConsumableArray(phone && ["col-phone-".concat(phone.span)]), _toConsumableArray(ipad && ["col-ipad-".concat(ipad.span)]), _toConsumableArray(narrowPc && ["col-narrow-pc-".concat(narrowPc.span)]), _toConsumableArray(pc && ["col-pc-".concat(pc.span)]), _toConsumableArray(widePc && ["col-wide-pc-".concat(widePc.span)]));
     },
     colStyle: function colStyle() {
       return {
@@ -13533,7 +13566,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "9648" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "6826" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
