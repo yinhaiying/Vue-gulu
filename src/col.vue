@@ -14,6 +14,19 @@ export default {
       offset:{
         type:[Number,String]
       },
+      phone:{
+        type:Object,
+        validator(value){
+          let valid = true;
+          let keys = Object.keys(value);
+          keys.forEach((item) => {
+           if(!['span','offset'].includes(item)){
+             valid = false;
+           }
+          })
+          return valid;
+        }
+      }
     },
     data(){
       return {
@@ -37,6 +50,7 @@ export default {
 <style lang="scss" scoped>
 .col{
   height:100px;
+  border:2px solid green;
   @for $index from 1 to 24 {
       &-#{$index}{
         width:($index / 24) * 100%;
@@ -48,5 +62,7 @@ export default {
       }
   }
 }
+
+
 
 </style>

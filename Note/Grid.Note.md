@@ -178,3 +178,48 @@
     }
 
 ```
+
+#### 响应式设计
+
+如果我们希望在不同尺寸屏幕下展示不同的布局样式，那么就需要考虑响应式设计了。
+响应式的设计思路是我们给不同的宽度设置不同的`span`和`offset`等。
+比如在PC上，`span`是4,那么到了手机端，我们可以设计`span`是12。这样的话就能够实现
+在不同宽度上有不同的表现。如下所示：我们通过默认的span表示pc端，通过`phone-span`来
+表示手机端。
+```
+  <g-row>
+    <g-col span = "4" offset = "1" phone-span = "12" phone-offset = "2"> </g-col>
+  </g-row>
+
+```
+但是，上面的这种表示会带来一个问题，那就是如果有非常多的属性，比如除了`span`还有`offset`,`gutter`
+等，每一种设备都需要重新写一遍。而且我们还需要针对每一种设备写一份Css样式。这样肯定是不合理的。
+因此，我们可以考虑始终使用同样的`span`
+```
+<g-col span = "4" offset = "1" :phone = "{span:12,offset:2}"> </g-col>
+```
+然后给`col`组件添加`phone`属性
+`col.vue`
+```
+    phone:{
+      type:Object,
+      validator(value){
+        let valid = true;
+        let keys = Object.keys(value);
+        keys.forEach((item) => {
+          if(!['span','offset'].includes(item)){
+            valid = false;
+          }
+        })
+        return valid;
+      }
+    }
+
+```
+
+然后通过媒体查询来设置`phone`
+
+```
+
+
+```
