@@ -22,7 +22,6 @@ export default {
     props:{
       span:{ type:[Number,String] },
       offset:{type:[Number,String]},
-      phone:{ type:Object,validator},
       ipad:{ type:Object,validator},
       narrowPc:{ type:Object,validator},
       pc:{ type:Object, validator},
@@ -35,11 +34,10 @@ export default {
     },
     computed:{
       colClasses(){
-        const {span,offset,phone,ipad,narrowPc,pc,widePc} = this;
+        const {span,offset,ipad,narrowPc,pc,widePc} = this;
         return [
           `col-${span}`,
           offset && `offset-${offset}`,
-          ...(phone && [`col-phone-${phone.span}`]),
           ...(ipad && [`col-ipad-${ipad.span}`]),
           ...(narrowPc && [`col-narrow-pc-${narrowPc.span}`]),
           ...(pc && [`col-pc-${pc.span}`]),
@@ -71,20 +69,6 @@ export default {
       }
   }
 
-  @media (max-width:576px){
-    $class-prefix:phone;
-     @for $index from 1 to 24 {
-      &-#{$class-prefix}-#{$index}{
-        width:($index / 24) * 100%;
-      }
-     }
-    $class-prefix:phone;
-    @for $n from 1 to 24 {
-        &.#{$class-prefix}-offset-#{$n}{
-          margin-left:($n / 24) * 100%;
-        }
-    }
-  }
   @media (min-width:577px) and (max-width:768px){
     $class-prefix:ipad;
      @for $index from 1 to 24 {
