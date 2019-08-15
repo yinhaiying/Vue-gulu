@@ -13045,7 +13045,10 @@ var _default = {
     },
     autoCloseDelay: {
       type: Number,
-      default: 50
+      default: 3,
+      validator: function validator(value) {
+        return typeof value === 'number';
+      }
     },
     closeButton: {
       type: Object,
@@ -13342,7 +13345,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "13658" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "9648" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
