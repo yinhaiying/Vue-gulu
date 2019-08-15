@@ -23,15 +23,18 @@
   <style>.box{
     margin:20px;
   }</style>
-  <style>
-  </style>
+  <style>.box{
+      background:blue;
+    }</style>
 <link rel="stylesheet" href="/app.a6a4d504.css"></head>
 
 <body>
   <div id="app">
     <div>
-        <g-row gutter="20">
-            <g-col span="18" :ipad="{span:10}" :pc="{span:6} " :narrow-pc="{span:4}" :wide-pc="{span:1}">1</g-col>
+        <g-row>
+            <g-col :span="23" :ipad="{span:12}" :wide-pc="{span:4}">
+                <div class="box"></div> 
+            </g-col>
         </g-row>
     </div>
   </div>

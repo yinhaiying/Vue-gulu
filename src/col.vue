@@ -58,6 +58,7 @@ export default {
 .col{
   height:100px;
   border:2px solid green;
+  background:red;
   @for $index from 1 to 24 {
       &-#{$index}{
         width:($index / 24) * 100%;
@@ -69,7 +70,7 @@ export default {
       }
   }
 
-  @media (min-width:577px) and (max-width:768px){
+  @media (min-width:577px){
     $class-prefix:ipad;
      @for $index from 1 to 24 {
       &-#{$class-prefix}-#{$index}{
@@ -83,7 +84,8 @@ export default {
         }
     }
   }
-  @media (min-width:769px) and (max-width:992px){
+  
+  @media (min-width:769px){
     $class-prefix:narrow-pc;
      @for $index from 1 to 24 {
       &-#{$class-prefix}-#{$index}{
@@ -97,6 +99,22 @@ export default {
         }
     }
   }
+
+  @media (min-width:992px){
+    $class-prefix:pc;
+     @for $index from 1 to 24 {
+      &-#{$class-prefix}-#{$index}{
+        width:($index / 24) * 100%;
+      }
+     }
+    $class-prefix:pc;
+    @for $n from 1 to 24 {
+        &.#{$class-prefix}-offset-#{$n}{
+          margin-left:($n / 24) * 100%;
+        }
+    }
+  }
+
   @media (min-width:1201px){
     $class-prefix:wide-pc;
      @for $index from 1 to 24 {
