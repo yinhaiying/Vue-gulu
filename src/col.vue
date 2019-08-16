@@ -37,13 +37,14 @@ export default {
           if(!obj){
             return [];
           }
-          // str的值是 ipad narrow-pc 
+          // str的值是 ipad narrow-pc
            let arr = [];
            if(obj.span){
              arr.push(`col-${str}${obj.span}`)
            }
            if(obj.offset){
-             arr.push(`col-${str}${obj.offset}`)
+             arr.push(`${str}offset-${obj.offset}`)
+             console.log(arr)
            }
            return arr;
       }
@@ -58,7 +59,7 @@ export default {
           ...createClasses(narrowPc,'narrow-pc-'),
           ...createClasses(pc,'pc-'),
           ...createClasses(widePc,'wide-pc-')
-        ]  
+        ]
       },
       colStyle(){
         return {
@@ -73,7 +74,7 @@ export default {
 <style lang="scss" scoped>
 .col{
   height:100px;
-  // border:2px solid green;
+  border:2px solid green;
   // background:red;
   @for $index from 1 to 24 {
       &-#{$index}{
@@ -100,7 +101,7 @@ export default {
         }
     }
   }
-  
+
   @media (min-width:769px){
     $class-prefix:narrow-pc;
      @for $index from 1 to 24 {

@@ -323,6 +323,7 @@
 #### 单元测试
 
 栅格布局的单元测试和之前的UI组件的单元测试有所不同。
+`Row`组件单元测试
 1. 栅格布局中设计到两个组件，`Row`和`Col`，而且两个组件之间是相互依赖的。
 因此进行单元测试时需要同时测试这两个组件。
 ```
@@ -387,6 +388,25 @@
             console.log(vm.$el.outerHTML);
             done();
          },0)
+     })
+
+```
+`Col`组件单元测试
+
+```
+     it('可以接收offset', () => {
+      const oDiv = document.createElement('div');
+      const Constructor = Vue.extend(Col);
+      document.body.appendChild(oDiv);
+      const vm = new Constructor({
+        propsData:{
+          offset:1
+        }
+      }).$mount(oDiv)
+      console.log(vm.$el)
+      expect(vm.$el.classList.contains('offset-1')).to.eq(true);
+      vm.$el.remove();
+      vm.$destroy();
      })
 
 ```

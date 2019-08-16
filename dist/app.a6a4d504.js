@@ -13425,7 +13425,7 @@ var _default = {
 
       if (!obj) {
         return [];
-      } // str的值是 ipad narrow-pc 
+      } // str的值是 ipad narrow-pc
 
 
       var arr = [];
@@ -13435,7 +13435,8 @@ var _default = {
       }
 
       if (obj.offset) {
-        arr.push("col-".concat(str).concat(obj.offset));
+        arr.push("".concat(str, "offset-").concat(obj.offset));
+        console.log(arr);
       }
 
       return arr;
@@ -13587,7 +13588,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "6826" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "3489" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

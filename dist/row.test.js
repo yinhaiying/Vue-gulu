@@ -650,7 +650,7 @@ var _default = {
 
       if (!obj) {
         return [];
-      } // str的值是 ipad narrow-pc 
+      } // str的值是 ipad narrow-pc
 
 
       var arr = [];
@@ -660,7 +660,8 @@ var _default = {
       }
 
       if (obj.offset) {
-        arr.push("col-".concat(str).concat(obj.offset));
+        arr.push("".concat(str, "offset-").concat(obj.offset));
+        console.log(arr);
       }
 
       return arr;
@@ -723,7 +724,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var expect = chai.expect;
 _vue.default.config.productionTip = false;
 _vue.default.config.devtools = false;
-describe('Col', function () {
+describe('Row', function () {
   // BDD 行为驱动测试
   it('存在.', function () {
     expect(_row.default).to.exist; // 不是null,undefined

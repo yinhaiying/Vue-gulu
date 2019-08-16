@@ -6,7 +6,7 @@ const expect = chai.expect;
  Vue.config.productionTip = false
  Vue.config.devtools = false
 
- describe('Col', () => {
+ describe('Row', () => {
     // BDD 行为驱动测试
      it('存在.', () => {
          expect(Row).to.exist // 不是null,undefined
