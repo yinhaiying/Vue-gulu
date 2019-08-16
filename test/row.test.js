@@ -26,13 +26,12 @@ const expect = chai.expect;
              el:oDiv
          })
          setTimeout(() => {
-            console.log(vm.$el.outerHTML);
             const cols = vm.$el.querySelectorAll('.col');
             const row = vm.$el.querySelector('.row');
             expect(getComputedStyle(cols[0]).paddingLeft).to.eq('10px');
-            // expect(getComputedStyle(cols[1].paddingRight).to.eq('10px');
-            // expect(getComputedStyle(row).marginLeft)).to.eq('-10px')
-            // expect(getComputedStyle(row).marginRight)).to.eq('-10px')
+            expect(getComputedStyle(cols[1]).paddingRight).to.eq('10px');
+            expect(getComputedStyle(row).marginLeft).to.eq('-10px');
+            expect(getComputedStyle(row).marginRight).to.eq('-10px');
             done();
          },0)
      })
