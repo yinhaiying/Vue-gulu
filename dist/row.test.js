@@ -736,14 +736,17 @@ describe('Col', function () {
 
     _vue.default.component('g-col', _col.default);
 
-    oDiv.innerHTML = "\n           <g-row gutter = '20' >\n             <g-col></g-col>\n           </g-row>\n         ";
+    oDiv.innerHTML = "\n           <g-row gutter = '20' >\n             <g-col></g-col>\n             <g-col></g-col>\n           </g-row>\n         ";
     var vm = new _vue.default({
       el: oDiv
     });
     setTimeout(function () {
       console.log(vm.$el.outerHTML);
+      var cols = vm.$el.querySelectorAll('.col');
+      console.log(cols);
+      expect(getComputedStyle(cols[0].paddingLeft)).to.eq('10px');
       done();
-    }, 1500); //  vm.$destroy()
+    }, 0);
   });
 });
 },{"vue":"ApMz","../src/row":"rWcA","../src/col":"2sOC"}]},{},["Tgvo"], null)
