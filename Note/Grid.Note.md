@@ -300,3 +300,22 @@
       ]  
     },
 ```
+对上面的代码进行优化：
+```
+      createClasses(obj,str = ""){
+          if(!obj){
+            return [];
+          }
+          // str的值是 ipad narrow-pc 
+           let arr = [];
+           if(obj.span){
+             arr.push(`col-${str}-${obj.span}`)
+           }
+           if(obj.offset){
+             arr.push(`col-${str}-${obj.offset}`)
+           }
+           return arr;
+      }
+    }
+
+```

@@ -32,16 +32,32 @@ export default {
          gutter:0,
       }
     },
+    methods:{
+      createClasses(obj,str = ""){
+          if(!obj){
+            return [];
+          }
+          // str的值是 ipad narrow-pc 
+           let arr = [];
+           if(obj.span){
+             arr.push(`col-${str}-${obj.span}`)
+           }
+           if(obj.offset){
+             arr.push(`col-${str}-${obj.offset}`)
+           }
+           return arr;
+      }
+    },
     computed:{
       colClasses(){
         const {span,offset,ipad,narrowPc,pc,widePc} = this;
+        const createClasses = this.createClasses;
         return [
-          `col-${span}`,
-          offset && `offset-${offset}`,
-          ...(ipad ? [`col-ipad-${ipad.span}`]:[]),
-          ...(narrowPc ? [`col-narrow-pc-${narrowPc.span}`]:[]),
-          ...(pc ? [`col-pc-${pc.span}`]:[]),
-          ...(widePc ? [`col-wide-pc-${widePc.span}`]:[])
+          ...createClasses({span,offset}),
+          ...createClasses(ipad,'ipad'),
+          ...createClasses(narrowPc,'narrow-pc'),
+          ...createClasses(pc,'pc'),
+          ...createClasses(widePc,'wide-pc')
         ]  
       },
       colStyle(){
