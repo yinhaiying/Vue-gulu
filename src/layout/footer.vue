@@ -13,5 +13,7 @@ export default {
 
 
 <style lang="scss" scoped>
-
+.footer{
+  border:2px solid black;
+}
 </style>

@@ -12,50 +12,50 @@
       padding: 0;
       box-sizing: border-box;
     }
-
-    #app {
-      margin: 20px;
-    }
     body {
       font-size: var(--font-size);
     }
   </style>
+
+
   <style>
-  .box{
-    margin:20px;
-  }
-  </style>
-  <style>
+    .demo{
+      min-height:100px;
+    }
   </style>
 </head>
 
 <body>
   <div id="app">
-   <g-layout>
-     <g-header></g-header>
-     <g-content></g-content>
-     <g-footer></g-footer>
+   <g-layout style = "height:100vh">
+     <g-sider>sider</g-sider>
+     <g-layout>
+        <g-header class = "demo">header</g-header>
+        <g-content class = "demo">content</g-content>
+        <g-footer class = "demo">footer</g-footer>
+     </g-layout>
    </g-layout>
+   <div style = "margin:30px"></div>
 
-   <g-layout>
+   <!-- <g-layout>
+     <g-header>1</g-header>
+     <g-layout>
+       <g-sider>2</g-sider>
+       <g-content>3</g-content>
+     </g-layout>
+     <g-footer>4</g-footer>
+   </g-layout> -->
+
+   <!-- <g-layout>
      <g-header></g-header>
      <g-layout>
-       <g-sider></g-sider>
-       <g-content></g-content>
-     </g-layout>
-     <g-footer></g-footer>
-   </g-layout>
-
-   <g-layout>
-     <g-header></g-header>
-     <g-layout>
        <g-content></g-content>
        <g-sider></g-sider>
      </g-layout>
      <g-footer></g-footer>
-   </g-layout>
+   </g-layout> -->
 
-   <g-layout>
+   <!-- <g-layout>
      <g-sider></g-sider>
      <g-layout>
        <g-header></g-header>
@@ -63,7 +63,7 @@
        <g-footer></g-footer>
      </g-layout>
 
-   </g-layout>
+   </g-layout> -->
 
 
 

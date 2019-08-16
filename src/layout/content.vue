@@ -13,5 +13,8 @@ export default {
 
 
 <style lang="scss" scoped>
-
+.content{
+  border:2px solid green;
+  flex-grow:1;
+}
 </style>
