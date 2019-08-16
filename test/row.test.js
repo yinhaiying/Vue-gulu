@@ -33,6 +33,9 @@ const expect = chai.expect;
             expect(getComputedStyle(row).marginLeft).to.eq('-10px');
             expect(getComputedStyle(row).marginRight).to.eq('-10px');
             done();
+            vm.$el.remove();
+            vm.$destroy();
+
          },0)
      })
 

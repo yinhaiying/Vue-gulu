@@ -244,7 +244,7 @@
           `col-${span}`,
           offset && `offset-${offset}`,
           ...phoneClass
-          ]  
+          ]
       },
 
 ```
@@ -297,7 +297,7 @@
         ...(narrowPc && [`col-narrow-pc-${narrowPc.span}`]),
         ...(pc && [`col-pc-${pc.span}`]),
         ...(widePc && [`col-wide-pc-${widePc.span}`])
-      ]  
+      ]
     },
 ```
 对上面的代码进行优化：
@@ -306,7 +306,7 @@
           if(!obj){
             return [];
           }
-          // str的值是 ipad narrow-pc 
+          // str的值是 ipad narrow-pc
            let arr = [];
            if(obj.span){
              arr.push(`col-${str}-${obj.span}`)
@@ -366,7 +366,9 @@
 3. 通过使用`Vue.component`来注册组件，然后手动通过HTML来创建测试。但是我们会发现一个新的
 问题，那就是`g-col`中的`padding`总是为0。这设计到父子组件的创建过程的先后问题。在Vue中父组件
 和子组件的`mounted`事件都是异步的,也就是说我们此时通过`console.log`进行打印,`col`还没有挂载完成，
-因此得到的`padding-left`始终为0。解决办法是使用异步的测试方法。
+因此得到的`padding-left`始终为0。解决办法是使用异步的测试方法。ps:通常情况需要测试的值在出现在钩子
+函数中,可能需要使用异步。如果是需要测试css,那么通常需要把它放到页面中，而不能只挂载到内存中。
+
 ```
      it('可以接收gutter', (done) => {
          const oDiv = document.createElement('div');
