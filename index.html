@@ -31,10 +31,45 @@
 
 <body>
   <div id="app">
-    <g-button @click = "showToast1">top</g-button>
-    <g-button @click = "showToast2">middle</g-button>
-    <g-button @click = "showToast3">bottom</g-button>
+   <g-layout>
+     <g-header></g-header>
+     <g-content></g-content>
+     <g-footer></g-footer>
+   </g-layout>
+
+   <g-layout>
+     <g-header></g-header>
+     <g-layout>
+       <g-sider></g-sider>
+       <g-content></g-content>
+     </g-layout>
+     <g-footer></g-footer>
+   </g-layout>
+
+   <g-layout>
+     <g-header></g-header>
+     <g-layout>
+       <g-content></g-content>
+       <g-sider></g-sider>
+     </g-layout>
+     <g-footer></g-footer>
+   </g-layout>
+
+   <g-layout>
+     <g-sider></g-sider>
+     <g-layout>
+       <g-header></g-header>
+       <g-content></g-content>
+       <g-footer></g-footer>
+     </g-layout>
+
+   </g-layout>
+
+
+
   </div>
+
+
 </body>
 <script src="./src/app.js"></script>
 
