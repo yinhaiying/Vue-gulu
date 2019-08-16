@@ -9,6 +9,15 @@ import Col from './col.vue'
 import Toast from './toast.vue'
 import Plugin from './plugin'
 
+import Tabs from './tabs/tabs.vue'
+import TabsHead from './tabs/tabs-head.vue'
+import TabsBody from './tabs/tabs-body.vue'
+import TabsItem from './tabs/tabs-item.vue'
+import TabsPane from './tabs/tabs-pane.vue'
+
+
+
+
 Vue.component('g-button',Button)
 Vue.component('g-icon',Icon)
 Vue.component('g-button-group',ButtonGroup)
@@ -16,6 +25,11 @@ Vue.component('g-input',Input)
 Vue.component('g-row',Row)
 Vue.component('g-col',Col)
 Vue.component('g-toast',Toast)
+Vue.component('g-tabs',Tabs)
+Vue.component('g-tabs-head',TabsHead)
+Vue.component('g-tabs-body',TabsBody)
+Vue.component('g-tabs-item',TabsItem)
+Vue.component('g-tabs-pane',TabsPane)
 
 
 Vue.use(Plugin)

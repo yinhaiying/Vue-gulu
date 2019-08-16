@@ -31,9 +31,20 @@
 
 <body>
   <div id="app">
-    <g-button @click = "showToast1">top</g-button>
-    <g-button @click = "showToast2">middle</g-button>
-    <g-button @click = "showToast3">bottom</g-button>
+    <g-tabs>
+       <g-tabs-nav>
+         <g-tabs-item name = "tab1">
+           体育
+         </g-tabs-item>
+         <g-tabs-item name = "tab2">
+           财经
+         </g-tabs-item>
+       </g-tabs-nav>
+       <g-tabs-body>
+         <g-tabs-panel name = "tab1"></g-tabs-panel>
+         <g-tabs-panel name = "tab2"></g-tabs-panel>
+       </g-tabs-body>
+    </g-tabs>
   </div>
 
 </body>
