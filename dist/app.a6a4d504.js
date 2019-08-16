@@ -12476,11 +12476,11 @@ var _default = {
 };
 exports.default = _default;
         var $2f27c1 = exports.default || module.exports;
-      
+
       if (typeof $2f27c1 === 'function') {
         $2f27c1 = $2f27c1.options;
       }
-    
+
         /* template */
         Object.assign($2f27c1, (function () {
           var render = function() {
@@ -12504,7 +12504,7 @@ render._withStripped = true
             functional: undefined
           };
         })());
-      
+
     /* hot reload */
     (function () {
       if (module.hot) {
@@ -12519,11 +12519,11 @@ render._withStripped = true
           }
         }
 
-        
+
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
-      
+
       }
     })();
 },{"./svg.js":"src/svg.js","_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.common.js"}],"src/button.vue":[function(require,module,exports) {
@@ -12571,11 +12571,11 @@ var _default = {
 };
 exports.default = _default;
         var $778e3e = exports.default || module.exports;
-      
+
       if (typeof $778e3e === 'function') {
         $778e3e = $778e3e.options;
       }
-    
+
         /* template */
         Object.assign($778e3e, (function () {
           var render = function() {
@@ -12622,7 +12622,7 @@ render._withStripped = true
             functional: undefined
           };
         })());
-      
+
     /* hot reload */
     (function () {
       if (module.hot) {
@@ -12637,11 +12637,11 @@ render._withStripped = true
           }
         }
 
-        
+
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
-      
+
       }
     })();
 },{"./icon.vue":"src/icon.vue","_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.common.js"}],"src/button-group.vue":[function(require,module,exports) {
@@ -12690,11 +12690,11 @@ var _default = {
 };
 exports.default = _default;
         var $163f24 = exports.default || module.exports;
-      
+
       if (typeof $163f24 === 'function') {
         $163f24 = $163f24.options;
       }
-    
+
         /* template */
         Object.assign($163f24, (function () {
           var render = function() {
@@ -12714,7 +12714,7 @@ render._withStripped = true
             functional: undefined
           };
         })());
-      
+
     /* hot reload */
     (function () {
       if (module.hot) {
@@ -12729,11 +12729,11 @@ render._withStripped = true
           }
         }
 
-        
+
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
-      
+
       }
     })();
 },{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.common.js"}],"src/input.vue":[function(require,module,exports) {
@@ -12794,11 +12794,11 @@ var _default = {
 };
 exports.default = _default;
         var $b208f8 = exports.default || module.exports;
-      
+
       if (typeof $b208f8 === 'function') {
         $b208f8 = $b208f8.options;
       }
-    
+
         /* template */
         Object.assign($b208f8, (function () {
           var render = function() {
@@ -12852,7 +12852,7 @@ render._withStripped = true
             functional: undefined
           };
         })());
-      
+
     /* hot reload */
     (function () {
       if (module.hot) {
@@ -12867,11 +12867,11 @@ render._withStripped = true
           }
         }
 
-        
+
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
-      
+
       }
     })();
 },{"./icon.vue":"src/icon.vue","_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.common.js"}],"src/row.vue":[function(require,module,exports) {
@@ -12887,21 +12887,49 @@ exports.default = void 0;
 //
 //
 //
-var _default = {};
+var _default = {
+  props: {
+    gutter: {
+      type: [Number, String],
+      default: 0
+    }
+  },
+  computed: {
+    rowStyle: function rowStyle() {
+      return {
+        marginLeft: -this.gutter / 2 + 'px',
+        marginRight: -this.gutter / 2 + 'px'
+      };
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$children.forEach(function (vm) {
+      // 获取每一个子元素，然后给子元素绑定gutter
+      vm.gutter = _this.gutter;
+    });
+  }
+};
 exports.default = _default;
         var $cac2f6 = exports.default || module.exports;
-      
+
       if (typeof $cac2f6 === 'function') {
         $cac2f6 = $cac2f6.options;
       }
-    
+
         /* template */
         Object.assign($cac2f6, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [_vm._t("default")], 2)
+  return _c(
+    "div",
+    { staticClass: "row", style: _vm.rowStyle },
+    [_vm._t("default")],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -12914,7 +12942,7 @@ render._withStripped = true
             functional: undefined
           };
         })());
-      
+
     /* hot reload */
     (function () {
       if (module.hot) {
@@ -12929,11 +12957,11 @@ render._withStripped = true
           }
         }
 
-        
+
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
-      
+
       }
     })();
 },{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.common.js"}],"src/col.vue":[function(require,module,exports) {
@@ -12943,12 +12971,36 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _keys = _interopRequireDefault(require("babel-runtime/core-js/object/keys"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 //
 //
 //
 //
 //
 //
+var validator = function validator(value) {
+  var valid = true;
+  var keys = (0, _keys.default)(value);
+  keys.forEach(function (item) {
+    if (!['span', 'offset'].includes(item)) {
+      valid = false;
+    }
+  });
+  return valid;
+};
+
 var _default = {
   name: 'Gulu-Col',
   props: {
@@ -12957,16 +13009,81 @@ var _default = {
     },
     offset: {
       type: [Number, String]
+    },
+    ipad: {
+      type: Object,
+      validator: validator
+    },
+    narrowPc: {
+      type: Object,
+      validator: validator
+    },
+    pc: {
+      type: Object,
+      validator: validator
+    },
+    widePc: {
+      type: Object,
+      validator: validator
+    }
+  },
+  data: function data() {
+    return {
+      gutter: 0
+    };
+  },
+  methods: {
+    createClasses: function createClasses(obj) {
+      var str = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+
+      if (!obj) {
+        return [];
+      } // str的值是 ipad narrow-pc
+
+
+      var arr = [];
+
+      if (obj.span) {
+        arr.push("col-".concat(str).concat(obj.span));
+      }
+
+      if (obj.offset) {
+        arr.push("".concat(str, "offset-").concat(obj.offset));
+        console.log(arr);
+      }
+
+      return arr;
+    }
+  },
+  computed: {
+    colClasses: function colClasses() {
+      var span = this.span,
+          offset = this.offset,
+          ipad = this.ipad,
+          narrowPc = this.narrowPc,
+          pc = this.pc,
+          widePc = this.widePc;
+      var createClasses = this.createClasses;
+      return [].concat(_toConsumableArray(createClasses({
+        span: span,
+        offset: offset
+      })), _toConsumableArray(createClasses(ipad, 'ipad-')), _toConsumableArray(createClasses(narrowPc, 'narrow-pc-')), _toConsumableArray(createClasses(pc, 'pc-')), _toConsumableArray(createClasses(widePc, 'wide-pc-')));
+    },
+    colStyle: function colStyle() {
+      return {
+        paddingLeft: this.gutter / 2 + 'px',
+        paddingRight: this.gutter / 2 + 'px'
+      };
     }
   }
 };
 exports.default = _default;
         var $743967 = exports.default || module.exports;
-      
+
       if (typeof $743967 === 'function') {
         $743967 = $743967.options;
       }
-    
+
         /* template */
         Object.assign($743967, (function () {
           var render = function() {
@@ -12975,10 +13092,7 @@ exports.default = _default;
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass: "col",
-      class: ["col-" + _vm.span, _vm.offset && "offset-" + _vm.offset]
-    },
+    { staticClass: "col", class: _vm.colClasses, style: _vm.colStyle },
     [_vm._t("default")],
     2
   )
@@ -12994,7 +13108,7 @@ render._withStripped = true
             functional: undefined
           };
         })());
-      
+
     /* hot reload */
     (function () {
       if (module.hot) {
@@ -13009,11 +13123,11 @@ render._withStripped = true
           }
         }
 
-        
+
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
-      
+
       }
     })();
 },{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.common.js"}],"src/toast.vue":[function(require,module,exports) {
@@ -13112,11 +13226,11 @@ var _default = {
 };
 exports.default = _default;
         var $dd39bb = exports.default || module.exports;
-      
+
       if (typeof $dd39bb === 'function') {
         $dd39bb = $dd39bb.options;
       }
-    
+
         /* template */
         Object.assign($dd39bb, (function () {
           var render = function() {
@@ -13152,7 +13266,7 @@ render._withStripped = true
             functional: undefined
           };
         })());
-      
+
     /* hot reload */
     (function () {
       if (module.hot) {
@@ -13167,11 +13281,11 @@ render._withStripped = true
           }
         }
 
-        
+
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
-      
+
       }
     })();
 },{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.common.js"}],"src/plugin.js":[function(require,module,exports) {
