@@ -74,7 +74,7 @@ export default {
 <style lang="scss" scoped>
 .col{
   height:100px;
-  border:2px solid green;
+  // border:2px solid green;
   // background:red;
   @for $index from 1 to 24 {
       &-#{$index}{
