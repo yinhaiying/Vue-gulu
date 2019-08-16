@@ -319,3 +319,72 @@
     }
 
 ```
+
+#### 单元测试
+
+栅格布局的单元测试和之前的UI组件的单元测试有所不同。
+1. 栅格布局中设计到两个组件，`Row`和`Col`，而且两个组件之间是相互依赖的。
+因此进行单元测试时需要同时测试这两个组件。
+```
+     it('可以接收gutter', () => {
+         const oDiv = document.createElement('div');
+         document.body.appendChild(oDiv);
+         const ColConstructor = Vue.extend(Col);
+         const col = new ColConstructor({ })
+         const RowConstructor = Vue.extend(Row)
+         const row = new RowConstructor({
+            propsData: {
+                gutter: 20
+            }
+         })
+         // 进行不下去了
+         row.$destroy()
+     })
+
+```
+2. 需要同时创建`Col`和`Row`的实例，而且需要将`Col`的实例作为`Row`的子元素。
+而`Vue`中好像并没有提供绑定使用js绑定`children`的api。只提供了使用html进行设置
+得到children。因此，我们需要考虑使用`html`的方式来进行单元测试。
+```
+     it('可以接收gutter', () => {
+         const oDiv = document.createElement('div');
+         document.body.appendChild(oDiv);
+         Vue.component('g-row',Row);
+         Vue.component('g-col',Col);
+         oDiv.innerHTML = `
+           <g-row gutter = '20' >
+             <g-col></g-col>
+           </g-row>
+         `
+         const vm = new Vue({
+             el:oDiv
+         })
+         console.log(vm.$el.outerHTML);
+     })
+
+```
+3. 通过使用`Vue.component`来注册组件，然后手动通过HTML来创建测试。但是我们会发现一个新的
+问题，那就是`g-col`中的`padding`总是为0。这设计到父子组件的创建过程的先后问题。在Vue中父组件
+和子组件的`mounted`事件都是异步的,也就是说我们此时通过`console.log`进行打印,`col`还没有挂载完成，
+因此得到的`padding-left`始终为0。解决办法是使用异步的测试方法。
+```
+     it('可以接收gutter', (done) => {
+         const oDiv = document.createElement('div');
+         document.body.appendChild(oDiv);
+         Vue.component('g-row',Row);
+         Vue.component('g-col',Col);
+         oDiv.innerHTML = `
+           <g-row gutter = '20' >
+             <g-col></g-col>
+           </g-row>
+         `
+         const vm = new Vue({
+             el:oDiv
+         })
+         setTimeout(() => {
+            console.log(vm.$el.outerHTML);
+            done();
+         },0)
+     })
+
+```

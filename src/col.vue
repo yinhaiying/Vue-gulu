@@ -40,10 +40,10 @@ export default {
           // str的值是 ipad narrow-pc 
            let arr = [];
            if(obj.span){
-             arr.push(`col-${str}-${obj.span}`)
+             arr.push(`col-${str}${obj.span}`)
            }
            if(obj.offset){
-             arr.push(`col-${str}-${obj.offset}`)
+             arr.push(`col-${str}${obj.offset}`)
            }
            return arr;
       }
@@ -54,10 +54,10 @@ export default {
         const createClasses = this.createClasses;
         return [
           ...createClasses({span,offset}),
-          ...createClasses(ipad,'ipad'),
-          ...createClasses(narrowPc,'narrow-pc'),
-          ...createClasses(pc,'pc'),
-          ...createClasses(widePc,'wide-pc')
+          ...createClasses(ipad,'ipad-'),
+          ...createClasses(narrowPc,'narrow-pc-'),
+          ...createClasses(pc,'pc-'),
+          ...createClasses(widePc,'wide-pc-')
         ]  
       },
       colStyle(){
@@ -73,8 +73,8 @@ export default {
 <style lang="scss" scoped>
 .col{
   height:100px;
-  border:2px solid green;
-  background:red;
+  // border:2px solid green;
+  // background:red;
   @for $index from 1 to 24 {
       &-#{$index}{
         width:($index / 24) * 100%;
