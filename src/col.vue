@@ -44,7 +44,6 @@ export default {
            }
            if(obj.offset){
              arr.push(`${str}offset-${obj.offset}`)
-             console.log(arr)
            }
            return arr;
       }
