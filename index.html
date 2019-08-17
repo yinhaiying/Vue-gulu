@@ -30,12 +30,13 @@
 
     <g-upload
         accept = "images/*"
-        action = "http://frank.com/upload"
+        action = "https://img-upload-server.herokuapp.com/"
         name = "avatar"
-        :fileList = "fileList"
-        @update:fileList = "">
+        >
       <button>上传</button>
-      <div>只能上传300kb以内的png,jpg图片</div>
+      <template slot = "tips">
+        <div>只能上传300kb以内的png,jpg图片</div>
+      </template>
     </g-upload>
     <button>保存</button>
 

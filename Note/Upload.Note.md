@@ -87,3 +87,18 @@ app.put('/upload', cors(), upload.single('file'), function (req, res, next) {
   res.json({key: req.file.filename})
 })
 ```
+
+
+#### 上传组件的实现
+我们先参考`element-ui`的`upload`组件的调用方式。
+```
+<el-upload
+  class="upload-demo"
+  action="https://jsonplaceholder.typicode.com/posts/">
+  <el-button size="small" type="primary">点击上传</el-button>
+  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+</el-upload>
+```
+从上面我们可以看出，当用户点击上传的时候，会自动弹出一个对话框，让我们去选择要上传的文件。
+这应该是`type`为`file`类型的`input`实现的功能。然而我们并没有在目前的代码中和页面中看到有
+`input`,这说明这个`input`是用户点击后创建的。

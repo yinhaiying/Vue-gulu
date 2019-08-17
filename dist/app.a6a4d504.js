@@ -14078,6 +14078,95 @@ render._withStripped = true
       
       }
     })();
+},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.common.js"}],"src/upload/upload.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: 'Upload',
+  methods: {
+    onUploadClick: function onUploadClick() {
+      var oInput = document.createElement('input');
+      oInput.type = 'file';
+      oInput.addEventListener('change', function () {
+        var file = oInput.files[0];
+        oInput.remove();
+        console.log(file);
+      });
+      this.$refs.temp.appendChild(oInput); //在这里手动触发input的click事件。
+
+      oInput.click();
+    }
+  }
+};
+exports.default = _default;
+        var $87fb9f = exports.default || module.exports;
+      
+      if (typeof $87fb9f === 'function') {
+        $87fb9f = $87fb9f.options;
+      }
+    
+        /* template */
+        Object.assign($87fb9f, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "gulu-uploader" }, [
+    _c("div", { on: { click: _vm.onUploadClick } }, [_vm._t("default")], 2),
+    _vm._v(" "),
+    _c("div", {
+      ref: "temp",
+      staticStyle: { width: "0", height: "0", overflow: "hidden" }
+    })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$87fb9f', $87fb9f);
+          } else {
+            api.reload('$87fb9f', $87fb9f);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
 },{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.common.js"}],"src/app.js":[function(require,module,exports) {
 "use strict";
 
@@ -14109,6 +14198,8 @@ var _footer = _interopRequireDefault(require("./layout/footer.vue"));
 
 var _sider = _interopRequireDefault(require("./layout/sider.vue"));
 
+var _upload = _interopRequireDefault(require("./upload/upload.vue"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue.default.component('g-button', _button.default);
@@ -14134,6 +14225,8 @@ _vue.default.component('g-content', _content.default);
 _vue.default.component('g-footer', _footer.default);
 
 _vue.default.component('g-sider', _sider.default);
+
+_vue.default.component('g-upload', _upload.default);
 
 _vue.default.use(_plugin.default);
 
@@ -14177,7 +14270,7 @@ new _vue.default({
     }
   }
 });
-},{"vue":"node_modules/vue/dist/vue.common.js","./button.vue":"src/button.vue","./button-group.vue":"src/button-group.vue","./icon.vue":"src/icon.vue","./input":"src/input.vue","./row.vue":"src/row.vue","./col.vue":"src/col.vue","./toast.vue":"src/toast.vue","./plugin":"src/plugin.js","./layout/layout.vue":"src/layout/layout.vue","./layout/header.vue":"src/layout/header.vue","./layout/content.vue":"src/layout/content.vue","./layout/footer.vue":"src/layout/footer.vue","./layout/sider.vue":"src/layout/sider.vue"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"vue":"node_modules/vue/dist/vue.common.js","./button.vue":"src/button.vue","./button-group.vue":"src/button-group.vue","./icon.vue":"src/icon.vue","./input":"src/input.vue","./row.vue":"src/row.vue","./col.vue":"src/col.vue","./toast.vue":"src/toast.vue","./plugin":"src/plugin.js","./layout/layout.vue":"src/layout/layout.vue","./layout/header.vue":"src/layout/header.vue","./layout/content.vue":"src/layout/content.vue","./layout/footer.vue":"src/layout/footer.vue","./layout/sider.vue":"src/layout/sider.vue","./upload/upload.vue":"src/upload/upload.vue"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -14205,7 +14298,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "13775" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "7249" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
