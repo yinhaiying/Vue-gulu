@@ -40,14 +40,15 @@ export default {
       let oInput = this.createInput();
       // 监听Input
       oInput.addEventListener('change',() => {
-        this.uploadFile(oInput)
+        let file = oInput.files[0];
+        this.uploadFile(file);
+        oInput.remove();
       })
       //在这里手动触发input的click事件。
       oInput.click();
     },
-    uploadFile(oInput){
+    uploadFile(file){
         // 上传文件
-        let file = oInput.files[0];
         let formData = new FormData();
         formData.append(this.name,file);
         // 开始发送请求
@@ -58,8 +59,7 @@ export default {
           let url = this.parseResponse(xhr.response);
           this.url = url;
         };
-        xhr.send(formData)
-        oInput.remove();
+        xhr.send(formData);
     },
     createInput(){
       // 创建Input

@@ -14128,16 +14128,19 @@ var _default = {
       var oInput = this.createInput(); // 监听Input
 
       oInput.addEventListener('change', function () {
-        _this.uploadFile(oInput);
+        var file = oInput.files[0];
+
+        _this.uploadFile(file);
+
+        oInput.remove();
       }); //在这里手动触发input的click事件。
 
       oInput.click();
     },
-    uploadFile: function uploadFile(oInput) {
+    uploadFile: function uploadFile(file) {
       var _this2 = this;
 
       // 上传文件
-      var file = oInput.files[0];
       var formData = new FormData();
       formData.append(this.name, file); // 开始发送请求
 
@@ -14152,7 +14155,6 @@ var _default = {
       };
 
       xhr.send(formData);
-      oInput.remove();
     },
     createInput: function createInput() {
       // 创建Input
