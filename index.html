@@ -27,15 +27,17 @@
 
 <body>
   <div id="app">
-   <g-layout style = "height:100vh">
-      <g-header class = "demo">header</g-header>
-     <g-layout>
-        <g-sider>sider</g-sider>
-        <g-content class = "demo">content</g-content>
-     </g-layout>
-     <g-footer class = "demo">footer</g-footer>
-   </g-layout>
-   <div style = "margin:30px"></div>
+
+    <g-upload
+        accept = "images/*"
+        action = "http://frank.com/upload"
+        name = "avatar"
+        :fileList = "fileList"
+        @update:fileList = "">
+      <button>上传</button>
+      <div>只能上传300kb以内的png,jpg图片</div>
+    </g-upload>
+    <button>保存</button>
 
 
 
