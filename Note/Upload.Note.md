@@ -102,3 +102,42 @@ app.put('/upload', cors(), upload.single('file'), function (req, res, next) {
 从上面我们可以看出，当用户点击上传的时候，会自动弹出一个对话框，让我们去选择要上传的文件。
 这应该是`type`为`file`类型的`input`实现的功能。然而我们并没有在目前的代码中和页面中看到有
 `input`,这说明这个`input`是用户点击后创建的。
+
+
+#### 简单实现前端的ajax请求上传图片
+
+```
+    onUploadClick(){
+      let oInput = document.createElement('input');
+      oInput.type = 'file';
+      this.$refs.temp.appendChild(oInput);
+      oInput.addEventListener('change',() => {
+        let file = oInput.files[0];
+        let formData = new FormData();
+        formData.append(this.name,file);
+        // 开始发送请求
+        let xhr = new XMLHttpRequest();
+        xhr.open(this.method,this.action);
+        xhr.onload = () =>{
+          //通过用户自己定义函数来确定如何解析后台返回的参数
+          let url = this.parseResponse(xhr.response);
+          this.url = url;
+        };
+        xhr.send(formData)
+        oInput.remove();
+      })
+      //在这里手动触发input的click事件。
+      oInput.click();
+    }
+
+```
+
+这里用户最好自己定义上传图片时候，如何处理后台的数据。
+`parseResponse`
+```
+    parseResponse:(response) => {
+      let obj = JSON.parse(response)
+     let url = `http://127.0.0.1:3000/preview/${obj.key}`
+      return url;
+    }
+```

@@ -15,6 +15,7 @@ import Footer from './layout/footer.vue'
 import Sider from './layout/sider.vue'
 import Uploader from './upload/upload.vue'
 
+
 Vue.component('g-button',Button)
 Vue.component('g-icon',Icon)
 Vue.component('g-button-group',ButtonGroup)
@@ -35,7 +36,12 @@ new Vue({
   el:'#app',
   data:{
     loading1:false,
-    message:'hello world'
+    message:'hello world',
+    parseResponse:(response) => {
+      let obj = JSON.parse(response)
+     let url = `http://127.0.0.1:3000/preview/${obj.key}`
+      return url;
+    }
   },
   created(){
 
@@ -74,6 +80,7 @@ new Vue({
         }
       })
     },
+
   }
 })
 

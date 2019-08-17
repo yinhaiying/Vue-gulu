@@ -14095,6 +14095,7 @@ exports.default = void 0;
 //
 //
 //
+//
 var _default = {
   name: 'Upload',
   props: {
@@ -14109,32 +14110,56 @@ var _default = {
     action: {
       type: String,
       required: true
+    },
+    parseResponse: {
+      type: Function,
+      required: true
     }
+  },
+  data: function data() {
+    return {
+      url: 'about:blank'
+    };
   },
   methods: {
     onUploadClick: function onUploadClick() {
       var _this = this;
 
-      var oInput = document.createElement('input');
-      oInput.type = 'file';
-      this.$refs.temp.appendChild(oInput);
+      var oInput = this.createInput(); // 监听Input
+
       oInput.addEventListener('change', function () {
-        var file = oInput.files[0];
-        var formData = new FormData();
-        formData.append(_this.name, file); // 开始发送请求
-
-        var xhr = new XMLHttpRequest();
-        xhr.open(_this.method, _this.action);
-
-        xhr.onload = function () {
-          console.log(xhr.response);
-        };
-
-        xhr.send(formData);
-        oInput.remove();
+        _this.uploadFile(oInput);
       }); //在这里手动触发input的click事件。
 
       oInput.click();
+    },
+    uploadFile: function uploadFile(oInput) {
+      var _this2 = this;
+
+      // 上传文件
+      var file = oInput.files[0];
+      var formData = new FormData();
+      formData.append(this.name, file); // 开始发送请求
+
+      var xhr = new XMLHttpRequest();
+      xhr.open(this.method, this.action);
+
+      xhr.onload = function () {
+        //通过用户自己定义函数来确定如何解析后台返回的参数
+        var url = _this2.parseResponse(xhr.response);
+
+        _this2.url = url;
+      };
+
+      xhr.send(formData);
+      oInput.remove();
+    },
+    createInput: function createInput() {
+      // 创建Input
+      var oInput = document.createElement('input');
+      oInput.type = 'file';
+      this.$refs.temp.appendChild(oInput);
+      return oInput;
     }
   }
 };
@@ -14157,7 +14182,9 @@ exports.default = _default;
     _c("div", {
       ref: "temp",
       staticStyle: { width: "0", height: "0", overflow: "hidden" }
-    })
+    }),
+    _vm._v(" "),
+    _c("img", { attrs: { src: _vm.url, alt: "" } })
   ])
 }
 var staticRenderFns = []
@@ -14260,7 +14287,12 @@ new _vue.default({
   el: '#app',
   data: {
     loading1: false,
-    message: 'hello world'
+    message: 'hello world',
+    parseResponse: function parseResponse(response) {
+      var obj = JSON.parse(response);
+      var url = "http://127.0.0.1:3000/preview/".concat(obj.key);
+      return url;
+    }
   },
   created: function created() {},
   methods: {
@@ -14324,7 +14356,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50793" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54650" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
