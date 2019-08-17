@@ -11,17 +11,39 @@
 <script>
 export default {
   name:'Upload',
+  props:{
+    name:{
+      type:String,
+      required:true
+    },
+    method:{
+      type:String,
+      default:'POST'
+    },
+    action:{
+      type:String,
+      required:true
+    }
+  },
   methods:{
     onUploadClick(){
-
       let oInput = document.createElement('input');
       oInput.type = 'file';
+      this.$refs.temp.appendChild(oInput);
       oInput.addEventListener('change',() => {
         let file = oInput.files[0];
+        let formData = new FormData();
+        formData.append(this.name,file);
+        // 开始发送请求
+        let xhr = new XMLHttpRequest();
+        xhr.open(this.method,this.action);
+        xhr.onload = function(){
+          console.log(xhr.response)
+        };
+        xhr.send(formData)
         oInput.remove();
-        console.log(file);
       })
-      this.$refs.temp.appendChild(oInput);
+
       //在这里手动触发input的click事件。
       oInput.click();
     }
