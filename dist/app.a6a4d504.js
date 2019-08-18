@@ -14107,6 +14107,8 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 //
 //
 //
@@ -14172,9 +14174,9 @@ var _default = {
       var oInput = this.createInput(); // 监听Input
 
       oInput.addEventListener('change', function () {
-        var file = oInput.files[0];
-
-        _this.uploadFile(file);
+        // let file = oInput.files[0];
+        // this.uploadFile(file);
+        _this.uploadFiles(oInput.files);
 
         oInput.remove();
       }); //在这里手动触发input的click事件。
@@ -14186,7 +14188,6 @@ var _default = {
           size = file.size;
 
       if (size > this.sizeLimit) {
-        console.log('这里执行了吗');
         this.$emit('upload-error', "\u6587\u4EF6\u5927\u4E8E".concat(this.sizeLimit));
         return false;
       }
@@ -14196,39 +14197,54 @@ var _default = {
         type: type,
         size: size,
         status: 'uploading'
-      }; // this.$emit('update:fileList',[...this.fileList,newFile]);
+      };
+      return true; // this.$emit('update:fileList',[...this.fileList,newFile]);
     },
-    uploadFile: function uploadFile(file) {
+    uploadFiles: function uploadFiles(files) {
       var _this2 = this;
 
-      var name = file.name,
-          size = file.size,
-          type = file.type;
-      var newName = this.generateName(name);
+      var _loop = function _loop(i) {
+        var file = files[i];
+        var name = file.name,
+            size = file.size,
+            type = file.type;
 
-      if (!this.beforeUpload(file, newName)) {
-        return false;
-      } // 上传文件
+        var newName = _this2.generateName(name);
+
+        if (!_this2.beforeUpload(file, newName)) {
+          return {
+            v: false
+          };
+        } // 上传文件
 
 
-      var formData = new FormData();
-      formData.append(this.name, file);
-      this.doUploadFile(formData, function (response) {
-        //通过用户自己定义函数来确定如何解析后台返回的参数
-        var url = _this2.parseResponse(response);
+        var formData = new FormData();
+        formData.append(_this2.name, file);
 
-        _this2.url = url;
+        _this2.doUploadFile(formData, function (response) {
+          console.log(response); //通过用户自己定义函数来确定如何解析后台返回的参数
 
-        _this2.$emit('update:fileList', [].concat(_toConsumableArray(_this2.fileList), [{
-          name: newName,
-          type: type,
-          size: size,
-          url: url,
-          status: 'success'
-        }]));
-      }, function (xhr) {
-        _this2.uploadError(newName, xhr);
-      });
+          var url = _this2.parseResponse(response);
+
+          _this2.url = url;
+
+          _this2.$emit('update:fileList', [].concat(_toConsumableArray(_this2.fileList), [{
+            name: newName,
+            type: type,
+            size: size,
+            url: url,
+            status: 'success'
+          }]));
+        }, function (xhr) {
+          _this2.uploadError(newName, xhr);
+        });
+      };
+
+      for (var i = 0; i < files.length; i++) {
+        var _ret = _loop(i);
+
+        if (_typeof(_ret) === "object") return _ret.v;
+      }
     },
     uploadError: function uploadError(newName, xhr) {
       console.log(xhr);
@@ -14287,6 +14303,7 @@ var _default = {
 
       var oInput = document.createElement('input');
       oInput.type = 'file';
+      oInput.multiple = true;
       this.$refs.temp.appendChild(oInput);
       return oInput;
     },
@@ -14484,7 +14501,7 @@ new _vue.default({
       return url;
     },
     fileList: [],
-    sizeLimit: 200
+    sizeLimit: 1024 * 1024
   },
   created: function created() {},
   methods: {

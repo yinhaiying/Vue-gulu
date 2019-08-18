@@ -43,7 +43,7 @@ new Vue({
       return url;
     },
     fileList:[],
-    sizeLimit:200
+    sizeLimit:1024*1024
   },
   created(){
 

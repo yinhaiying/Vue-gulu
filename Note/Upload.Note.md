@@ -291,4 +291,47 @@ app.put('/upload', cors(), upload.single('file'), function (req, res, next) {
 
 ```
 
+#### 多文件上传
 
+多文件上传前端只需要在创建`input`时给`input`添加一个`multiple`属性即可。
+但是关键是后端要支持多文件上传。后端传递的不再是一个，而是包含多张图片名称组成的数组。
+前端这边需要对数组进行处理。
+```
+    uploadFiles(files){
+      let formData = new FormData();
+      for(let i = 0;i < files.length;i++){
+        // 这里的name就是files
+        formData.append(this.name,files[i])
+      }
+      let xhr = new XMLHttpRequest();
+      xhr.open(this.method,this.action)
+      xhr.send(formData);
+    },
+```
+如上所示：通过ajax进行请求时，通过`for`循环将所有的数组逐步`append`到`formData`中。
+接下来对于多文件上传，我们通过多次调用单文件上传的方式即可。
+
+```
+    uploadFiles(files){
+      for(let i = 0;i < files.length;i++){
+        let file = files[i];
+        let {name,size,type} = file;
+        let newName = this.generateName(name);
+        if(!this.beforeUpload(file,newName)){
+            return false;
+        }
+               // 上传文件
+        let formData = new FormData();
+        formData.append(this.name,file);
+        this.doUploadFile(formData,(response) =>{
+          //通过用户自己定义函数来确定如何解析后台返回的参数
+          let url = this.parseResponse(response);
+          this.url = url;
+          this.$emit('update:fileList',[...this.fileList,{name:newName,type,size,url,status:'success'}])
+        },(xhr) => {
+          this.uploadError(newName,xhr);
+        })
+      }
+
+
+```

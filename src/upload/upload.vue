@@ -60,8 +60,9 @@ export default {
       let oInput = this.createInput();
       // 监听Input
       oInput.addEventListener('change',() => {
-        let file = oInput.files[0];
-        this.uploadFile(file);
+        // let file = oInput.files[0];
+        // this.uploadFile(file);
+        this.uploadFiles(oInput.files)
         oInput.remove();
       })
       //在这里手动触发input的click事件。
@@ -70,31 +71,34 @@ export default {
     beforeUpload(file,newName){
       let {type,size} = file;
       if(size > this.sizeLimit){
-        console.log('这里执行了吗');
         this.$emit('upload-error',`文件大于${this.sizeLimit}`);
         return false;
       }
       let newFile = {name:newName,type,size,status:'uploading'};
+      return true;
       // this.$emit('update:fileList',[...this.fileList,newFile]);
     },
-    uploadFile(file){
-      let {name,size,type} = file;
-      let newName = this.generateName(name);
-
-      if(!this.beforeUpload(file,newName)){
-        return false;
+    uploadFiles(files){
+      for(let i = 0;i < files.length;i++){
+        let file = files[i];
+        let {name,size,type} = file;
+        let newName = this.generateName(name);
+        if(!this.beforeUpload(file,newName)){
+            return false;
+        }
+               // 上传文件
+        let formData = new FormData();
+        formData.append(this.name,file);
+        this.doUploadFile(formData,(response) =>{
+          console.log(response)
+          //通过用户自己定义函数来确定如何解析后台返回的参数
+          let url = this.parseResponse(response);
+          this.url = url;
+          this.$emit('update:fileList',[...this.fileList,{name:newName,type,size,url,status:'success'}])
+        },(xhr) => {
+          this.uploadError(newName,xhr);
+        })
       }
-       // 上传文件
-      let formData = new FormData();
-      formData.append(this.name,file);
-      this.doUploadFile(formData,(response) =>{
-        //通过用户自己定义函数来确定如何解析后台返回的参数
-        let url = this.parseResponse(response);
-        this.url = url;
-        this.$emit('update:fileList',[...this.fileList,{name:newName,type,size,url,status:'success'}])
-      },(xhr) => {
-        this.uploadError(newName,xhr);
-      })
     },
     uploadError(newName,xhr){
       console.log(xhr)
@@ -140,6 +144,7 @@ export default {
       // 创建Input
       let oInput = document.createElement('input');
       oInput.type = 'file';
+      oInput.multiple = true;
       this.$refs.temp.appendChild(oInput);
       return oInput
     },
