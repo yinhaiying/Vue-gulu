@@ -169,3 +169,16 @@ app.put('/upload', cors(), upload.single('file'), function (req, res, next) {
         >
 ```
 这种通过`upload`更新数据的方式非常简便，可以多尝试使用。
+
+#### 删除已经上传的图片
+```
+    onRemoveFile(index){
+     let isRemove = window.confirm('你确定要删除这张图片吗');
+     if(isRemove){
+      let copy = [...this.fileList];
+      copy.splice(index,1);
+      //使用update进行更新
+      this.$emit('update:fileList',copy)
+     }
+```
+这里关键是学会使用`update`来进行数据的更新。通过指定父组件中更新的数据，并传入新的数据。

@@ -14111,6 +14111,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
 var _default = {
   name: 'Upload',
   props: {
@@ -14209,6 +14210,17 @@ var _default = {
       oInput.type = 'file';
       this.$refs.temp.appendChild(oInput);
       return oInput;
+    },
+    onRemoveFile: function onRemoveFile(index) {
+      var isRemove = window.confirm('你确定要删除这张图片吗');
+
+      if (isRemove) {
+        var copy = _toConsumableArray(this.fileList);
+
+        copy.splice(index, 1); //使用update进行更新
+
+        this.$emit('update:fileList', copy);
+      }
     }
   }
 };
@@ -14235,12 +14247,23 @@ exports.default = _default;
     _vm._v(" "),
     _c(
       "ol",
-      _vm._l(_vm.fileList, function(file) {
+      _vm._l(_vm.fileList, function(file, index) {
         return _c("li", { key: file.name }, [
           _c("img", {
             attrs: { src: file.url, alt: "", width: "100", height: "100" }
           }),
-          _vm._v("\n      " + _vm._s(file.name) + "\n    ")
+          _vm._v("\n      " + _vm._s(file.name) + "\n      "),
+          _c(
+            "button",
+            {
+              on: {
+                click: function($event) {
+                  return _vm.onRemoveFile(index)
+                }
+              }
+            },
+            [_vm._v("删除")]
+          )
         ])
       }),
       0
