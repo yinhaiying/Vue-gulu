@@ -14078,13 +14078,26 @@ render._withStripped = true
       
       }
     })();
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.common.js"}],"src/upload/upload.vue":[function(require,module,exports) {
+},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.common.js"}],"node_modules/core-js/library/fn/json/stringify.js":[function(require,module,exports) {
+var core = require('../../modules/_core');
+var $JSON = core.JSON || (core.JSON = { stringify: JSON.stringify });
+module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
+  return $JSON.stringify.apply($JSON, arguments);
+};
+
+},{"../../modules/_core":"node_modules/core-js/library/modules/_core.js"}],"node_modules/babel-runtime/core-js/json/stringify.js":[function(require,module,exports) {
+module.exports = { "default": require("core-js/library/fn/json/stringify"), __esModule: true };
+},{"core-js/library/fn/json/stringify":"node_modules/core-js/library/fn/json/stringify.js"}],"src/upload/upload.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _stringify = _interopRequireDefault(require("babel-runtime/core-js/json/stringify"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -14094,6 +14107,7 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
+//
 //
 //
 //
@@ -14159,13 +14173,26 @@ var _default = {
 
       oInput.click();
     },
+    beforeUpload: function beforeUpload(file, newName) {
+      var type = file.type,
+          size = file.size;
+      var newFile = {
+        name: newName,
+        type: type,
+        size: size,
+        status: 'uploading'
+      };
+      console.log(newFile);
+      this.$emit('update:fileList', [].concat(_toConsumableArray(this.fileList), [newFile]));
+    },
     uploadFile: function uploadFile(file) {
       var _this2 = this;
 
       var name = file.name,
           size = file.size,
           type = file.type;
-      var newName = this.generateName(name); // 上传文件
+      var newName = this.generateName(name);
+      this.beforeUpload(file, newName); // 上传文件
 
       var formData = new FormData();
       formData.append(this.name, file);
@@ -14179,15 +14206,24 @@ var _default = {
           name: newName,
           type: type,
           size: size,
-          url: url
+          status: 'success'
         }]));
-
-        _this2.fileList.push({
-          name: name,
-          size: size,
-          type: type
-        });
+      }, function () {
+        _this2.uploadError(newName);
       });
+    },
+    uploadError: function uploadError(newName) {
+      var errorFile = this.fileList.filter(function (item) {
+        return item.name === newName;
+      })[0];
+      var index = this.fileList.indexOf(errorFile);
+      var fileCopy = JSON.parse((0, _stringify.default)(this.fileList));
+      fileCopy[0].status = "fail";
+
+      var fileListCopy = _toConsumableArray(this.fileList);
+
+      fileListCopy.splice(index, 1, fileCopy);
+      this.$emit('update:fileList', fileCopy);
     },
     doUploadFile: function doUploadFile(formData, success, fail) {
       // 开始发送请求
@@ -14195,7 +14231,7 @@ var _default = {
       xhr.open(this.method, this.action);
 
       xhr.onload = function () {
-        success(xhr.response);
+        success(xhr.response); // fail()
       };
 
       xhr.send(formData);
@@ -14246,6 +14282,7 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "gulu-uploader" }, [
+    _vm._v("\n  " + _vm._s(_vm.fileList) + "\n  "),
     _c("div", { on: { click: _vm.onUploadClick } }, [_vm._t("default")], 2),
     _vm._v(" "),
     _c("div", {
@@ -14311,7 +14348,7 @@ render._withStripped = true
       
       }
     })();
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.common.js"}],"src/app.js":[function(require,module,exports) {
+},{"babel-runtime/core-js/json/stringify":"node_modules/babel-runtime/core-js/json/stringify.js","_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.common.js"}],"src/app.js":[function(require,module,exports) {
 "use strict";
 
 var _vue = _interopRequireDefault(require("vue"));

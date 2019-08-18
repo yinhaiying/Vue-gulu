@@ -182,3 +182,28 @@ app.put('/upload', cors(), upload.single('file'), function (req, res, next) {
      }
 ```
 这里关键是学会使用`update`来进行数据的更新。通过指定父组件中更新的数据，并传入新的数据。
+
+#### 添加上传失败的处理
+```
+    uploadError(newName){
+      let errorFile = this.fileList.filter((item) => item.name === newName)[0];
+      let index = this.fileList.indexOf(errorFile)
+      let fileCopy = JSON.parse(JSON.stringify(this.fileList));
+      fileCopy[0].status = "fail";
+      let fileListCopy = [...this.fileList];
+      fileListCopy.splice(index,1,fileCopy);
+      this.$emit('update:fileList',fileCopy)
+    }
+```
+
+`uploadFile`
+```
+    this.doUploadFile(formData,(response) =>{
+      //通过用户自己定义函数来确定如何解析后台返回的参数
+      let url = this.parseResponse(response);
+      this.url = url;
+      this.$emit('update:fileList',[...this.fileList,{name:newName,type,size,status:'success'}])
+    },() => {
+      this.uploadError(newName);
+    })
+```

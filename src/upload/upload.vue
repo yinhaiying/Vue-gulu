@@ -1,5 +1,6 @@
 <template>
   <div class = "gulu-uploader">
+    {{fileList}}
     <div @click = "onUploadClick">
       <slot></slot>
     </div>
@@ -58,20 +59,39 @@ export default {
       //在这里手动触发input的click事件。
       oInput.click();
     },
+    beforeUpload(file,newName){
+      let {type,size} = file;
+      let newFile = {name:newName,type,size,status:'uploading'};
+      console.log(newFile)
+      this.$emit('update:fileList',[...this.fileList,newFile]);
+    },
     uploadFile(file){
-
       let {name,size,type} = file;
-      let newName = this.generateName(name)
-        // 上传文件
-        let formData = new FormData();
-        formData.append(this.name,file);
-        this.doUploadFile(formData,(response) =>{
-          //通过用户自己定义函数来确定如何解析后台返回的参数
-          let url = this.parseResponse(response);
-          this.url = url;
-          this.$emit('update:fileList',[...this.fileList,{name:newName,type,size,url}])
-          this.fileList.push({name,size,type})
-        })
+      let newName = this.generateName(name);
+
+      this.beforeUpload(file,newName);
+
+       // 上传文件
+      let formData = new FormData();
+      formData.append(this.name,file);
+      this.doUploadFile(formData,(response) =>{
+        //通过用户自己定义函数来确定如何解析后台返回的参数
+        let url = this.parseResponse(response);
+        this.url = url;
+        this.$emit('update:fileList',[...this.fileList,{name:newName,type,size,status:'success'}])
+      },() => {
+        this.uploadError(newName);
+      })
+
+    },
+    uploadError(newName){
+      let errorFile = this.fileList.filter((item) => item.name === newName)[0];
+      let index = this.fileList.indexOf(errorFile)
+      let fileCopy = JSON.parse(JSON.stringify(this.fileList));
+      fileCopy[0].status = "fail";
+      let fileListCopy = [...this.fileList];
+      fileListCopy.splice(index,1,fileCopy);
+      this.$emit('update:fileList',fileCopy)
     },
     doUploadFile(formData,success,fail){
         // 开始发送请求
@@ -79,6 +99,7 @@ export default {
         xhr.open(this.method,this.action);
         xhr.onload = function(){
           success(xhr.response)
+          // fail()
         }
         xhr.send(formData);
     },
