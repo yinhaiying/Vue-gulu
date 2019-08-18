@@ -207,3 +207,20 @@ app.put('/upload', cors(), upload.single('file'), function (req, res, next) {
       this.uploadError(newName);
     })
 ```
+#### 解决用户选择图片时，如果选择取消。那么也会创建input的bug。
+当用户选择图片时，没有选择图片而是点击了取消。而每次点击都会创建一个`input`,
+如果多次取消，那么就会创建多个非常多的input。这存在一点问题。
+
+解决办法是：每次创建之前都删除之前的input。
+```
+    createInput(){
+      //每次创建之前都删除之前的input
+      this.$refs.temp.innerHTML  = '';
+      // 创建Input
+      let oInput = document.createElement('input');
+      oInput.type = 'file';
+      this.$refs.temp.appendChild(oInput);
+      return oInput
+    },
+
+```

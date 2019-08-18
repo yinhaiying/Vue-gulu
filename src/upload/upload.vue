@@ -115,6 +115,8 @@ export default {
           return name;
     },
     createInput(){
+      //每次创建之前都删除之前的input
+      this.$refs.temp.innerHTML  = '';
       // 创建Input
       let oInput = document.createElement('input');
       oInput.type = 'file';

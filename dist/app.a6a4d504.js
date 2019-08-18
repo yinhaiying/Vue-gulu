@@ -14253,7 +14253,9 @@ var _default = {
       return name;
     },
     createInput: function createInput() {
-      // 创建Input
+      //每次创建之前都删除之前的input
+      this.$refs.temp.innerHTML = ''; // 创建Input
+
       var oInput = document.createElement('input');
       oInput.type = 'file';
       this.$refs.temp.appendChild(oInput);
