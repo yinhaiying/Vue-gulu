@@ -3,14 +3,19 @@
     <div @click = "onUploadClick">
       <slot></slot>
     </div>
-    <slot name = "tips"></slot>
     <div ref = "temp" style = "width:0;height:0;overflow:hidden"></div>
-    <!-- <img :src="url" alt="" class=""> -->
     <ol class = "gulu-uploader-file-list">
       <li v-for = "(file,index) in fileList" :key = "file.name">
-        <img :src="file.url" alt="" width = "100" height = "100">
-        {{file.name}}
-        <button @click = "onRemoveFile(index)">删除</button>
+        <div class="gulu-uploader-img-wrapper">
+          <template v-if = "file.type.indexOf('image') > -1">
+              <img :src="file.url" alt="" width = "32" height = "32">
+          </template>
+          <template v-else>
+            <div class = "gulu-uploader-default-img"></div>
+          </template>
+        </div>
+        <span class = "gulu-uploader-name" :class = "{[file.status]:file.status}">{{file.name}}</span>
+        <button class = "gulu-uploader-remove" @click = "onRemoveFile(index)">x</button>
       </li>
     </ol>
   </div>
@@ -137,6 +142,36 @@ export default {
 .gulu-uploader{
   &-file-list{
     list-style:none;
+    > li{
+      display:flex;
+
+      align-items:center;
+      // margin:8px 0;
+      box-sizing:border-box;
+      border:1px solid #c0c0c0;
+    }
+  }
+  &-default-img{
+    border:1px solid #ddd;
+    width:32px;
+    height:32px;
+  }
+  &-img-wrapper{
+    height:32px;
+    margin:0 8px 0 0;
+  }
+  &-name{
+    margin-right:auto;
+    &.success{
+      color:green;
+    }
+    &.fail{
+      color:red;
+    }
+  }
+  &-remove{
+    width:32px;
+    height:32px;
   }
 }
 

@@ -26,7 +26,7 @@
 </head>
 
 <body>
-  <div id="app">
+  <div id="app" style = "margin:20px">
 
     <g-upload
         accept = "images/*"
@@ -36,20 +36,7 @@
         :file-list.sync = "fileList"
         >
       <button>上传</button>
-      <template slot = "tips">
-        <div>只能上传300kb以内的png,jpg图片</div>
-      </template>
     </g-upload>
-
-
-
-
-
-
-
-
-
-
   </div>
 
 

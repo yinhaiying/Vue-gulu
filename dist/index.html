@@ -23,24 +23,11 @@
 <link rel="stylesheet" href="/app.a6a4d504.css"></head>
 
 <body>
-  <div id="app">
+  <div id="app" style="margin:20px">
 
     <g-upload accept="images/*" action="http://127.0.0.1:3000/upload" name="file" :parse-response="parseResponse" :file-list.sync="fileList">
       <button>上传</button>
-      <template slot="tips">
-        <div>只能上传300kb以内的png,jpg图片</div>
-      </template>
     </g-upload>
-
-
-
-
-
-
-
-
-
-
   </div>
 
 

@@ -1015,4 +1015,30 @@
 
 .gulu-uploader-file-list {
   list-style: none; }
+  .gulu-uploader-file-list > li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    border: 1px solid #c0c0c0; }
+  .gulu-uploader-default-img {
+  border: 1px solid #ddd;
+  width: 32px;
+  height: 32px; }
+  .gulu-uploader-img-wrapper {
+  height: 32px;
+  margin: 0 8px 0 0; }
+  .gulu-uploader-name {
+  margin-right: auto; }
+  .gulu-uploader-name.success {
+    color: green; }
+  .gulu-uploader-name.fail {
+    color: red; }
+  .gulu-uploader-remove {
+  width: 32px;
+  height: 32px; }
 
