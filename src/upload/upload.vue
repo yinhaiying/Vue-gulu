@@ -145,6 +145,7 @@ export default {
       let oInput = document.createElement('input');
       oInput.type = 'file';
       oInput.multiple = true;
+      oInput.accept = "image/*"
       this.$refs.temp.appendChild(oInput);
       return oInput
     },
