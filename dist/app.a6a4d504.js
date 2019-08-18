@@ -14162,34 +14162,21 @@ var _default = {
     uploadFile: function uploadFile(file) {
       var _this2 = this;
 
-      // 上传文件
-      var formData = new FormData();
-      formData.append(this.name, file);
       var name = file.name,
           size = file.size,
-          type = file.type; // 开始发送请求
+          type = file.type;
+      var newName = this.generateName(name); // 上传文件
 
-      var xhr = new XMLHttpRequest();
-      xhr.open(this.method, this.action);
-
-      xhr.onload = function () {
+      var formData = new FormData();
+      formData.append(this.name, file);
+      this.doUploadFile(formData, function (response) {
         //通过用户自己定义函数来确定如何解析后台返回的参数
-        var url = _this2.parseResponse(xhr.response);
+        var url = _this2.parseResponse(response);
 
-        _this2.url = url; // 上传成功之后，将上传成功图片信息放到fileList中
-        //处理重复的name
-
-        while (_this2.fileList.filter(function (item) {
-          return item.name === name;
-        }).length > 0) {
-          var dotIndex = name.lastIndexOf('.');
-          var nameWithoutExtension = name.substring(0, dotIndex);
-          var extension = name.substring(dotIndex);
-          name = nameWithoutExtension + '(1)' + extension;
-        }
+        _this2.url = url;
 
         _this2.$emit('update:fileList', [].concat(_toConsumableArray(_this2.fileList), [{
-          name: name,
+          name: newName,
           type: type,
           size: size,
           url: url
@@ -14200,9 +14187,30 @@ var _default = {
           size: size,
           type: type
         });
+      });
+    },
+    doUploadFile: function doUploadFile(formData, success, fail) {
+      // 开始发送请求
+      var xhr = new XMLHttpRequest();
+      xhr.open(this.method, this.action);
+
+      xhr.onload = function () {
+        success(xhr.response);
       };
 
       xhr.send(formData);
+    },
+    generateName: function generateName(name) {
+      while (this.fileList.filter(function (item) {
+        return item.name === name;
+      }).length > 0) {
+        var dotIndex = name.lastIndexOf('.');
+        var nameWithoutExtension = name.substring(0, dotIndex);
+        var extension = name.substring(dotIndex);
+        name = nameWithoutExtension + '(1)' + extension;
+      }
+
+      return name;
     },
     createInput: function createInput() {
       // 创建Input
@@ -14440,7 +14448,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50294" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56979" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -59,29 +59,37 @@ export default {
       oInput.click();
     },
     uploadFile(file){
+
+      let {name,size,type} = file;
+      let newName = this.generateName(name)
         // 上传文件
         let formData = new FormData();
         formData.append(this.name,file);
-        let {name,size,type} = file;
+        this.doUploadFile(formData,(response) =>{
+          //通过用户自己定义函数来确定如何解析后台返回的参数
+          let url = this.parseResponse(response);
+          this.url = url;
+          this.$emit('update:fileList',[...this.fileList,{name:newName,type,size,url}])
+          this.fileList.push({name,size,type})
+        })
+    },
+    doUploadFile(formData,success,fail){
         // 开始发送请求
         let xhr = new XMLHttpRequest();
         xhr.open(this.method,this.action);
-        xhr.onload = () =>{
-          //通过用户自己定义函数来确定如何解析后台返回的参数
-          let url = this.parseResponse(xhr.response);
-          this.url = url;
-          // 上传成功之后，将上传成功图片信息放到fileList中
-          //处理重复的name
+        xhr.onload = function(){
+          success(xhr.response)
+        }
+        xhr.send(formData);
+    },
+    generateName(name){
           while(this.fileList.filter((item) => item.name === name).length > 0){
             let dotIndex = name.lastIndexOf('.');
             let nameWithoutExtension = name.substring(0,dotIndex);
             let extension = name.substring(dotIndex);
             name = nameWithoutExtension + '(1)' + extension;
           }
-          this.$emit('update:fileList',[...this.fileList,{name,type,size,url}])
-          this.fileList.push({name,size,type})
-        };
-        xhr.send(formData);
+          return name;
     },
     createInput(){
       // 创建Input
