@@ -224,3 +224,52 @@ app.put('/upload', cors(), upload.single('file'), function (req, res, next) {
     },
 
 ```
+
+#### 上传失败时将错误信息传递出去
+1. `doUpload`函数中定义`onError`事件
+```
+    doUploadFile(formData,success,fail){
+        // 开始发送请求
+        let xhr = new XMLHttpRequest();
+        xhr.open(this.method,this.action);
+        xhr.onload = function(){
+          success(xhr.response)
+        }
+        xhr.onerror = () => {
+          fail(xhr);
+        }
+        xhr.send(formData);
+    },
+```
+2. `uploadError`中`emit`这个事件。并将从`xhr`中获得的错误信息传递出去。
+```
+    uploadError(newName,xhr){
+      console.log(xhr)
+      let errorFile = this.fileList.filter((item) => item.name === newName)[0];
+      let index = this.fileList.indexOf(errorFile)
+      let fileCopy = JSON.parse(JSON.stringify(this.fileList));
+      if(fileCopy.length > 0 ){
+        fileCopy[0].status = "fail";
+      }
+      let fileListCopy = [...this.fileList];
+      fileListCopy.splice(index,1,fileCopy);
+      this.$emit('update:fileList',fileCopy);
+      let error = '';
+      if(xhr.status === 0){
+        error = '网络无法连接'
+      }
+      this.$emit('upload-error',error)
+    },
+```
+
+3. 在外界进行监听`emit`事件
+```
+    <g-upload
+        accept = "images/*"
+        action = "http://127.0.0.1:3000/upload"
+        name = "file"
+        :parse-response = "parseResponse"
+        :file-list.sync = "fileList"
+        @upload-error = "uploadError"
+    >
+```

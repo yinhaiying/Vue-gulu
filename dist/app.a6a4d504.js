@@ -14212,22 +14212,33 @@ var _default = {
           url: url,
           status: 'success'
         }]));
-      }, function () {
-        _this2.uploadError(newName);
+      }, function (xhr) {
+        _this2.uploadError(newName, xhr);
       });
     },
-    uploadError: function uploadError(newName) {
+    uploadError: function uploadError(newName, xhr) {
+      console.log(xhr);
       var errorFile = this.fileList.filter(function (item) {
         return item.name === newName;
       })[0];
       var index = this.fileList.indexOf(errorFile);
       var fileCopy = JSON.parse((0, _stringify.default)(this.fileList));
-      fileCopy[0].status = "fail";
+
+      if (fileCopy.length > 0) {
+        fileCopy[0].status = "fail";
+      }
 
       var fileListCopy = _toConsumableArray(this.fileList);
 
       fileListCopy.splice(index, 1, fileCopy);
       this.$emit('update:fileList', fileCopy);
+      var error = '';
+
+      if (xhr.status === 0) {
+        error = '网络无法连接';
+      }
+
+      this.$emit('upload-error', error);
     },
     doUploadFile: function doUploadFile(formData, success, fail) {
       // 开始发送请求
@@ -14236,6 +14247,10 @@ var _default = {
 
       xhr.onload = function () {
         success(xhr.response);
+      };
+
+      xhr.onerror = function () {
+        fail(xhr);
       };
 
       xhr.send(formData);
@@ -14487,6 +14502,9 @@ new _vue.default({
           callback: function callback(toast) {}
         }
       });
+    },
+    uploadError: function uploadError(error) {
+      alert(error || '上传失败');
     }
   }
 });

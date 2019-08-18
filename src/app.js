@@ -81,6 +81,9 @@ new Vue({
         }
       })
     },
+    uploadError(error){
+      alert(error || '上传失败')
+    }
   }
 })
 

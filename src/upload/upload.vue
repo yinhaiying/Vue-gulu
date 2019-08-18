@@ -83,18 +83,26 @@ export default {
         let url = this.parseResponse(response);
         this.url = url;
         this.$emit('update:fileList',[...this.fileList,{name:newName,type,size,url,status:'success'}])
-      },() => {
-        this.uploadError(newName);
+      },(xhr) => {
+        this.uploadError(newName,xhr);
       })
     },
-    uploadError(newName){
+    uploadError(newName,xhr){
+      console.log(xhr)
       let errorFile = this.fileList.filter((item) => item.name === newName)[0];
       let index = this.fileList.indexOf(errorFile)
       let fileCopy = JSON.parse(JSON.stringify(this.fileList));
-      fileCopy[0].status = "fail";
+      if(fileCopy.length > 0 ){
+        fileCopy[0].status = "fail";
+      }
       let fileListCopy = [...this.fileList];
       fileListCopy.splice(index,1,fileCopy);
-      this.$emit('update:fileList',fileCopy)
+      this.$emit('update:fileList',fileCopy);
+      let error = '';
+      if(xhr.status === 0){
+        error = '网络无法连接'
+      }
+      this.$emit('upload-error',error)
     },
     doUploadFile(formData,success,fail){
         // 开始发送请求
@@ -102,6 +110,9 @@ export default {
         xhr.open(this.method,this.action);
         xhr.onload = function(){
           success(xhr.response)
+        }
+        xhr.onerror = () => {
+          fail(xhr);
         }
         xhr.send(formData);
     },
