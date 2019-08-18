@@ -14181,9 +14181,7 @@ var _default = {
         type: type,
         size: size,
         status: 'uploading'
-      };
-      console.log(newFile);
-      this.$emit('update:fileList', [].concat(_toConsumableArray(this.fileList), [newFile]));
+      }; // this.$emit('update:fileList',[...this.fileList,newFile]);
     },
     uploadFile: function uploadFile(file) {
       var _this2 = this;
@@ -14206,6 +14204,7 @@ var _default = {
           name: newName,
           type: type,
           size: size,
+          url: url,
           status: 'success'
         }]));
       }, function () {
@@ -14231,7 +14230,7 @@ var _default = {
       xhr.open(this.method, this.action);
 
       xhr.onload = function () {
-        success(xhr.response); // fail()
+        success(xhr.response);
       };
 
       xhr.send(formData);
@@ -14281,39 +14280,46 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "gulu-uploader" }, [
-    _vm._v("\n  " + _vm._s(_vm.fileList) + "\n  "),
-    _c("div", { on: { click: _vm.onUploadClick } }, [_vm._t("default")], 2),
-    _vm._v(" "),
-    _c("div", {
-      ref: "temp",
-      staticStyle: { width: "0", height: "0", overflow: "hidden" }
-    }),
-    _vm._v(" "),
-    _c(
-      "ol",
-      _vm._l(_vm.fileList, function(file, index) {
-        return _c("li", { key: file.name }, [
-          _c("img", {
-            attrs: { src: file.url, alt: "", width: "100", height: "100" }
-          }),
-          _vm._v("\n      " + _vm._s(file.name) + "\n      "),
-          _c(
-            "button",
-            {
-              on: {
-                click: function($event) {
-                  return _vm.onRemoveFile(index)
-                }
-              }
-            },
-            [_vm._v("删除")]
-          )
-        ])
+  return _c(
+    "div",
+    { staticClass: "gulu-uploader" },
+    [
+      _c("div", { on: { click: _vm.onUploadClick } }, [_vm._t("default")], 2),
+      _vm._v(" "),
+      _vm._t("tips"),
+      _vm._v(" "),
+      _c("div", {
+        ref: "temp",
+        staticStyle: { width: "0", height: "0", overflow: "hidden" }
       }),
-      0
-    )
-  ])
+      _vm._v(" "),
+      _c(
+        "ol",
+        { staticClass: "gulu-uploader-file-list" },
+        _vm._l(_vm.fileList, function(file, index) {
+          return _c("li", { key: file.name }, [
+            _c("img", {
+              attrs: { src: file.url, alt: "", width: "100", height: "100" }
+            }),
+            _vm._v("\n      " + _vm._s(file.name) + "\n      "),
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    return _vm.onRemoveFile(index)
+                  }
+                }
+              },
+              [_vm._v("删除")]
+            )
+          ])
+        }),
+        0
+      )
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

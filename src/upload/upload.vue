@@ -1,12 +1,12 @@
 <template>
   <div class = "gulu-uploader">
-    {{fileList}}
     <div @click = "onUploadClick">
       <slot></slot>
     </div>
+    <slot name = "tips"></slot>
     <div ref = "temp" style = "width:0;height:0;overflow:hidden"></div>
     <!-- <img :src="url" alt="" class=""> -->
-    <ol>
+    <ol class = "gulu-uploader-file-list">
       <li v-for = "(file,index) in fileList" :key = "file.name">
         <img :src="file.url" alt="" width = "100" height = "100">
         {{file.name}}
@@ -62,8 +62,7 @@ export default {
     beforeUpload(file,newName){
       let {type,size} = file;
       let newFile = {name:newName,type,size,status:'uploading'};
-      console.log(newFile)
-      this.$emit('update:fileList',[...this.fileList,newFile]);
+      // this.$emit('update:fileList',[...this.fileList,newFile]);
     },
     uploadFile(file){
       let {name,size,type} = file;
@@ -78,11 +77,10 @@ export default {
         //通过用户自己定义函数来确定如何解析后台返回的参数
         let url = this.parseResponse(response);
         this.url = url;
-        this.$emit('update:fileList',[...this.fileList,{name:newName,type,size,status:'success'}])
+        this.$emit('update:fileList',[...this.fileList,{name:newName,type,size,url,status:'success'}])
       },() => {
         this.uploadError(newName);
       })
-
     },
     uploadError(newName){
       let errorFile = this.fileList.filter((item) => item.name === newName)[0];
@@ -99,7 +97,6 @@ export default {
         xhr.open(this.method,this.action);
         xhr.onload = function(){
           success(xhr.response)
-          // fail()
         }
         xhr.send(formData);
     },
@@ -136,5 +133,11 @@ export default {
 
 
 <style lang="scss">
+
+.gulu-uploader{
+  &-file-list{
+    list-style:none;
+  }
+}
 
 </style>

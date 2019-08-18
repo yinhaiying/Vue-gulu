@@ -1013,3 +1013,6 @@
   border: 2px solid #3ccc;
 }
 
+.gulu-uploader-file-list {
+  list-style: none; }
+
