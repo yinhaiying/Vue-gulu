@@ -14155,6 +14155,9 @@ var _default = {
       default: function _default() {
         return [];
       }
+    },
+    sizeLimit: {
+      type: Number
     }
   },
   data: function data() {
@@ -14181,6 +14184,13 @@ var _default = {
     beforeUpload: function beforeUpload(file, newName) {
       var type = file.type,
           size = file.size;
+
+      if (size > this.sizeLimit) {
+        console.log('这里执行了吗');
+        this.$emit('upload-error', "\u6587\u4EF6\u5927\u4E8E".concat(this.sizeLimit));
+        return false;
+      }
+
       var newFile = {
         name: newName,
         type: type,
@@ -14195,7 +14205,11 @@ var _default = {
           size = file.size,
           type = file.type;
       var newName = this.generateName(name);
-      this.beforeUpload(file, newName); // 上传文件
+
+      if (!this.beforeUpload(file, newName)) {
+        return false;
+      } // 上传文件
+
 
       var formData = new FormData();
       formData.append(this.name, file);
@@ -14469,7 +14483,8 @@ new _vue.default({
       var url = "http://127.0.0.1:3000/preview/".concat(obj.key);
       return url;
     },
-    fileList: []
+    fileList: [],
+    sizeLimit: 200
   },
   created: function created() {},
   methods: {

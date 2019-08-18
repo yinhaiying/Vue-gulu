@@ -226,7 +226,7 @@ app.put('/upload', cors(), upload.single('file'), function (req, res, next) {
 ```
 
 #### 上传失败时将错误信息传递出去
-1. `doUpload`函数中定义`onError`事件
+1. `doUpload`函数中定义`onError`事件,`onError`事件能够获取到错误信息。
 ```
     doUploadFile(formData,success,fail){
         // 开始发送请求
@@ -273,3 +273,22 @@ app.put('/upload', cors(), upload.single('file'), function (req, res, next) {
         @upload-error = "uploadError"
     >
 ```
+
+#### 上传图片大写的限制。
+
+我们可以在`beforeUpload`之前确定图片大写，如果图片过大就进行提示。
+`beforUpload`
+```
+    beforeUpload(file,newName){
+      let {type,size} = file;
+      //尺寸限制
+      if(size > this.sizeLimit){
+        console.log('这里执行了吗');
+        this.$emit('upload-error',`文件大于${this.sizeLimit}`);
+        return false;
+      }
+    },
+
+```
+
+

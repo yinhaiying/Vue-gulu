@@ -42,7 +42,8 @@ new Vue({
      let url = `http://127.0.0.1:3000/preview/${obj.key}`
       return url;
     },
-    fileList:[]
+    fileList:[],
+    sizeLimit:200
   },
   created(){
 

@@ -45,6 +45,9 @@ export default {
     fileList:{
       type:Array,
       default:() => []
+    },
+    sizeLimit:{
+      type:Number
     }
   },
   data(){
@@ -66,6 +69,11 @@ export default {
     },
     beforeUpload(file,newName){
       let {type,size} = file;
+      if(size > this.sizeLimit){
+        console.log('这里执行了吗');
+        this.$emit('upload-error',`文件大于${this.sizeLimit}`);
+        return false;
+      }
       let newFile = {name:newName,type,size,status:'uploading'};
       // this.$emit('update:fileList',[...this.fileList,newFile]);
     },
@@ -73,8 +81,9 @@ export default {
       let {name,size,type} = file;
       let newName = this.generateName(name);
 
-      this.beforeUpload(file,newName);
-
+      if(!this.beforeUpload(file,newName)){
+        return false;
+      }
        // 上传文件
       let formData = new FormData();
       formData.append(this.name,file);
