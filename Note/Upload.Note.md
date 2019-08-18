@@ -141,3 +141,31 @@ app.put('/upload', cors(), upload.single('file'), function (req, res, next) {
       return url;
     }
 ```
+
+#### 创建一个fileList用来保存已经上传的图片
+当我们上传成功之后，我们应该将上传成功的图片保存到一个列表中，方便前端
+进行展示。
+`uploadFile`
+```
+          // 上传成功之后，将上传成功图片信息放到fileList中
+          //处理重复的name
+          while(this.fileList.filter((item) => item.name === name).length > 0){
+            let dotIndex = name.lastIndexOf('.');
+            let nameWithoutExtension = name.substring(0,dotIndex);
+            let extension = name.substring(dotIndex);
+            name = nameWithoutExtension + '(1)' + extension;
+          }
+          this.$emit('update:fileList',[...this.fileList,{name,type,size,url}])
+          this.fileList.push({name,size,type})
+```
+`index.html`
+```
+    <g-upload
+        accept = "images/*"
+        action = "http://127.0.0.1:3000/upload"
+        name = "file"
+        :parse-response = "parseResponse"
+        :file-list.sync = "fileList"
+        >
+```
+这种通过`upload`更新数据的方式非常简便，可以多尝试使用。

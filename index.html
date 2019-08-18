@@ -33,6 +33,7 @@
         action = "http://127.0.0.1:3000/upload"
         name = "file"
         :parse-response = "parseResponse"
+        :file-list.sync = "fileList"
         >
       <button>上传</button>
       <template slot = "tips">

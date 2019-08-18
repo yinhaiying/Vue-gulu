@@ -14085,6 +14085,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -14114,6 +14129,12 @@ var _default = {
     parseResponse: {
       type: Function,
       required: true
+    },
+    fileList: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
     }
   },
   data: function data() {
@@ -14142,7 +14163,10 @@ var _default = {
 
       // 上传文件
       var formData = new FormData();
-      formData.append(this.name, file); // 开始发送请求
+      formData.append(this.name, file);
+      var name = file.name,
+          size = file.size,
+          type = file.type; // 开始发送请求
 
       var xhr = new XMLHttpRequest();
       xhr.open(this.method, this.action);
@@ -14151,7 +14175,30 @@ var _default = {
         //通过用户自己定义函数来确定如何解析后台返回的参数
         var url = _this2.parseResponse(xhr.response);
 
-        _this2.url = url;
+        _this2.url = url; // 上传成功之后，将上传成功图片信息放到fileList中
+        //处理重复的name
+
+        while (_this2.fileList.filter(function (item) {
+          return item.name === name;
+        }).length > 0) {
+          var dotIndex = name.lastIndexOf('.');
+          var nameWithoutExtension = name.substring(0, dotIndex);
+          var extension = name.substring(dotIndex);
+          name = nameWithoutExtension + '(1)' + extension;
+        }
+
+        _this2.$emit('update:fileList', [].concat(_toConsumableArray(_this2.fileList), [{
+          name: name,
+          type: type,
+          size: size,
+          url: url
+        }]));
+
+        _this2.fileList.push({
+          name: name,
+          size: size,
+          type: type
+        });
       };
 
       xhr.send(formData);
@@ -14186,7 +14233,18 @@ exports.default = _default;
       staticStyle: { width: "0", height: "0", overflow: "hidden" }
     }),
     _vm._v(" "),
-    _c("img", { attrs: { src: _vm.url, alt: "" } })
+    _c(
+      "ol",
+      _vm._l(_vm.fileList, function(file) {
+        return _c("li", { key: file.name }, [
+          _c("img", {
+            attrs: { src: file.url, alt: "", width: "100", height: "100" }
+          }),
+          _vm._v("\n      " + _vm._s(file.name) + "\n    ")
+        ])
+      }),
+      0
+    )
   ])
 }
 var staticRenderFns = []
@@ -14294,7 +14352,8 @@ new _vue.default({
       var obj = JSON.parse(response);
       var url = "http://127.0.0.1:3000/preview/".concat(obj.key);
       return url;
-    }
+    },
+    fileList: []
   },
   created: function created() {},
   methods: {
@@ -14358,7 +14417,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54650" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50294" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
