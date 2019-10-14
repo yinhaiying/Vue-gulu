@@ -25,16 +25,16 @@
   </style>
 </head>
 
-<body>
-  <div id="app">
-   <g-layout style = "height:100vh">
-      <g-header class = "demo">header</g-header>
-     <g-layout>
-        <g-sider>sider</g-sider>
-        <g-content class = "demo">content</g-content>
-     </g-layout>
-     <g-footer class = "demo">footer</g-footer>
-   </g-layout>
+<body style = "border:1px solid red">
+  <div id="app" style = "margin-left:100px;margin-top:100px">
+   <g-popover>
+     <template slot = "content">
+        <div>展示内容</div>
+     </template>
+     <button>点击</button>
+   </g-popover>
+
+
    <div style = "margin:30px"></div>
 
 

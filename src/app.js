@@ -13,7 +13,7 @@ import Header from './layout/header.vue'
 import Content from './layout/content.vue'
 import Footer from './layout/footer.vue'
 import Sider from './layout/sider.vue'
-
+import Popover from './popover/popover.vue'
 Vue.component('g-button',Button)
 Vue.component('g-icon',Icon)
 Vue.component('g-button-group',ButtonGroup)
@@ -26,6 +26,7 @@ Vue.component('g-header',Header)
 Vue.component('g-content',Content)
 Vue.component('g-footer',Footer)
 Vue.component('g-sider',Sider)
+Vue.component('g-popover',Popover)
 
 Vue.use(Plugin)
 
